@@ -7,10 +7,10 @@ struct ScoringEngine {
 
     static func compositeScore(strength: Int, cardio: Int, stability: Int, nutrition: Int) -> Int {
         Int(round(
-            Double(strength) * 0.3
-            + Double(cardio) * 0.3
-            + Double(stability) * 0.2
-            + Double(nutrition) * 0.2
+            Double(strength) * 0.35
+            + Double(cardio) * 0.35
+            + Double(stability) * 0.15
+            + Double(nutrition) * 0.15
         ))
     }
 

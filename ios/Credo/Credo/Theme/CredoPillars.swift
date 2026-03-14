@@ -44,10 +44,10 @@ enum Pillar: String, CaseIterable, Codable {
 
     var weight: Double {
         switch self {
-        case .strength: return 0.3
-        case .stability: return 0.2
-        case .cardio: return 0.3
-        case .nutrition: return 0.2
+        case .strength: return 0.35
+        case .stability: return 0.15
+        case .cardio: return 0.35
+        case .nutrition: return 0.15
         }
     }
 
