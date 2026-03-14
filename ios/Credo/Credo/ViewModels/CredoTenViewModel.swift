@@ -153,6 +153,11 @@ class CredoTenViewModel {
         benchmark.lastTested != "Not tested"
     }
 
+    /// Returns the exercise library ID for a given benchmark, if one exists.
+    func exerciseId(for benchmark: Benchmark) -> String? {
+        benchmarkDefinitions.first { $0.name == benchmark.name }?.exerciseId
+    }
+
     // MARK: - Helpers
 
     private func bestPullupReps() -> Int {

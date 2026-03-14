@@ -30,7 +30,8 @@ struct CredoTenView: View {
                             formattedValue: vm.formatValue(benchmark),
                             isTested: vm.isTested(benchmark),
                             percentile: benchmark.percentile,
-                            demographicLabel: vm.demographicLabel
+                            demographicLabel: vm.demographicLabel,
+                            exerciseId: vm.exerciseId(for: benchmark)
                         )
                     }
                 }

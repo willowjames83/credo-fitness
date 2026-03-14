@@ -12,6 +12,7 @@ struct ExerciseCard: View {
     let onRemoveSet: (Int) -> Void
 
     @State private var showFormCues: Bool = false
+    @State private var showVideoSheet: Bool = false
     @State private var repsStrings: [String] = []
 
     var body: some View {
@@ -41,6 +42,18 @@ struct ExerciseCard: View {
                         }
                     }
                     .buttonStyle(.plain)
+
+                    if let def = ExerciseLibrary.find(exercise.id),
+                       def.shortVideoURL != nil || def.detailedVideoURL != nil {
+                        Button {
+                            showVideoSheet = true
+                        } label: {
+                            Image(systemName: "play.circle")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundStyle(CredoColors.accent)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
 
                 Spacer()
@@ -231,6 +244,15 @@ struct ExerciseCard: View {
         }
         .onChange(of: exercise.sets.count) { _, _ in
             initRepsStrings()
+        }
+        .sheet(isPresented: $showVideoSheet) {
+            if let def = ExerciseLibrary.find(exercise.id) {
+                ExerciseVideoSheet(
+                    exerciseName: def.name,
+                    shortVideoURL: def.shortVideoURL,
+                    detailedVideoURL: def.detailedVideoURL
+                )
+            }
         }
     }
 

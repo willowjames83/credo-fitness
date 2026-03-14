@@ -6,6 +6,9 @@ struct BenchmarkCard: View {
     var isTested: Bool = true
     var percentile: Int? = nil
     var demographicLabel: String = ""
+    var exerciseId: String? = nil
+
+    @State private var showVideoSheet = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -17,6 +20,19 @@ struct BenchmarkCard: View {
                     Text(benchmark.name)
                         .font(.credoBody(size: 14, weight: .semibold))
                         .foregroundStyle(isTested ? CredoColors.textPrimary : CredoColors.textTertiary)
+
+                    if let eid = exerciseId,
+                       let def = ExerciseLibrary.find(eid),
+                       def.shortVideoURL != nil || def.detailedVideoURL != nil {
+                        Button {
+                            showVideoSheet = true
+                        } label: {
+                            Image(systemName: "play.circle")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(CredoColors.accent)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
 
                 Spacer()
@@ -85,6 +101,15 @@ struct BenchmarkCard: View {
                 .stroke(CredoColors.border, lineWidth: 1)
         )
         .opacity(isTested ? 1.0 : 0.6)
+        .sheet(isPresented: $showVideoSheet) {
+            if let eid = exerciseId, let def = ExerciseLibrary.find(eid) {
+                ExerciseVideoSheet(
+                    exerciseName: def.name,
+                    shortVideoURL: def.shortVideoURL,
+                    detailedVideoURL: def.detailedVideoURL
+                )
+            }
+        }
     }
 
     private func ordinalString(_ value: Int) -> String {

@@ -398,7 +398,9 @@ struct ExerciseLibrary {
             isPerSide: false,
             defaultRepRange: [12, 15],
             defaultSets: 3,
-            defaultRestSeconds: 60
+            defaultRestSeconds: 60,
+            shortVideoURL: "https://youtube.com/shorts/rep-qVOkqgk",
+            detailedVideoURL: "https://www.youtube.com/watch?v=rep-qVOkqgk"
         ),
         ExerciseDefinition(
             id: "hammer_curl",
@@ -415,7 +417,9 @@ struct ExerciseLibrary {
             isPerSide: true,
             defaultRepRange: [10, 12],
             defaultSets: 3,
-            defaultRestSeconds: 60
+            defaultRestSeconds: 60,
+            shortVideoURL: "https://youtube.com/shorts/zC3nLlEvin4",
+            detailedVideoURL: "https://www.youtube.com/watch?v=zC3nLlEvin4"
         ),
         ExerciseDefinition(
             id: "overhead_tricep_ext",
@@ -432,7 +436,9 @@ struct ExerciseLibrary {
             isPerSide: true,
             defaultRepRange: [10, 12],
             defaultSets: 3,
-            defaultRestSeconds: 60
+            defaultRestSeconds: 60,
+            shortVideoURL: "https://youtube.com/shorts/YbX7Wd8jQ-Q",
+            detailedVideoURL: "https://www.youtube.com/watch?v=YbX7Wd8jQ-Q"
         ),
         ExerciseDefinition(
             id: "pallof_press",
@@ -449,7 +455,9 @@ struct ExerciseLibrary {
             isPerSide: false,
             defaultRepRange: [12, 12],
             defaultSets: 3,
-            defaultRestSeconds: 60
+            defaultRestSeconds: 60,
+            shortVideoURL: "https://youtube.com/shorts/AH_QZLm_0-s",
+            detailedVideoURL: "https://www.youtube.com/watch?v=AH_QZLm_0-s"
         ),
         ExerciseDefinition(
             id: "single_leg_rdl",
@@ -466,7 +474,9 @@ struct ExerciseLibrary {
             isPerSide: true,
             defaultRepRange: [10, 10],
             defaultSets: 3,
-            defaultRestSeconds: 90
+            defaultRestSeconds: 90,
+            shortVideoURL: "https://youtube.com/shorts/ej3MhS8MnCA",
+            detailedVideoURL: "https://www.youtube.com/watch?v=ej3MhS8MnCA"
         ),
         ExerciseDefinition(
             id: "trap_bar_deadlift",
@@ -483,7 +493,9 @@ struct ExerciseLibrary {
             isPerSide: false,
             defaultRepRange: [5, 6],
             defaultSets: 4,
-            defaultRestSeconds: 180
+            defaultRestSeconds: 180,
+            shortVideoURL: "https://youtube.com/shorts/dDC4OVWM5cA",
+            detailedVideoURL: "https://www.youtube.com/watch?v=GbdfCotMkHc"
         ),
         ExerciseDefinition(
             id: "hanging_knee_raise",
@@ -500,7 +512,9 @@ struct ExerciseLibrary {
             isPerSide: false,
             defaultRepRange: [12, 15],
             defaultSets: 3,
-            defaultRestSeconds: 60
+            defaultRestSeconds: 60,
+            shortVideoURL: "https://youtube.com/shorts/hdng3Nm1x30",
+            detailedVideoURL: "https://www.youtube.com/watch?v=hdng3Nm1x30"
         ),
         ExerciseDefinition(
             id: "incline_bench",
@@ -517,7 +531,9 @@ struct ExerciseLibrary {
             isPerSide: false,
             defaultRepRange: [8, 10],
             defaultSets: 4,
-            defaultRestSeconds: 120
+            defaultRestSeconds: 120,
+            shortVideoURL: "https://youtube.com/shorts/8iPEnn-ltC8",
+            detailedVideoURL: "https://www.youtube.com/watch?v=SrqOu55lrYU"
         ),
         ExerciseDefinition(
             id: "db_ohp",
@@ -534,7 +550,9 @@ struct ExerciseLibrary {
             isPerSide: true,
             defaultRepRange: [8, 10],
             defaultSets: 3,
-            defaultRestSeconds: 90
+            defaultRestSeconds: 90,
+            shortVideoURL: "https://youtube.com/shorts/qEwKCR5JCog",
+            detailedVideoURL: "https://www.youtube.com/watch?v=qEwKCR5JCog"
         )
     ]
 

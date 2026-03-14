@@ -98,6 +98,7 @@
 		A0809200000000000000092 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809200000000000000092 /* CoachView.swift */; };
 		A0809300000000000000093 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809300000000000000093 /* MessageBubble.swift */; };
 		A0809400000000000000094 /* SuggestedPromptChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809400000000000000094 /* SuggestedPromptChip.swift */; };
+		A0809500000000000000095 /* ExerciseVideoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809500000000000000095 /* ExerciseVideoSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +194,7 @@
 		B0809200000000000000092 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
 		B0809300000000000000093 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		B0809400000000000000094 /* SuggestedPromptChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedPromptChip.swift; sourceTree = "<group>"; };
+		B0809500000000000000095 /* ExerciseVideoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseVideoSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +404,7 @@
 			children = (
 				B03200000000000000000032 /* ExerciseCard.swift */,
 				B06900000000000000000069 /* ExerciseSwapSheet.swift */,
+				B0809500000000000000095 /* ExerciseVideoSheet.swift */,
 				B0808300000000000000083 /* SupersetGroupView.swift */,
 				A1B00700000000000000B007 /* ProgramSelectorView.swift */,
 				B03400000000000000000034 /* RestTimerView.swift */,
@@ -607,6 +610,7 @@
 				A0809200000000000000092 /* CoachView.swift in Sources */,
 				A0809300000000000000093 /* MessageBubble.swift in Sources */,
 				A0809400000000000000094 /* SuggestedPromptChip.swift in Sources */,
+				A0809500000000000000095 /* ExerciseVideoSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
