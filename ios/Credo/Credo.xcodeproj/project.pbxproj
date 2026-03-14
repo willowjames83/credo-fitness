@@ -167,6 +167,10 @@
 		A016100000000000000000161 /* SharePreviewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016100000000000000000161 /* SharePreviewSheet.swift */; };
 		A016200000000000000000162 /* WorkoutSummaryShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016200000000000000000162 /* WorkoutSummaryShareCard.swift */; };
 		A016300000000000000000163 /* SyncStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016300000000000000000163 /* SyncStatusBadge.swift */; };
+		A016400000000000000000164 /* MobilitySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016400000000000000000164 /* MobilitySession.swift */; };
+		A016500000000000000000165 /* StabilityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016500000000000000000165 /* StabilityStore.swift */; };
+		A016600000000000000000166 /* StabilityScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016600000000000000000166 /* StabilityScoreCalculator.swift */; };
+		A016700000000000000000167 /* StabilityDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016700000000000000000167 /* StabilityDetailCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -331,6 +335,10 @@
 		B016100000000000000000161 /* SharePreviewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharePreviewSheet.swift"; sourceTree = "<group>"; };
 		B016200000000000000000162 /* WorkoutSummaryShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutSummaryShareCard.swift"; sourceTree = "<group>"; };
 		B016300000000000000000163 /* SyncStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncStatusBadge.swift"; sourceTree = "<group>"; };
+		B016400000000000000000164 /* MobilitySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MobilitySession.swift"; sourceTree = "<group>"; };
+		B016500000000000000000165 /* StabilityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityStore.swift"; sourceTree = "<group>"; };
+		B016600000000000000000166 /* StabilityScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityScoreCalculator.swift"; sourceTree = "<group>"; };
+		B016700000000000000000167 /* StabilityDetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityDetailCard.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +437,7 @@
 				B011300000000000000000113 /* NutritionEntry.swift */,
 				B011400000000000000000114 /* ProgressionInsight.swift */,
 				B011500000000000000000115 /* ShareableContent.swift */,
+				B016400000000000000000164 /* MobilitySession.swift */,
 				B011600000000000000000116 /* SyncPayload.swift */,
 				B00900000000000000000009 /* Benchmark.swift */,
 				A1B00100000000000000B001 /* ExerciseDefinition.swift */,
@@ -453,6 +462,7 @@
 				B011700000000000000000117 /* CardioScoreCalculator.swift */,
 				B011800000000000000000118 /* NutritionScoreCalculator.swift */,
 				B07200000000000000000072 /* ScoreHistoryTracker.swift */,
+				B016600000000000000000166 /* StabilityScoreCalculator.swift */,
 				B01700000000000000000017 /* ScoringEngine.swift */,
 				B07100000000000000000071 /* StrengthScoreCalculator.swift */,
 				B07000000000000000000070 /* StrengthStandards.swift */,
@@ -541,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				B02900000000000000000029 /* DashboardView.swift */,
+				B016700000000000000000167 /* StabilityDetailCard.swift */,
 				B03000000000000000000030 /* TodaysWorkoutCard.swift */,
 				B0808400000000000000084 /* MuscleRecoveryCard.swift */,
 			);
@@ -615,6 +626,7 @@
 				B012500000000000000000125 /* NutritionStore.swift */,
 				B012600000000000000000126 /* OverloadEngine.swift */,
 				B012700000000000000000127 /* ShareCardRenderer.swift */,
+				B016500000000000000000165 /* StabilityStore.swift */,
 				B012800000000000000000128 /* SyncService.swift */,
 				A1B00600000000000000B006 /* ProgressionEngine.swift */,
 				A1B00500000000000000B005 /* WorkoutStore.swift */,
@@ -939,6 +951,10 @@
 				A016100000000000000000161 /* SharePreviewSheet.swift in Sources */,
 				A016200000000000000000162 /* WorkoutSummaryShareCard.swift in Sources */,
 				A016300000000000000000163 /* SyncStatusBadge.swift in Sources */,
+				A016400000000000000000164 /* MobilitySession.swift in Sources */,
+				A016500000000000000000165 /* StabilityStore.swift in Sources */,
+				A016600000000000000000166 /* StabilityScoreCalculator.swift in Sources */,
+				A016700000000000000000167 /* StabilityDetailCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

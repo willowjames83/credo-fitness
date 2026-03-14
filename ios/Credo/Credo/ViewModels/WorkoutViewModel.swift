@@ -401,6 +401,14 @@ class WorkoutViewModel {
 
         store.saveCompletedWorkout(completedWorkout, detectedPRs: prs)
 
+        // Log warmup completion for stability tracking
+        let hadWarmups = currentSession.exercises.contains { exercise in
+            exercise.sets.contains { $0.isWarmup && $0.completed }
+        }
+        if hadWarmups {
+            StabilityStore.shared.logWarmupCompletion()
+        }
+
         store.advanceDay()
         stopAllTimers()
         showWorkoutSummary = true

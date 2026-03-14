@@ -20,7 +20,7 @@ class DashboardViewModel {
     }
 
     private var _cachedStability: Int {
-        ScoringEngine.placeholderStabilityScore
+        StabilityScoreCalculator.calculate(store: store)
     }
 
     var strengthSubscores: StrengthSubscores {
@@ -85,7 +85,10 @@ class DashboardViewModel {
             ),
             .stability: PillarScore(
                 score: stabilityScore,
-                metrics: ["2 of 3 warmups complete", "Hip mobility focus next"],
+                metrics: [
+                    "\(StabilityStore.shared.warmupsCompleted(inLastDays: 14)) warmups completed",
+                    "\(weeklyCoreSets) core sets this week"
+                ],
                 isWeakest: weakest == .stability
             ),
             .cardio: PillarScore(
@@ -166,6 +169,19 @@ class DashboardViewModel {
     }
 
     var hasProgramSelected: Bool { store.selectedProgram != nil }
+
+    // MARK: - Stability Metrics
+
+    private var weeklyCoreSets: Int {
+        let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+        return store.workoutHistory.filter { $0.date >= weekStart }.reduce(0) { total, workout in
+            total + workout.exercises.reduce(0) { exTotal, exercise in
+                guard let def = ExerciseLibrary.find(exercise.exerciseId),
+                      def.movementPattern == .core else { return exTotal }
+                return exTotal + exercise.sets.count
+            }
+        }
+    }
 
     // MARK: - Progression Insights (cached to avoid re-sorting all workout history)
 

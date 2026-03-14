@@ -293,7 +293,7 @@ class WorkoutStore {
         let subscores = StrengthScoreCalculator.calculate(store: self)
         let strengthScore = subscores.weightedScore
 
-        let stabilityScore = ScoringEngine.placeholderStabilityScore
+        let stabilityScore = StabilityScoreCalculator.calculate(store: self)
         let cardioScore = CardioScoreCalculator.calculate(store: CardioStore.shared)
         let nutritionScore = NutritionScoreCalculator.calculate(store: NutritionStore.shared)
         let credoScore = ScoringEngine.compositeScore(

@@ -82,7 +82,7 @@ class CoachViewModel {
         let strengthSubscores = StrengthScoreCalculator.calculate(store: store)
         let strengthScore = strengthSubscores.weightedScore
 
-        let stabilityScore = ScoringEngine.placeholderStabilityScore
+        let stabilityScore = StabilityScoreCalculator.calculate(store: store)
         let cardioScore = CardioScoreCalculator.calculate(store: CardioStore.shared)
         let nutritionScore = NutritionScoreCalculator.calculate(store: NutritionStore.shared)
         let credoScore = ScoringEngine.compositeScore(
