@@ -1,0 +1,24 @@
+{
+  "name": "credo-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Credo fitness app",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@prisma/client": "^5.22.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0",
+    "typescript": "^5.6.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0"
+  }
+}

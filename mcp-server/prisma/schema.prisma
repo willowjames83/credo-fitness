@@ -1,0 +1,100 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String
+  name            String
+  age             Int?
+  sex             String?
+  weight          Int?
+  experienceLevel String?
+  trainingGoal    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  workouts        Workout[]
+  exercise1RMs    Exercise1RM[]
+  personalRecords PersonalRecord[]
+  scoreSnapshots  ScoreSnapshot[]
+  userProgram     UserProgram?
+}
+
+model Workout {
+  id              String   @id @default(cuid())
+  userId          String
+  date            DateTime
+  dayLabel        String
+  programTemplate String?
+  durationSeconds Int?
+  exercises       Json
+  totalVolume     Float?
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model Exercise1RM {
+  id         String   @id @default(cuid())
+  userId     String
+  exerciseId String
+  weight     Float
+  date       DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
+}
+
+model PersonalRecord {
+  id          String   @id @default(cuid())
+  userId      String
+  exerciseId  String
+  previous1RM Float?
+  new1RM      Float
+  setWeight   Float
+  setReps     Int
+  date        DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, exerciseId])
+}
+
+model ScoreSnapshot {
+  id              String   @id @default(cuid())
+  userId          String
+  weekNumber      Int
+  credoScore      Int
+  strengthScore   Int
+  stabilityScore  Int
+  cardioScore     Int
+  nutritionScore  Int
+  date            DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weekNumber])
+  @@index([userId])
+}
+
+model UserProgram {
+  id              String @id @default(cuid())
+  userId          String @unique
+  programTemplate String
+  daysPerWeek     Int
+  currentWeek     Int    @default(1)
+  currentDayIndex Int    @default(0)
+
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

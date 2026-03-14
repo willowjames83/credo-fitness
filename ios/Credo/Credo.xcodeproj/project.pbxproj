@@ -1,0 +1,827 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A07000000000000000000070 /* StrengthStandards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07000000000000000000070 /* StrengthStandards.swift */; };
+		A07100000000000000000071 /* StrengthScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07100000000000000000071 /* StrengthScoreCalculator.swift */; };
+		A07200000000000000000072 /* ScoreHistoryTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07200000000000000000072 /* ScoreHistoryTracker.swift */; };
+		A00100000000000000000001 /* CredoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00100000000000000000001 /* CredoApp.swift */; };
+		A00200000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00200000000000000000002 /* ContentView.swift */; };
+		A00300000000000000000003 /* CredoColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00300000000000000000003 /* CredoColors.swift */; };
+		A00400000000000000000004 /* CredoFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00400000000000000000004 /* CredoFonts.swift */; };
+		A00500000000000000000005 /* CredoPillars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00500000000000000000005 /* CredoPillars.swift */; };
+		A00600000000000000000006 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00600000000000000000006 /* User.swift */; };
+		A00700000000000000000007 /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00700000000000000000007 /* Scores.swift */; };
+		A00800000000000000000008 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00800000000000000000008 /* Workout.swift */; };
+		A00900000000000000000009 /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00900000000000000000009 /* Benchmark.swift */; };
+		A01000000000000000000010 /* Protein.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01000000000000000000010 /* Protein.swift */; };
+		A01100000000000000000011 /* ScoreDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01100000000000000000011 /* ScoreDomain.swift */; };
+		A01200000000000000000012 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01200000000000000000012 /* MockUser.swift */; };
+		A01300000000000000000013 /* MockScores.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01300000000000000000013 /* MockScores.swift */; };
+		A01400000000000000000014 /* MockWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01400000000000000000014 /* MockWorkouts.swift */; };
+		A01500000000000000000015 /* MockBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01500000000000000000015 /* MockBenchmarks.swift */; };
+		A01600000000000000000016 /* MockProtein.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01600000000000000000016 /* MockProtein.swift */; };
+		A01700000000000000000017 /* ScoringEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01700000000000000000017 /* ScoringEngine.swift */; };
+		A01800000000000000000018 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01800000000000000000018 /* DashboardViewModel.swift */; };
+		A01900000000000000000019 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01900000000000000000019 /* WorkoutViewModel.swift */; };
+		A02000000000000000000020 /* CredoTenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02000000000000000000020 /* CredoTenViewModel.swift */; };
+		A02100000000000000000021 /* ProteinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02100000000000000000021 /* ProteinViewModel.swift */; };
+		A02200000000000000000022 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02200000000000000000022 /* ProfileViewModel.swift */; };
+		A02300000000000000000023 /* CredoScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02300000000000000000023 /* CredoScoreRing.swift */; };
+		A02400000000000000000024 /* ProteinRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02400000000000000000024 /* ProteinRing.swift */; };
+		A02500000000000000000025 /* PillarCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02500000000000000000025 /* PillarCard.swift */; };
+		A02600000000000000000026 /* PercentileBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02600000000000000000026 /* PercentileBar.swift */; };
+		A02700000000000000000027 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02700000000000000000027 /* SectionHeader.swift */; };
+		A02800000000000000000028 /* PillarBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02800000000000000000028 /* PillarBadge.swift */; };
+		A02900000000000000000029 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02900000000000000000029 /* DashboardView.swift */; };
+		A03000000000000000000030 /* TodaysWorkoutCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03000000000000000000030 /* TodaysWorkoutCard.swift */; };
+		A03100000000000000000031 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03100000000000000000031 /* WorkoutView.swift */; };
+		A03200000000000000000032 /* ExerciseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03200000000000000000032 /* ExerciseCard.swift */; };
+		A03300000000000000000033 /* SetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03300000000000000000033 /* SetRowView.swift */; };
+		A03400000000000000000034 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03400000000000000000034 /* RestTimerView.swift */; };
+		A03500000000000000000035 /* UpcomingExerciseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03500000000000000000035 /* UpcomingExerciseRow.swift */; };
+		A03600000000000000000036 /* CredoTenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03600000000000000000036 /* CredoTenView.swift */; };
+		A03700000000000000000037 /* CompositeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03700000000000000000037 /* CompositeCard.swift */; };
+		A03800000000000000000038 /* BenchmarkCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03800000000000000000038 /* BenchmarkCard.swift */; };
+		A03900000000000000000039 /* ProteinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03900000000000000000039 /* ProteinView.swift */; };
+		A04000000000000000000040 /* QuickAddButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04000000000000000000040 /* QuickAddButtonRow.swift */; };
+		A04100000000000000000041 /* WeeklyBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04100000000000000000041 /* WeeklyBarChart.swift */; };
+		A04200000000000000000042 /* SavedMealRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04200000000000000000042 /* SavedMealRow.swift */; };
+		A04300000000000000000043 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04300000000000000000043 /* ProfileView.swift */; };
+		A04400000000000000000044 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04400000000000000000044 /* ProfileHeaderView.swift */; };
+		A04500000000000000000045 /* SettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04500000000000000000045 /* SettingsSectionView.swift */; };
+		A04600000000000000000046 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04600000000000000000046 /* SettingsRowView.swift */; };
+		A04700000000000000000047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B04700000000000000000047 /* Assets.xcassets */; };
+		A1C00100000000000000C001 /* ExerciseDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00100000000000000B001 /* ExerciseDefinition.swift */; };
+		A1C00200000000000000C002 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00200000000000000B002 /* Program.swift */; };
+		A1C00300000000000000C003 /* ExerciseLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00300000000000000B003 /* ExerciseLibrary.swift */; };
+		A1C00400000000000000C004 /* ProgramGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00400000000000000B004 /* ProgramGenerator.swift */; };
+		A1C00500000000000000C005 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00500000000000000B005 /* WorkoutStore.swift */; };
+		A1C00600000000000000C006 /* ProgressionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00600000000000000B006 /* ProgressionEngine.swift */; };
+		A1C00700000000000000C007 /* ProgramSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00700000000000000B007 /* ProgramSelectorView.swift */; };
+		A1C00800000000000000C008 /* RIRSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B00800000000000000B008 /* RIRSheetView.swift */; };
+		A05000000000000000000050 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05000000000000000000050 /* UserProfile.swift */; };
+		A05100000000000000000051 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05100000000000000000051 /* OnboardingView.swift */; };
+		A05200000000000000000052 /* OnboardingBasicInfoStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05200000000000000000052 /* OnboardingBasicInfoStep.swift */; };
+		A05300000000000000000053 /* OnboardingBodyStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05300000000000000000053 /* OnboardingBodyStep.swift */; };
+		A05400000000000000000054 /* OnboardingExperienceStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05400000000000000000054 /* OnboardingExperienceStep.swift */; };
+		A05500000000000000000055 /* OnboardingBenchmarksStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05500000000000000000055 /* OnboardingBenchmarksStep.swift */; };
+		A05600000000000000000056 /* OnboardingGoalStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05600000000000000000056 /* OnboardingGoalStep.swift */; };
+		A05700000000000000000057 /* OnboardingReadyStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05700000000000000000057 /* OnboardingReadyStep.swift */; };
+		A06000000000000000000060 /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06000000000000000000060 /* PersonalRecord.swift */; };
+		A06100000000000000000061 /* PRBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06100000000000000000061 /* PRBadge.swift */; };
+		A06200000000000000000062 /* WorkoutHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06200000000000000000062 /* WorkoutHistoryViewModel.swift */; };
+		A06300000000000000000063 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06300000000000000000063 /* WorkoutHistoryView.swift */; };
+		A06400000000000000000064 /* WorkoutHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06400000000000000000064 /* WorkoutHistoryRow.swift */; };
+		A06500000000000000000065 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06500000000000000000065 /* WorkoutDetailView.swift */; };
+		A06600000000000000000066 /* EditWeightSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06600000000000000000066 /* EditWeightSheet.swift */; };
+		A06700000000000000000067 /* EditExperienceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06700000000000000000067 /* EditExperienceSheet.swift */; };
+		A06800000000000000000068 /* ProgramStatsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06800000000000000000068 /* ProgramStatsCard.swift */; };
+		A06900000000000000000069 /* ExerciseSwapSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06900000000000000000069 /* ExerciseSwapSheet.swift */; };
+		A0808000000000000000080 /* Superset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808000000000000000080 /* Superset.swift */; };
+		A0808100000000000000081 /* MuscleRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808100000000000000081 /* MuscleRecovery.swift */; };
+		A0808200000000000000082 /* ExerciseRotationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808200000000000000082 /* ExerciseRotationEngine.swift */; };
+		A0808300000000000000083 /* SupersetGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808300000000000000083 /* SupersetGroupView.swift */; };
+		A0808400000000000000084 /* MuscleRecoveryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808400000000000000084 /* MuscleRecoveryCard.swift */; };
+		A0808500000000000000085 /* PercentileBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808500000000000000085 /* PercentileBarView.swift */; };
+		A0808600000000000000086 /* StrengthBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808600000000000000086 /* StrengthBreakdownView.swift */; };
+		A0808700000000000000087 /* LogBenchmarkSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808700000000000000087 /* LogBenchmarkSheet.swift */; };
+		A0808800000000000000088 /* StrengthBreakdownViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808800000000000000088 /* StrengthBreakdownViewModel.swift */; };
+		A0808900000000000000089 /* CoachMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0808900000000000000089 /* CoachMessage.swift */; };
+		A0809000000000000000090 /* AICoachService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809000000000000000090 /* AICoachService.swift */; };
+		A0809100000000000000091 /* CoachViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809100000000000000091 /* CoachViewModel.swift */; };
+		A0809200000000000000092 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809200000000000000092 /* CoachView.swift */; };
+		A0809300000000000000093 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809300000000000000093 /* MessageBubble.swift */; };
+		A0809400000000000000094 /* SuggestedPromptChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0809400000000000000094 /* SuggestedPromptChip.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B00100000000000000000001 /* CredoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoApp.swift; sourceTree = "<group>"; };
+		B00200000000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B00300000000000000000003 /* CredoColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoColors.swift; sourceTree = "<group>"; };
+		B00400000000000000000004 /* CredoFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoFonts.swift; sourceTree = "<group>"; };
+		B00500000000000000000005 /* CredoPillars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoPillars.swift; sourceTree = "<group>"; };
+		B00600000000000000000006 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B00700000000000000000007 /* Scores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
+		B00800000000000000000008 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		B00900000000000000000009 /* Benchmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benchmark.swift; sourceTree = "<group>"; };
+		B01000000000000000000010 /* Protein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protein.swift; sourceTree = "<group>"; };
+		B01100000000000000000011 /* ScoreDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreDomain.swift; sourceTree = "<group>"; };
+		B01200000000000000000012 /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
+		B01300000000000000000013 /* MockScores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScores.swift; sourceTree = "<group>"; };
+		B01400000000000000000014 /* MockWorkouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWorkouts.swift; sourceTree = "<group>"; };
+		B01500000000000000000015 /* MockBenchmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBenchmarks.swift; sourceTree = "<group>"; };
+		B01600000000000000000016 /* MockProtein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProtein.swift; sourceTree = "<group>"; };
+		B01700000000000000000017 /* ScoringEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringEngine.swift; sourceTree = "<group>"; };
+		B07000000000000000000070 /* StrengthStandards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthStandards.swift; sourceTree = "<group>"; };
+		B07100000000000000000071 /* StrengthScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthScoreCalculator.swift; sourceTree = "<group>"; };
+		B07200000000000000000072 /* ScoreHistoryTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreHistoryTracker.swift; sourceTree = "<group>"; };
+		B01800000000000000000018 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		B01900000000000000000019 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		B02000000000000000000020 /* CredoTenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoTenViewModel.swift; sourceTree = "<group>"; };
+		B02100000000000000000021 /* ProteinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProteinViewModel.swift; sourceTree = "<group>"; };
+		B02200000000000000000022 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		B02300000000000000000023 /* CredoScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoScoreRing.swift; sourceTree = "<group>"; };
+		B02400000000000000000024 /* ProteinRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProteinRing.swift; sourceTree = "<group>"; };
+		B02500000000000000000025 /* PillarCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillarCard.swift; sourceTree = "<group>"; };
+		B02600000000000000000026 /* PercentileBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentileBar.swift; sourceTree = "<group>"; };
+		B02700000000000000000027 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		B02800000000000000000028 /* PillarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillarBadge.swift; sourceTree = "<group>"; };
+		B02900000000000000000029 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		B03000000000000000000030 /* TodaysWorkoutCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysWorkoutCard.swift; sourceTree = "<group>"; };
+		B03100000000000000000031 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		B03200000000000000000032 /* ExerciseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCard.swift; sourceTree = "<group>"; };
+		B03300000000000000000033 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
+		B03400000000000000000034 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
+		B03500000000000000000035 /* UpcomingExerciseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingExerciseRow.swift; sourceTree = "<group>"; };
+		B03600000000000000000036 /* CredoTenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoTenView.swift; sourceTree = "<group>"; };
+		B03700000000000000000037 /* CompositeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeCard.swift; sourceTree = "<group>"; };
+		B03800000000000000000038 /* BenchmarkCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkCard.swift; sourceTree = "<group>"; };
+		B03900000000000000000039 /* ProteinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProteinView.swift; sourceTree = "<group>"; };
+		B04000000000000000000040 /* QuickAddButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddButtonRow.swift; sourceTree = "<group>"; };
+		B04100000000000000000041 /* WeeklyBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyBarChart.swift; sourceTree = "<group>"; };
+		B04200000000000000000042 /* SavedMealRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMealRow.swift; sourceTree = "<group>"; };
+		B04300000000000000000043 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B04400000000000000000044 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		B04500000000000000000045 /* SettingsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionView.swift; sourceTree = "<group>"; };
+		B04600000000000000000046 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		B04700000000000000000047 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B04800000000000000000048 /* Credo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Credo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B00100000000000000B001 /* ExerciseDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDefinition.swift; sourceTree = "<group>"; };
+		A1B00200000000000000B002 /* Program.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
+		A1B00300000000000000B003 /* ExerciseLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibrary.swift; sourceTree = "<group>"; };
+		A1B00400000000000000B004 /* ProgramGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramGenerator.swift; sourceTree = "<group>"; };
+		A1B00500000000000000B005 /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
+		A1B00600000000000000B006 /* ProgressionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionEngine.swift; sourceTree = "<group>"; };
+		A1B00700000000000000B007 /* ProgramSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramSelectorView.swift; sourceTree = "<group>"; };
+		A1B00800000000000000B008 /* RIRSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RIRSheetView.swift; sourceTree = "<group>"; };
+		B05000000000000000000050 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		B05100000000000000000051 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		B05200000000000000000052 /* OnboardingBasicInfoStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBasicInfoStep.swift; sourceTree = "<group>"; };
+		B05300000000000000000053 /* OnboardingBodyStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBodyStep.swift; sourceTree = "<group>"; };
+		B05400000000000000000054 /* OnboardingExperienceStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperienceStep.swift; sourceTree = "<group>"; };
+		B05500000000000000000055 /* OnboardingBenchmarksStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBenchmarksStep.swift; sourceTree = "<group>"; };
+		B05600000000000000000056 /* OnboardingGoalStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGoalStep.swift; sourceTree = "<group>"; };
+		B05700000000000000000057 /* OnboardingReadyStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReadyStep.swift; sourceTree = "<group>"; };
+		B06000000000000000000060 /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
+		B06100000000000000000061 /* PRBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRBadge.swift; sourceTree = "<group>"; };
+		B06200000000000000000062 /* WorkoutHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryViewModel.swift; sourceTree = "<group>"; };
+		B06300000000000000000063 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
+		B06400000000000000000064 /* WorkoutHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryRow.swift; sourceTree = "<group>"; };
+		B06500000000000000000065 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
+		B06600000000000000000066 /* EditWeightSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeightSheet.swift; sourceTree = "<group>"; };
+		B06700000000000000000067 /* EditExperienceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExperienceSheet.swift; sourceTree = "<group>"; };
+		B06800000000000000000068 /* ProgramStatsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramStatsCard.swift; sourceTree = "<group>"; };
+		B06900000000000000000069 /* ExerciseSwapSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSwapSheet.swift; sourceTree = "<group>"; };
+		B0808000000000000000080 /* Superset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superset.swift; sourceTree = "<group>"; };
+		B0808100000000000000081 /* MuscleRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleRecovery.swift; sourceTree = "<group>"; };
+		B0808200000000000000082 /* ExerciseRotationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRotationEngine.swift; sourceTree = "<group>"; };
+		B0808300000000000000083 /* SupersetGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupersetGroupView.swift; sourceTree = "<group>"; };
+		B0808400000000000000084 /* MuscleRecoveryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleRecoveryCard.swift; sourceTree = "<group>"; };
+		B0808500000000000000085 /* PercentileBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentileBarView.swift; sourceTree = "<group>"; };
+		B0808600000000000000086 /* StrengthBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthBreakdownView.swift; sourceTree = "<group>"; };
+		B0808700000000000000087 /* LogBenchmarkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBenchmarkSheet.swift; sourceTree = "<group>"; };
+		B0808800000000000000088 /* StrengthBreakdownViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthBreakdownViewModel.swift; sourceTree = "<group>"; };
+		B0808900000000000000089 /* CoachMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachMessage.swift; sourceTree = "<group>"; };
+		B0809000000000000000090 /* AICoachService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoachService.swift; sourceTree = "<group>"; };
+		B0809100000000000000091 /* CoachViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachViewModel.swift; sourceTree = "<group>"; };
+		B0809200000000000000092 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
+		B0809300000000000000093 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		B0809400000000000000094 /* SuggestedPromptChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedPromptChip.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C00100000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D00100000000000000000001 /* root */ = {
+			isa = PBXGroup;
+			children = (
+				D00200000000000000000002 /* Credo */,
+				D00300000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D00200000000000000000002 /* Credo */ = {
+			isa = PBXGroup;
+			children = (
+				B00100000000000000000001 /* CredoApp.swift */,
+				B00200000000000000000002 /* ContentView.swift */,
+				D00400000000000000000004 /* Components */,
+				D00500000000000000000005 /* Data */,
+				D00600000000000000000006 /* Models */,
+				D00700000000000000000007 /* Scoring */,
+				A1D00100000000000000D001 /* Services */,
+				D00800000000000000000008 /* Theme */,
+				D00900000000000000000009 /* ViewModels */,
+				D01000000000000000000010 /* Views */,
+				B04700000000000000000047 /* Assets.xcassets */,
+			);
+			path = Credo;
+			sourceTree = "<group>";
+		};
+		D00300000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B04800000000000000000048 /* Credo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D00400000000000000000004 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B02300000000000000000023 /* CredoScoreRing.swift */,
+				B02600000000000000000026 /* PercentileBar.swift */,
+				B02800000000000000000028 /* PillarBadge.swift */,
+				B02500000000000000000025 /* PillarCard.swift */,
+				B06100000000000000000061 /* PRBadge.swift */,
+				B02400000000000000000024 /* ProteinRing.swift */,
+				B02700000000000000000027 /* SectionHeader.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D00500000000000000000005 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A1B00300000000000000B003 /* ExerciseLibrary.swift */,
+				B01500000000000000000015 /* MockBenchmarks.swift */,
+				B01600000000000000000016 /* MockProtein.swift */,
+				B01300000000000000000013 /* MockScores.swift */,
+				B01200000000000000000012 /* MockUser.swift */,
+				B01400000000000000000014 /* MockWorkouts.swift */,
+				A1B00400000000000000B004 /* ProgramGenerator.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D00600000000000000000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B00900000000000000000009 /* Benchmark.swift */,
+				A1B00100000000000000B001 /* ExerciseDefinition.swift */,
+				B06000000000000000000060 /* PersonalRecord.swift */,
+				B0808900000000000000089 /* CoachMessage.swift */,
+				B0808100000000000000081 /* MuscleRecovery.swift */,
+				B0808000000000000000080 /* Superset.swift */,
+				A1B00200000000000000B002 /* Program.swift */,
+				B01000000000000000000010 /* Protein.swift */,
+				B01100000000000000000011 /* ScoreDomain.swift */,
+				B00700000000000000000007 /* Scores.swift */,
+				B00600000000000000000006 /* User.swift */,
+				B05000000000000000000050 /* UserProfile.swift */,
+				B00800000000000000000008 /* Workout.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D00700000000000000000007 /* Scoring */ = {
+			isa = PBXGroup;
+			children = (
+				B07200000000000000000072 /* ScoreHistoryTracker.swift */,
+				B01700000000000000000017 /* ScoringEngine.swift */,
+				B07100000000000000000071 /* StrengthScoreCalculator.swift */,
+				B07000000000000000000070 /* StrengthStandards.swift */,
+			);
+			path = Scoring;
+			sourceTree = "<group>";
+		};
+		D00800000000000000000008 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				B00300000000000000000003 /* CredoColors.swift */,
+				B00400000000000000000004 /* CredoFonts.swift */,
+				B00500000000000000000005 /* CredoPillars.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		D00900000000000000000009 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B02000000000000000000020 /* CredoTenViewModel.swift */,
+				B01800000000000000000018 /* DashboardViewModel.swift */,
+				B02200000000000000000022 /* ProfileViewModel.swift */,
+				B0808800000000000000088 /* StrengthBreakdownViewModel.swift */,
+				B0809100000000000000091 /* CoachViewModel.swift */,
+				B02100000000000000000021 /* ProteinViewModel.swift */,
+				B06200000000000000000062 /* WorkoutHistoryViewModel.swift */,
+				B01900000000000000000019 /* WorkoutViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D01000000000000000000010 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D09200000000000000000092 /* Coach */,
+				D01100000000000000000011 /* CredoTen */,
+				D01200000000000000000012 /* Dashboard */,
+				D01700000000000000000017 /* History */,
+				D01600000000000000000016 /* Onboarding */,
+				D01300000000000000000013 /* Profile */,
+				D01400000000000000000014 /* Protein */,
+				D01500000000000000000015 /* Workout */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D01700000000000000000017 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				B06500000000000000000065 /* WorkoutDetailView.swift */,
+				B06400000000000000000064 /* WorkoutHistoryRow.swift */,
+				B06300000000000000000063 /* WorkoutHistoryView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		D01100000000000000000011 /* CredoTen */ = {
+			isa = PBXGroup;
+			children = (
+				B03800000000000000000038 /* BenchmarkCard.swift */,
+				B0808500000000000000085 /* PercentileBarView.swift */,
+				B0808600000000000000086 /* StrengthBreakdownView.swift */,
+				B0808700000000000000087 /* LogBenchmarkSheet.swift */,
+				B03700000000000000000037 /* CompositeCard.swift */,
+				B03600000000000000000036 /* CredoTenView.swift */,
+			);
+			path = CredoTen;
+			sourceTree = "<group>";
+		};
+		D01200000000000000000012 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				B02900000000000000000029 /* DashboardView.swift */,
+				B03000000000000000000030 /* TodaysWorkoutCard.swift */,
+				B0808400000000000000084 /* MuscleRecoveryCard.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		D01300000000000000000013 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B06700000000000000000067 /* EditExperienceSheet.swift */,
+				B06600000000000000000066 /* EditWeightSheet.swift */,
+				B04400000000000000000044 /* ProfileHeaderView.swift */,
+				B04300000000000000000043 /* ProfileView.swift */,
+				B06800000000000000000068 /* ProgramStatsCard.swift */,
+				B04600000000000000000046 /* SettingsRowView.swift */,
+				B04500000000000000000045 /* SettingsSectionView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		D01400000000000000000014 /* Protein */ = {
+			isa = PBXGroup;
+			children = (
+				B03900000000000000000039 /* ProteinView.swift */,
+				B04000000000000000000040 /* QuickAddButtonRow.swift */,
+				B04200000000000000000042 /* SavedMealRow.swift */,
+				B04100000000000000000041 /* WeeklyBarChart.swift */,
+			);
+			path = Protein;
+			sourceTree = "<group>";
+		};
+		D01500000000000000000015 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				B03200000000000000000032 /* ExerciseCard.swift */,
+				B06900000000000000000069 /* ExerciseSwapSheet.swift */,
+				B0808300000000000000083 /* SupersetGroupView.swift */,
+				A1B00700000000000000B007 /* ProgramSelectorView.swift */,
+				B03400000000000000000034 /* RestTimerView.swift */,
+				A1B00800000000000000B008 /* RIRSheetView.swift */,
+				B03300000000000000000033 /* SetRowView.swift */,
+				B03500000000000000000035 /* UpcomingExerciseRow.swift */,
+				B03100000000000000000031 /* WorkoutView.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		D01600000000000000000016 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				B05200000000000000000052 /* OnboardingBasicInfoStep.swift */,
+				B05500000000000000000055 /* OnboardingBenchmarksStep.swift */,
+				B05300000000000000000053 /* OnboardingBodyStep.swift */,
+				B05400000000000000000054 /* OnboardingExperienceStep.swift */,
+				B05600000000000000000056 /* OnboardingGoalStep.swift */,
+				B05700000000000000000057 /* OnboardingReadyStep.swift */,
+				B05100000000000000000051 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		A1D00100000000000000D001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A1B00600000000000000B006 /* ProgressionEngine.swift */,
+				A1B00500000000000000B005 /* WorkoutStore.swift */,
+				B0808200000000000000082 /* ExerciseRotationEngine.swift */,
+				B0809000000000000000090 /* AICoachService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D09200000000000000000092 /* Coach */ = {
+			isa = PBXGroup;
+			children = (
+				B0809200000000000000092 /* CoachView.swift */,
+				B0809300000000000000093 /* MessageBubble.swift */,
+				B0809400000000000000094 /* SuggestedPromptChip.swift */,
+			);
+			path = Coach;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E00100000000000000000001 /* Credo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F00300000000000000000003 /* Build configuration list for PBXNativeTarget "Credo" */;
+			buildPhases = (
+				E00200000000000000000002 /* Sources */,
+				C00100000000000000000001 /* Frameworks */,
+				E00300000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Credo;
+			productName = Credo;
+			productReference = B04800000000000000000048 /* Credo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E00400000000000000000004 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E00100000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = F00100000000000000000001 /* Build configuration list for PBXProject "Credo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D00100000000000000000001 /* root */;
+			productRefGroup = D00300000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E00100000000000000000001 /* Credo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E00300000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A04700000000000000000047 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E00200000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00100000000000000000001 /* CredoApp.swift in Sources */,
+				A00200000000000000000002 /* ContentView.swift in Sources */,
+				A00300000000000000000003 /* CredoColors.swift in Sources */,
+				A00400000000000000000004 /* CredoFonts.swift in Sources */,
+				A00500000000000000000005 /* CredoPillars.swift in Sources */,
+				A00600000000000000000006 /* User.swift in Sources */,
+				A00700000000000000000007 /* Scores.swift in Sources */,
+				A00800000000000000000008 /* Workout.swift in Sources */,
+				A00900000000000000000009 /* Benchmark.swift in Sources */,
+				A01000000000000000000010 /* Protein.swift in Sources */,
+				A01100000000000000000011 /* ScoreDomain.swift in Sources */,
+				A01200000000000000000012 /* MockUser.swift in Sources */,
+				A01300000000000000000013 /* MockScores.swift in Sources */,
+				A01400000000000000000014 /* MockWorkouts.swift in Sources */,
+				A01500000000000000000015 /* MockBenchmarks.swift in Sources */,
+				A01600000000000000000016 /* MockProtein.swift in Sources */,
+				A01700000000000000000017 /* ScoringEngine.swift in Sources */,
+				A07000000000000000000070 /* StrengthStandards.swift in Sources */,
+				A07100000000000000000071 /* StrengthScoreCalculator.swift in Sources */,
+				A07200000000000000000072 /* ScoreHistoryTracker.swift in Sources */,
+				A01800000000000000000018 /* DashboardViewModel.swift in Sources */,
+				A01900000000000000000019 /* WorkoutViewModel.swift in Sources */,
+				A02000000000000000000020 /* CredoTenViewModel.swift in Sources */,
+				A02100000000000000000021 /* ProteinViewModel.swift in Sources */,
+				A02200000000000000000022 /* ProfileViewModel.swift in Sources */,
+				A02300000000000000000023 /* CredoScoreRing.swift in Sources */,
+				A02400000000000000000024 /* ProteinRing.swift in Sources */,
+				A02500000000000000000025 /* PillarCard.swift in Sources */,
+				A02600000000000000000026 /* PercentileBar.swift in Sources */,
+				A02700000000000000000027 /* SectionHeader.swift in Sources */,
+				A02800000000000000000028 /* PillarBadge.swift in Sources */,
+				A02900000000000000000029 /* DashboardView.swift in Sources */,
+				A03000000000000000000030 /* TodaysWorkoutCard.swift in Sources */,
+				A03100000000000000000031 /* WorkoutView.swift in Sources */,
+				A03200000000000000000032 /* ExerciseCard.swift in Sources */,
+				A03300000000000000000033 /* SetRowView.swift in Sources */,
+				A03400000000000000000034 /* RestTimerView.swift in Sources */,
+				A03500000000000000000035 /* UpcomingExerciseRow.swift in Sources */,
+				A03600000000000000000036 /* CredoTenView.swift in Sources */,
+				A03700000000000000000037 /* CompositeCard.swift in Sources */,
+				A03800000000000000000038 /* BenchmarkCard.swift in Sources */,
+				A03900000000000000000039 /* ProteinView.swift in Sources */,
+				A04000000000000000000040 /* QuickAddButtonRow.swift in Sources */,
+				A04100000000000000000041 /* WeeklyBarChart.swift in Sources */,
+				A04200000000000000000042 /* SavedMealRow.swift in Sources */,
+				A04300000000000000000043 /* ProfileView.swift in Sources */,
+				A04400000000000000000044 /* ProfileHeaderView.swift in Sources */,
+				A04500000000000000000045 /* SettingsSectionView.swift in Sources */,
+				A04600000000000000000046 /* SettingsRowView.swift in Sources */,
+				A1C00100000000000000C001 /* ExerciseDefinition.swift in Sources */,
+				A1C00200000000000000C002 /* Program.swift in Sources */,
+				A1C00300000000000000C003 /* ExerciseLibrary.swift in Sources */,
+				A1C00400000000000000C004 /* ProgramGenerator.swift in Sources */,
+				A1C00500000000000000C005 /* WorkoutStore.swift in Sources */,
+				A1C00600000000000000C006 /* ProgressionEngine.swift in Sources */,
+				A1C00700000000000000C007 /* ProgramSelectorView.swift in Sources */,
+				A1C00800000000000000C008 /* RIRSheetView.swift in Sources */,
+				A05000000000000000000050 /* UserProfile.swift in Sources */,
+				A05100000000000000000051 /* OnboardingView.swift in Sources */,
+				A05200000000000000000052 /* OnboardingBasicInfoStep.swift in Sources */,
+				A05300000000000000000053 /* OnboardingBodyStep.swift in Sources */,
+				A05400000000000000000054 /* OnboardingExperienceStep.swift in Sources */,
+				A05500000000000000000055 /* OnboardingBenchmarksStep.swift in Sources */,
+				A05600000000000000000056 /* OnboardingGoalStep.swift in Sources */,
+				A05700000000000000000057 /* OnboardingReadyStep.swift in Sources */,
+				A06000000000000000000060 /* PersonalRecord.swift in Sources */,
+				A06100000000000000000061 /* PRBadge.swift in Sources */,
+				A06200000000000000000062 /* WorkoutHistoryViewModel.swift in Sources */,
+				A06300000000000000000063 /* WorkoutHistoryView.swift in Sources */,
+				A06400000000000000000064 /* WorkoutHistoryRow.swift in Sources */,
+				A06500000000000000000065 /* WorkoutDetailView.swift in Sources */,
+				A06600000000000000000066 /* EditWeightSheet.swift in Sources */,
+				A06700000000000000000067 /* EditExperienceSheet.swift in Sources */,
+				A06800000000000000000068 /* ProgramStatsCard.swift in Sources */,
+				A06900000000000000000069 /* ExerciseSwapSheet.swift in Sources */,
+				A0808000000000000000080 /* Superset.swift in Sources */,
+				A0808100000000000000081 /* MuscleRecovery.swift in Sources */,
+				A0808200000000000000082 /* ExerciseRotationEngine.swift in Sources */,
+				A0808300000000000000083 /* SupersetGroupView.swift in Sources */,
+				A0808400000000000000084 /* MuscleRecoveryCard.swift in Sources */,
+				A0808500000000000000085 /* PercentileBarView.swift in Sources */,
+				A0808600000000000000086 /* StrengthBreakdownView.swift in Sources */,
+				A0808700000000000000087 /* LogBenchmarkSheet.swift in Sources */,
+				A0808800000000000000088 /* StrengthBreakdownViewModel.swift in Sources */,
+				A0808900000000000000089 /* CoachMessage.swift in Sources */,
+				A0809000000000000000090 /* AICoachService.swift in Sources */,
+				A0809100000000000000091 /* CoachViewModel.swift in Sources */,
+				A0809200000000000000092 /* CoachView.swift in Sources */,
+				A0809300000000000000093 /* MessageBubble.swift in Sources */,
+				A0809400000000000000094 /* SuggestedPromptChip.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F00400000000000000000004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F00500000000000000000005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F00600000000000000000006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Credo;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.credo.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F00700000000000000000007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Credo;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.credo.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F00100000000000000000001 /* Build configuration list for PBXProject "Credo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F00400000000000000000004 /* Debug */,
+				F00500000000000000000005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F00300000000000000000003 /* Build configuration list for PBXNativeTarget "Credo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F00600000000000000000006 /* Debug */,
+				F00700000000000000000007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E00400000000000000000004 /* Project object */;
+}

@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -30,8 +30,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +41,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# iOS / Xcode
+ios/Credo/DerivedData/
+ios/Credo/build/
+ios/Credo/*.xcodeproj/xcuserdata/
+ios/Credo/*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Backend
+backend/node_modules/
+backend/.env
+backend/dist/
+
+# MCP Server
+mcp-server/node_modules/
+mcp-server/.env
+mcp-server/dist/
