@@ -20,6 +20,10 @@ class ProfileViewModel {
 
     var showEditWeight = false
     var showEditExperience = false
+    var showLoginSheet = false
+    var showHealthKitOnboarding = false
+
+    private let authService = AuthService.shared
 
     var userName: String {
         store.userProfile?.name ?? "User"
@@ -101,8 +105,34 @@ class ProfileViewModel {
         return volume
     }
 
+    var isLoggedIn: Bool { authService.isLoggedIn }
+    var accountEmail: String { authService.currentUserEmail ?? "" }
+
+    func logout() {
+        authService.logout()
+    }
+
+    private var accountSection: SettingsSection {
+        if isLoggedIn {
+            return SettingsSection(title: "Account", rows: [
+                SettingsRow(label: "Email", detail: accountEmail),
+                SettingsRow(label: "Cloud Sync", detail: "Enabled", detailColor: CredoColors.success),
+                SettingsRow(label: "Sign Out", detailColor: CredoColors.danger, action: {
+                    self.logout()
+                }),
+            ])
+        } else {
+            return SettingsSection(title: "Account", rows: [
+                SettingsRow(label: "Sign In", detail: "Sync your data", action: {
+                    self.showLoginSheet = true
+                }),
+            ])
+        }
+    }
+
     var sections: [SettingsSection] {
         [
+            accountSection,
             SettingsSection(title: "Program", rows: [
                 SettingsRow(label: "Current Program", detail: store.selectedProgram?.displayName ?? "None"),
                 SettingsRow(label: "Training Schedule", detail: "\(store.selectedProgram?.daysPerWeek ?? 0) days/week"),
@@ -118,7 +148,9 @@ class ProfileViewModel {
                 SettingsRow(label: "Biomarkers"),
             ]),
             SettingsSection(title: "Integrations", rows: [
-                SettingsRow(label: "Apple Health", detail: "Connected", detailColor: CredoColors.success),
+                SettingsRow(label: "Apple Health", detail: "Manage", action: {
+                    self.showHealthKitOnboarding = true
+                }),
                 SettingsRow(label: "Peloton"),
                 SettingsRow(label: "Strava"),
                 SettingsRow(label: "MyFitnessPal"),

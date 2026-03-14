@@ -82,15 +82,35 @@ class CoachViewModel {
         let strengthSubscores = StrengthScoreCalculator.calculate(store: store)
         let strengthScore = strengthSubscores.weightedScore
 
-        let stabilityScore = 41
-        let cardioScore = 76
-        let nutritionScore = 85
+        let stabilityScore = ScoringEngine.placeholderStabilityScore
+        let cardioScore = CardioScoreCalculator.calculate(store: CardioStore.shared)
+        let nutritionScore = NutritionScoreCalculator.calculate(store: NutritionStore.shared)
         let credoScore = ScoringEngine.compositeScore(
             strength: strengthScore,
             cardio: cardioScore,
             stability: stabilityScore,
             nutrition: nutritionScore
         )
+
+        // Cardio context
+        let cardioStore = CardioStore.shared
+        let recentCardio = cardioStore.sessionsThisWeek().prefix(3).map { session in
+            "\(session.type.displayName) - \(session.durationMinutes) min"
+        }.joined(separator: ", ")
+
+        // Nutrition context
+        let nutritionStore = NutritionStore.shared
+        let todayMacros = nutritionStore.todaysMacros()
+        let todayMacrosStr = "\(todayMacros.cal) cal, \(Int(todayMacros.p))g protein, \(Int(todayMacros.c))g carbs, \(Int(todayMacros.f))g fat"
+        let proteinTarget = DailyNutritionTarget.forProfile(profile).proteinTargetG
+        let proteinAdherence = proteinTarget > 0
+            ? "\(Int(todayMacros.p))/\(Int(proteinTarget))g (\(Int(todayMacros.p / proteinTarget * 100))%)"
+            : "No target set"
+
+        // Progression insights
+        let insights = OverloadEngine.generateInsights(store: store).prefix(5)
+        let insightsStr = insights.isEmpty ? "No insights yet" :
+            insights.map { "\($0.exerciseName): \($0.type.label) - \($0.message)" }.joined(separator: "\n")
 
         return CoachContext(
             userName: profile?.firstName ?? "Athlete",
@@ -104,7 +124,13 @@ class CoachViewModel {
             strengthScore: strengthScore,
             recentWorkouts: formatRecentWorkouts(),
             personalRecords: formatPersonalRecords(),
-            exerciseMaxes: formatExerciseMaxes()
+            exerciseMaxes: formatExerciseMaxes(),
+            cardioWeeklyMinutes: cardioStore.weeklyCardioMinutes(),
+            cardioRecentSessions: recentCardio.isEmpty ? "No sessions this week" : recentCardio,
+            cardioScore: cardioScore,
+            nutritionTodayMacros: todayMacrosStr,
+            nutritionProteinAdherence: proteinAdherence,
+            progressionInsights: insightsStr
         )
     }
 

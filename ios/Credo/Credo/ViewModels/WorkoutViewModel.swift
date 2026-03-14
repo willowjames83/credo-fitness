@@ -404,6 +404,9 @@ class WorkoutViewModel {
         store.advanceDay()
         stopAllTimers()
         showWorkoutSummary = true
+
+        // Trigger cloud sync if logged in
+        Task { await SyncService.shared.autoSync() }
     }
 
     func dismissSummaryAndReset() {

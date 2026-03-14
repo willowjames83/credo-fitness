@@ -293,10 +293,9 @@ class WorkoutStore {
         let subscores = StrengthScoreCalculator.calculate(store: self)
         let strengthScore = subscores.weightedScore
 
-        // Use mock values for non-strength pillars until those are implemented
-        let stabilityScore = 41
-        let cardioScore = 76
-        let nutritionScore = 85
+        let stabilityScore = ScoringEngine.placeholderStabilityScore
+        let cardioScore = CardioScoreCalculator.calculate(store: CardioStore.shared)
+        let nutritionScore = NutritionScoreCalculator.calculate(store: NutritionStore.shared)
         let credoScore = ScoringEngine.compositeScore(
             strength: strengthScore,
             cardio: cardioScore,

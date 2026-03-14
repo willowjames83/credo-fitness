@@ -13,6 +13,12 @@ struct CoachContext {
     let recentWorkouts: String
     let personalRecords: String
     let exerciseMaxes: String
+    var cardioWeeklyMinutes: Int = 0
+    var cardioRecentSessions: String = ""
+    var cardioScore: Int = 0
+    var nutritionTodayMacros: String = ""
+    var nutritionProteinAdherence: String = ""
+    var progressionInsights: String = ""
 }
 
 enum CoachError: Error, LocalizedError {
@@ -111,6 +117,18 @@ class AICoachService {
 
         RECENT WORKOUTS:
         \(context.recentWorkouts)
+
+        CARDIO:
+        - Weekly cardio minutes: \(context.cardioWeeklyMinutes)
+        - Cardio score: \(context.cardioScore)/100
+        - Recent sessions: \(context.cardioRecentSessions)
+
+        NUTRITION:
+        - Today's macros: \(context.nutritionTodayMacros)
+        - Protein adherence: \(context.nutritionProteinAdherence)
+
+        PROGRESSION INSIGHTS:
+        \(context.progressionInsights)
 
         GUIDELINES:
         - Be concise and actionable. Keep responses focused and practical.

@@ -63,7 +63,7 @@ struct ContentView: View {
             }
 
             NavigationStack {
-                ProteinView()
+                NutritionView()
                     .navigationTitle("")
                     .toolbar {
                         ToolbarItem(placement: .principal) {
@@ -73,7 +73,7 @@ struct ContentView: View {
             }
             .tag(4)
             .tabItem {
-                Label("Protein", systemImage: "fork.knife")
+                Label("Nutrition", systemImage: "fork.knife")
             }
 
             NavigationStack {

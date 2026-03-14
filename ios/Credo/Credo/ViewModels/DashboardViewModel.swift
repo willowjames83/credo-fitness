@@ -5,22 +5,34 @@ class DashboardViewModel {
     let user = mockUser
     let store = WorkoutStore.shared
 
-    // MARK: - Computed Scores (real strength, mock others)
+    // MARK: - Cached Pillar Scores (computed once, used by credoScore + pillarScores)
+
+    private var _cachedStrength: Int {
+        StrengthScoreCalculator.calculate(store: store).weightedScore
+    }
+
+    private var _cachedCardio: Int {
+        CardioScoreCalculator.calculate(store: CardioStore.shared)
+    }
+
+    private var _cachedNutrition: Int {
+        NutritionScoreCalculator.calculate(store: NutritionStore.shared)
+    }
+
+    private var _cachedStability: Int {
+        ScoringEngine.placeholderStabilityScore
+    }
 
     var strengthSubscores: StrengthSubscores {
         StrengthScoreCalculator.calculate(store: store)
     }
 
     var credoScore: CredoScore {
-        let strength = strengthSubscores.weightedScore
-        let stability = 41
-        let cardio = 76
-        let nutrition = 85
         let composite = ScoringEngine.compositeScore(
-            strength: strength,
-            cardio: cardio,
-            stability: stability,
-            nutrition: nutrition
+            strength: _cachedStrength,
+            cardio: _cachedCardio,
+            stability: _cachedStability,
+            nutrition: _cachedNutrition
         )
         let delta: Int
         if let previous = store.scoreHistory.dropLast().last {
@@ -32,12 +44,15 @@ class DashboardViewModel {
     }
 
     var pillarScores: [Pillar: PillarScore] {
-        let strength = strengthSubscores
-        let strengthScore = strength.weightedScore
+        let strengthScore = _cachedStrength
+        let cardioScore = _cachedCardio
+        let nutritionScore = _cachedNutrition
+        let stabilityScore = _cachedStability
 
-        let sessionsThisWeek = store.completedWorkoutsThisWeek().count
+        let workoutsThisWeek = store.completedWorkoutsThisWeek()
+        let sessionsThisWeek = workoutsThisWeek.count
         let totalDays = store.selectedProgram?.daysPerWeek ?? 3
-        let totalVolume = store.completedWorkoutsThisWeek().reduce(0.0) { total, workout in
+        let totalVolume = workoutsThisWeek.reduce(0.0) { total, workout in
             total + workout.exercises.reduce(0.0) { exTotal, exercise in
                 exTotal + exercise.sets.reduce(0.0) { $0 + $1.weight * Double($1.reps) }
             }
@@ -49,12 +64,15 @@ class DashboardViewModel {
         let weakest: Pillar = {
             let scores: [(Pillar, Int)] = [
                 (.strength, strengthScore),
-                (.stability, 41),
-                (.cardio, 76),
-                (.nutrition, 85)
+                (.stability, stabilityScore),
+                (.cardio, cardioScore),
+                (.nutrition, nutritionScore)
             ]
             return scores.min(by: { $0.1 < $1.1 })?.0 ?? .stability
         }()
+
+        let cardioMinutes = weeklyCardioMinutes
+        let cardioSessions = weeklyCardioSessions
 
         return [
             .strength: PillarScore(
@@ -66,18 +84,24 @@ class DashboardViewModel {
                 isWeakest: weakest == .strength
             ),
             .stability: PillarScore(
-                score: 41,
+                score: stabilityScore,
                 metrics: ["2 of 3 warmups complete", "Hip mobility focus next"],
                 isWeakest: weakest == .stability
             ),
             .cardio: PillarScore(
-                score: 76,
-                metrics: ["Zone 2: 120 / 180 min", "VO\u{2082} max: 42 ml/kg/min"],
+                score: cardioScore,
+                metrics: [
+                    "\(cardioMinutes) min this week",
+                    "\(cardioSessions) sessions"
+                ],
                 isWeakest: weakest == .cardio
             ),
             .nutrition: PillarScore(
-                score: 85,
-                metrics: ["168g / 180g protein today", "5 of 7 days on target"],
+                score: nutritionScore,
+                metrics: [
+                    "\(Int(NutritionStore.shared.todaysMacros().p))g protein today",
+                    "\(NutritionStore.shared.daysLoggedThisWeek()) of 7 days logged"
+                ],
                 isWeakest: weakest == .nutrition
             ),
         ]
@@ -142,4 +166,29 @@ class DashboardViewModel {
     }
 
     var hasProgramSelected: Bool { store.selectedProgram != nil }
+
+    // MARK: - Progression Insights (cached to avoid re-sorting all workout history)
+
+    private var _cachedInsights: [ProgressionInsight]?
+    private var _insightsCacheCount: Int = -1
+
+    var topProgressionInsights: [ProgressionInsight] {
+        // Invalidate cache when workout count changes
+        let currentCount = store.workoutHistory.count
+        if _insightsCacheCount != currentCount {
+            _insightsCacheCount = currentCount
+            _cachedInsights = OverloadEngine.generateInsights(store: store)
+        }
+        return Array((_cachedInsights ?? []).prefix(3))
+    }
+
+    // MARK: - Cardio Summary
+
+    var weeklyCardioMinutes: Int {
+        CardioStore.shared.weeklyCardioMinutes()
+    }
+
+    var weeklyCardioSessions: Int {
+        CardioStore.shared.sessionsThisWeek().count
+    }
 }

@@ -1,6 +1,9 @@
 import Foundation
 
 struct ScoringEngine {
+    /// Placeholder until stability pillar is implemented.
+    static let placeholderStabilityScore = 41
+
     static func getTierLabel(score: Int, domain: ScoreDomain) -> String {
         domain.tierLabel(for: score)
     }

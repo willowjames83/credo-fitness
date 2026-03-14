@@ -15,6 +15,11 @@ struct ProfileView: View {
 
                 ProgramStatsCard()
 
+                // Sync Status
+                if vm.isLoggedIn {
+                    SyncStatusBadge()
+                }
+
                 ForEach(Array(vm.sections.enumerated()), id: \.offset) { _, section in
                     SettingsSectionView(section: section)
                 }
@@ -31,6 +36,13 @@ struct ProfileView: View {
         .sheet(isPresented: $vm.showEditExperience) {
             EditExperienceSheet()
                 .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $vm.showLoginSheet) {
+            LoginView()
+        }
+        .sheet(isPresented: $vm.showHealthKitOnboarding) {
+            HealthKitOnboardingView()
                 .presentationDragIndicator(.visible)
         }
     }
