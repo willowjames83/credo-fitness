@@ -5,6 +5,10 @@ struct PillarCard: View {
     let score: Int
     let metrics: [String]
     var isWeakest: Bool = false
+    var index: Int = 0
+
+    @State private var appeared = false
+    @State private var isPressed = false
 
     var body: some View {
         HStack(spacing: 0) {
@@ -71,6 +75,23 @@ struct PillarCard: View {
                         .stroke(CredoColors.border, lineWidth: 1)
                 )
         )
+        .scaleEffect(isPressed ? 0.97 : 1.0)
+        .animation(.easeInOut(duration: 0.15), value: isPressed)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
+        .scaleEffect(appeared ? 1 : 0.95)
+        .opacity(appeared ? 1 : 0)
+        .onAppear {
+            withAnimation(
+                .spring(response: 0.5, dampingFraction: 0.75)
+                    .delay(Double(index) * 0.08)
+            ) {
+                appeared = true
+            }
+        }
     }
 }
 
@@ -79,13 +100,15 @@ struct PillarCard: View {
         PillarCard(
             pillar: .strength,
             score: 74,
-            metrics: ["Bench 1RM: 205 lbs", "Squat 1RM: 285 lbs"]
+            metrics: ["Bench 1RM: 205 lbs", "Squat 1RM: 285 lbs"],
+            index: 0
         )
         PillarCard(
             pillar: .stability,
             score: 58,
             metrics: ["Single-leg balance: 32s", "Grip: 95 lbs"],
-            isWeakest: true
+            isWeakest: true,
+            index: 1
         )
     }
     .padding()

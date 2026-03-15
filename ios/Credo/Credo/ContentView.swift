@@ -63,7 +63,7 @@ struct ContentView: View {
             }
 
             NavigationStack {
-                NutritionView()
+                ProgramSelectionView()
                     .navigationTitle("")
                     .toolbar {
                         ToolbarItem(placement: .principal) {
@@ -73,7 +73,34 @@ struct ContentView: View {
             }
             .tag(4)
             .tabItem {
+                Label("Programs", systemImage: "list.bullet.rectangle.portrait")
+            }
+
+            NavigationStack {
+                NutritionView()
+                    .navigationTitle("")
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            credoWordmark
+                        }
+                    }
+            }
+            .tag(5)
+            .tabItem {
                 Label("Nutrition", systemImage: "fork.knife")
+            }
+
+            NavigationStack {
+                TrendsView()
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            credoWordmark
+                        }
+                    }
+            }
+            .tag(6)
+            .tabItem {
+                Label("Trends", systemImage: "chart.line.uptrend.xyaxis")
             }
 
             NavigationStack {
@@ -85,7 +112,7 @@ struct ContentView: View {
                         }
                     }
             }
-            .tag(5)
+            .tag(7)
             .tabItem {
                 Label("Profile", systemImage: "person")
             }

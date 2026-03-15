@@ -171,6 +171,20 @@
 		A016500000000000000000165 /* StabilityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016500000000000000000165 /* StabilityStore.swift */; };
 		A016600000000000000000166 /* StabilityScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016600000000000000000166 /* StabilityScoreCalculator.swift */; };
 		A016700000000000000000167 /* StabilityDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016700000000000000000167 /* StabilityDetailCard.swift */; };
+		A016800000000000000000168 /* CredoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016800000000000000000168 /* CredoCard.swift */; };
+		A016900000000000000000169 /* ScoreSparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B016900000000000000000169 /* ScoreSparkline.swift */; };
+		A017000000000000000000170 /* ProgramLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017000000000000000000170 /* ProgramLibrary.swift */; };
+		A017100000000000000000171 /* WorkoutProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017100000000000000000171 /* WorkoutProgram.swift */; };
+		A017200000000000000000172 /* ProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017200000000000000000172 /* ProgramStore.swift */; };
+		A017300000000000000000173 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017300000000000000000173 /* ProgramViewModel.swift */; };
+		A017400000000000000000174 /* TrendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017400000000000000000174 /* TrendsViewModel.swift */; };
+		A017500000000000000000175 /* ProgramDayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017500000000000000000175 /* ProgramDayCard.swift */; };
+		A017600000000000000000176 /* ProgramDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017600000000000000000176 /* ProgramDetailView.swift */; };
+		A017700000000000000000177 /* ProgramSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017700000000000000000177 /* ProgramSelectionView.swift */; };
+		A017800000000000000000178 /* PillarSparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017800000000000000000178 /* PillarSparkline.swift */; };
+		A017900000000000000000179 /* ScoreTrendChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017900000000000000000179 /* ScoreTrendChart.swift */; };
+		A018000000000000000000180 /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B018000000000000000000180 /* TrendsView.swift */; };
+		A018100000000000000000181 /* WeeklyComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B018100000000000000000181 /* WeeklyComparisonChart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -339,6 +353,20 @@
 		B016500000000000000000165 /* StabilityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityStore.swift"; sourceTree = "<group>"; };
 		B016600000000000000000166 /* StabilityScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityScoreCalculator.swift"; sourceTree = "<group>"; };
 		B016700000000000000000167 /* StabilityDetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StabilityDetailCard.swift"; sourceTree = "<group>"; };
+		B016800000000000000000168 /* CredoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredoCard.swift; sourceTree = "<group>"; };
+		B016900000000000000000169 /* ScoreSparkline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSparkline.swift; sourceTree = "<group>"; };
+		B017000000000000000000170 /* ProgramLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramLibrary.swift; sourceTree = "<group>"; };
+		B017100000000000000000171 /* WorkoutProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutProgram.swift; sourceTree = "<group>"; };
+		B017200000000000000000172 /* ProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramStore.swift; sourceTree = "<group>"; };
+		B017300000000000000000173 /* ProgramViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramViewModel.swift; sourceTree = "<group>"; };
+		B017400000000000000000174 /* TrendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsViewModel.swift; sourceTree = "<group>"; };
+		B017500000000000000000175 /* ProgramDayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramDayCard.swift; sourceTree = "<group>"; };
+		B017600000000000000000176 /* ProgramDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramDetailView.swift; sourceTree = "<group>"; };
+		B017700000000000000000177 /* ProgramSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramSelectionView.swift; sourceTree = "<group>"; };
+		B017800000000000000000178 /* PillarSparkline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillarSparkline.swift; sourceTree = "<group>"; };
+		B017900000000000000000179 /* ScoreTrendChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTrendChart.swift; sourceTree = "<group>"; };
+		B018000000000000000000180 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		B018100000000000000000181 /* WeeklyComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyComparisonChart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +430,8 @@
 				B06100000000000000000061 /* PRBadge.swift */,
 				B02400000000000000000024 /* ProteinRing.swift */,
 				B02700000000000000000027 /* SectionHeader.swift */,
+				B016800000000000000000168 /* CredoCard.swift */,
+				B016900000000000000000169 /* ScoreSparkline.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -420,6 +450,7 @@
 				B01200000000000000000012 /* MockUser.swift */,
 				B01400000000000000000014 /* MockWorkouts.swift */,
 				A1B00400000000000000B004 /* ProgramGenerator.swift */,
+				B017000000000000000000170 /* ProgramLibrary.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -452,6 +483,7 @@
 				B00600000000000000000006 /* User.swift */,
 				B05000000000000000000050 /* UserProfile.swift */,
 				B00800000000000000000008 /* Workout.swift */,
+				B017100000000000000000171 /* WorkoutProgram.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -498,8 +530,31 @@
 				B02100000000000000000021 /* ProteinViewModel.swift */,
 				B06200000000000000000062 /* WorkoutHistoryViewModel.swift */,
 				B01900000000000000000019 /* WorkoutViewModel.swift */,
+				B017300000000000000000173 /* ProgramViewModel.swift */,
+				B017400000000000000000174 /* TrendsViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D01800000000000000000018 /* Programs */ = {
+			isa = PBXGroup;
+			children = (
+				B017500000000000000000175 /* ProgramDayCard.swift */,
+				B017600000000000000000176 /* ProgramDetailView.swift */,
+				B017700000000000000000177 /* ProgramSelectionView.swift */,
+			);
+			path = Programs;
+			sourceTree = "<group>";
+		};
+		D01900000000000000000019 /* Trends */ = {
+			isa = PBXGroup;
+			children = (
+				B017800000000000000000178 /* PillarSparkline.swift */,
+				B017900000000000000000179 /* ScoreTrendChart.swift */,
+				B018000000000000000000180 /* TrendsView.swift */,
+				B018100000000000000000181 /* WeeklyComparisonChart.swift */,
+			);
+			path = Trends;
 			sourceTree = "<group>";
 		};
 		D01000000000000000000010 /* Views */ = {
@@ -520,6 +575,8 @@
 				D01300000000000000000013 /* Profile */,
 				D01400000000000000000014 /* Protein */,
 				D01500000000000000000015 /* Workout */,
+				D01800000000000000000018 /* Programs */,
+				D01900000000000000000019 /* Trends */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -632,6 +689,7 @@
 				A1B00500000000000000B005 /* WorkoutStore.swift */,
 				B0808200000000000000082 /* ExerciseRotationEngine.swift */,
 				B0809000000000000000090 /* AICoachService.swift */,
+				B017200000000000000000172 /* ProgramStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -955,6 +1013,20 @@
 				A016500000000000000000165 /* StabilityStore.swift in Sources */,
 				A016600000000000000000166 /* StabilityScoreCalculator.swift in Sources */,
 				A016700000000000000000167 /* StabilityDetailCard.swift in Sources */,
+				A016800000000000000000168 /* CredoCard.swift in Sources */,
+				A016900000000000000000169 /* ScoreSparkline.swift in Sources */,
+				A017000000000000000000170 /* ProgramLibrary.swift in Sources */,
+				A017100000000000000000171 /* WorkoutProgram.swift in Sources */,
+				A017200000000000000000172 /* ProgramStore.swift in Sources */,
+				A017300000000000000000173 /* ProgramViewModel.swift in Sources */,
+				A017400000000000000000174 /* TrendsViewModel.swift in Sources */,
+				A017500000000000000000175 /* ProgramDayCard.swift in Sources */,
+				A017600000000000000000176 /* ProgramDetailView.swift in Sources */,
+				A017700000000000000000177 /* ProgramSelectionView.swift in Sources */,
+				A017800000000000000000178 /* PillarSparkline.swift in Sources */,
+				A017900000000000000000179 /* ScoreTrendChart.swift in Sources */,
+				A018000000000000000000180 /* TrendsView.swift in Sources */,
+				A018100000000000000000181 /* WeeklyComparisonChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

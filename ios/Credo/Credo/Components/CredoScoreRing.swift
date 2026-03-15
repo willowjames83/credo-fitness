@@ -18,6 +18,14 @@ struct CredoScoreRing: View {
 
     var body: some View {
         ZStack {
+            // Glow effect behind the ring
+            Circle()
+                .fill(color.opacity(0.12))
+                .frame(width: size + strokeWidth * 2, height: size + strokeWidth * 2)
+                .blur(radius: 16)
+                .scaleEffect(animatedProgress > 0 ? 1.0 : 0.5)
+                .opacity(animatedProgress > 0 ? 1.0 : 0.0)
+
             // Track
             Circle()
                 .stroke(CredoColors.surfaceElevated, lineWidth: strokeWidth)
@@ -45,7 +53,7 @@ struct CredoScoreRing: View {
         }
         .onAppear {
             if animate {
-                withAnimation(.easeOut(duration: 1.5)) {
+                withAnimation(.easeOut(duration: 1.2)) {
                     animatedProgress = targetProgress
                 }
                 animateCounter()
@@ -57,7 +65,7 @@ struct CredoScoreRing: View {
     }
 
     private func animateCounter() {
-        let duration: Double = 1.5
+        let duration: Double = 1.2
         let steps = min(score, 60)
         guard steps > 0 else {
             displayedScore = score

@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 struct DashboardView: View {
     @State private var vm = DashboardViewModel()
@@ -17,6 +18,19 @@ struct DashboardView: View {
                 // Credo Score Ring
                 if vm.hasWorkoutData {
                     CredoScoreRing(score: vm.credoScore.score)
+
+                    // Score sparkline
+                    if WorkoutStore.shared.scoreHistory.count >= 2 {
+                        ScoreSparkline(
+                            scores: WorkoutStore.shared.scoreHistory
+                                .sorted { $0.date < $1.date }
+                                .suffix(8)
+                                .map { $0.credoScore },
+                            color: CredoColors.accent,
+                            height: 32
+                        )
+                        .padding(.horizontal, 40)
+                    }
 
                     // Delta
                     if vm.credoScore.delta != 0 {
@@ -48,13 +62,14 @@ struct DashboardView: View {
                     .padding(.top, 4)
 
                 VStack(spacing: 10) {
-                    ForEach(Pillar.allCases, id: \.self) { pillar in
+                    ForEach(Array(Pillar.allCases.enumerated()), id: \.element) { index, pillar in
                         if let pillarScore = vm.pillarScores[pillar] {
                             PillarCard(
                                 pillar: pillar,
                                 score: pillarScore.score,
                                 metrics: pillarScore.metrics,
-                                isWeakest: pillarScore.isWeakest
+                                isWeakest: pillarScore.isWeakest,
+                                index: index
                             )
                         }
                     }

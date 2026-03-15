@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NutritionView: View {
     @State private var vm = NutritionViewModel()
+    @State private var emptyStateAppeared = false
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -177,21 +178,58 @@ struct NutritionView: View {
 
     @ViewBuilder
     private var emptyState: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 14) {
             Image(systemName: "fork.knife")
-                .font(.system(size: 36))
-                .foregroundStyle(CredoColors.textTertiary)
+                .font(.system(size: 36, weight: .light))
+                .foregroundStyle(CredoColors.nutrition)
 
-            Text("No meals logged")
-                .font(.credoBody(size: 16, weight: .medium))
-                .foregroundStyle(CredoColors.textSecondary)
+            VStack(spacing: 6) {
+                Text("Fuel your performance")
+                    .font(.credoDisplay(size: 18))
+                    .foregroundStyle(CredoColors.textPrimary)
 
-            Text("Tap + to start tracking your nutrition")
-                .font(.credoBody(size: 14))
-                .foregroundStyle(CredoColors.textTertiary)
+                Text("Tap + to start tracking your nutrition")
+                    .font(.credoBody(size: 14))
+                    .foregroundStyle(CredoColors.textSecondary)
+            }
+
+            Button {
+                vm.showingAddFood = true
+            } label: {
+                Text("Log Your First Meal")
+                    .font(.credoBody(size: 14, weight: .semibold))
+                    .foregroundStyle(CredoColors.nutrition)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(CredoColors.nutritionLight)
+                    .clipShape(Capsule())
+            }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 48)
+        .padding(.vertical, 32)
+        .padding(.horizontal, 20)
+        .background(
+            LinearGradient(
+                colors: [
+                    CredoColors.nutritionLight.opacity(0.5),
+                    CredoColors.surface
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(CredoColors.border, lineWidth: 1)
+        )
+        .scaleEffect(emptyStateAppeared ? 1 : 0.95)
+        .opacity(emptyStateAppeared ? 1 : 0)
+        .onAppear {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                emptyStateAppeared = true
+            }
+        }
     }
 }
 

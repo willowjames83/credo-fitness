@@ -119,7 +119,7 @@ class CoachViewModel {
             weight: profile?.weight ?? 185,
             experienceLevel: profile?.experienceLevel ?? "intermediate",
             trainingGoal: profile?.trainingGoal ?? "general_fitness",
-            currentProgram: store.selectedProgram?.rawValue ?? "None selected",
+            currentProgram: ProgramStore.shared.currentProgram?.name ?? store.selectedProgram?.rawValue ?? "None selected",
             credoScore: credoScore,
             strengthScore: strengthScore,
             recentWorkouts: formatRecentWorkouts(),
@@ -128,6 +128,7 @@ class CoachViewModel {
             cardioWeeklyMinutes: cardioStore.weeklyCardioMinutes(),
             cardioRecentSessions: recentCardio.isEmpty ? "No sessions this week" : recentCardio,
             cardioScore: cardioScore,
+            stabilityScore: stabilityScore,
             nutritionTodayMacros: todayMacrosStr,
             nutritionProteinAdherence: proteinAdherence,
             progressionInsights: insightsStr

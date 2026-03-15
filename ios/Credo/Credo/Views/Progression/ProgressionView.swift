@@ -95,19 +95,62 @@ struct ProgressionView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "chart.line.uptrend.xyaxis")
-                .font(.system(size: 40))
-                .foregroundStyle(CredoColors.textTertiary)
-            Text("No insights yet")
-                .credoBody(size: 16, weight: .semibold)
-                .foregroundStyle(CredoColors.textPrimary)
-            Text("Complete a few more workouts and progression insights will appear here.")
-                .credoBody(size: 14)
-                .foregroundStyle(CredoColors.textSecondary)
-                .multilineTextAlignment(.center)
+        ProgressionEmptyState()
+    }
+}
+
+// MARK: - Progression Empty State with Animated Bar Chart
+
+private struct ProgressionEmptyState: View {
+    @State private var appeared = false
+
+    private let barHeights: [CGFloat] = [0.3, 0.45, 0.4, 0.6, 0.55, 0.75, 0.85]
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Animated ascending bar chart
+            HStack(alignment: .bottom, spacing: 6) {
+                ForEach(0..<barHeights.count, id: \.self) { i in
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    CredoColors.accent.opacity(0.3 + Double(i) * 0.1),
+                                    CredoColors.accent.opacity(0.15 + Double(i) * 0.05)
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(width: 16, height: appeared ? barHeights[i] * 80 : 4)
+                        .animation(
+                            .spring(response: 0.6, dampingFraction: 0.7)
+                                .delay(Double(i) * 0.08),
+                            value: appeared
+                        )
+                }
+            }
+            .frame(height: 80, alignment: .bottom)
+
+            VStack(spacing: 6) {
+                Text("Greatness is built one session at a time")
+                    .font(.credoDisplay(size: 18))
+                    .foregroundStyle(CredoColors.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text("Keep training — insights appear after 3+ workouts")
+                    .credoBody(size: 14)
+                    .foregroundStyle(CredoColors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
         }
         .padding(.vertical, 40)
+        .opacity(appeared ? 1 : 0)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.4)) {
+                appeared = true
+            }
+        }
     }
 }
 

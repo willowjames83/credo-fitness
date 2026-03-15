@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WorkoutHistoryView: View {
     @State private var vm = WorkoutHistoryViewModel()
+    @State private var emptyStateAppeared = false
 
     var body: some View {
         Group {
@@ -16,22 +17,55 @@ struct WorkoutHistoryView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "dumbbell")
-                .font(.system(size: 40))
-                .foregroundStyle(CredoColors.textTertiary)
+        VStack(spacing: 20) {
+            // Layered icon composition
+            ZStack {
+                Image(systemName: "dumbbell.fill")
+                    .font(.system(size: 80, weight: .ultraLight))
+                    .foregroundStyle(CredoColors.accent.opacity(0.08))
 
-            Text("No workouts yet")
-                .font(.credoBody(size: 16, weight: .medium))
-                .foregroundStyle(CredoColors.textSecondary)
+                Image(systemName: "dumbbell.fill")
+                    .font(.system(size: 36, weight: .medium))
+                    .foregroundStyle(CredoColors.accent.opacity(0.6))
+            }
 
-            Text("Complete your first workout to start tracking your history")
-                .font(.credoBody(size: 13, weight: .regular))
-                .foregroundStyle(CredoColors.textTertiary)
-                .multilineTextAlignment(.center)
+            VStack(spacing: 8) {
+                Text("No workouts yet")
+                    .font(.credoDisplay(size: 22))
+                    .foregroundStyle(CredoColors.textPrimary)
+
+                Text("Your story starts with one rep")
+                    .font(.credoBody(size: 15, weight: .regular))
+                    .foregroundStyle(CredoColors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+
+            Button {
+                // Navigate to workout tab
+                NotificationCenter.default.post(
+                    name: Notification.Name("SwitchToWorkoutTab"),
+                    object: nil
+                )
+            } label: {
+                Text("Start First Workout")
+                    .font(.credoBody(size: 15, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 28)
+                    .padding(.vertical, 12)
+                    .background(CredoColors.accent)
+                    .clipShape(Capsule())
+            }
+            .padding(.top, 4)
         }
         .padding(.horizontal, 40)
         .frame(maxHeight: .infinity)
+        .scaleEffect(emptyStateAppeared ? 1 : 0.9)
+        .opacity(emptyStateAppeared ? 1 : 0)
+        .onAppear {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.75)) {
+                emptyStateAppeared = true
+            }
+        }
     }
 
     private var workoutList: some View {
@@ -40,7 +74,7 @@ struct WorkoutHistoryView: View {
                 ForEach(vm.groupedWorkouts, id: \.0) { monthLabel, workouts in
                     Section {
                         VStack(spacing: 10) {
-                            ForEach(Array(workouts.enumerated()), id: \.offset) { _, workout in
+                            ForEach(Array(workouts.enumerated()), id: \.offset) { index, workout in
                                 NavigationLink {
                                     WorkoutDetailView(workout: workout)
                                 } label: {
@@ -54,6 +88,7 @@ struct WorkoutHistoryView: View {
                                     )
                                 }
                                 .buttonStyle(.plain)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
                             }
                         }
                     } header: {

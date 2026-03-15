@@ -194,19 +194,75 @@ struct CardioView: View {
     // MARK: - Empty State
 
     private var emptyStateCard: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "heart.circle")
-                .font(.system(size: 36, weight: .light))
-                .foregroundStyle(CredoColors.textTertiary)
+        CardioEmptyState(onStartSession: {
+            showingTypeSheet = true
+        })
+    }
+}
 
-            Text("No sessions yet")
-                .font(.credoBody(size: 15, weight: .medium))
-                .foregroundStyle(CredoColors.textPrimary)
+// MARK: - Animated Pulse Ring Empty State
 
-            Text("Start a cardio session to begin tracking your conditioning")
-                .font(.credoBody(size: 13, weight: .regular))
-                .foregroundStyle(CredoColors.textSecondary)
-                .multilineTextAlignment(.center)
+private struct CardioEmptyState: View {
+    let onStartSession: () -> Void
+    @State private var appeared = false
+    @State private var pulsePhase: CGFloat = 0
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Pulse ring animation
+            ZStack {
+                ForEach(0..<3, id: \.self) { i in
+                    Circle()
+                        .stroke(
+                            CredoColors.cardio.opacity(0.15 - Double(i) * 0.04),
+                            lineWidth: 2
+                        )
+                        .frame(
+                            width: 40 + CGFloat(i) * 28,
+                            height: 40 + CGFloat(i) * 28
+                        )
+                        .scaleEffect(appeared ? 1.0 : 0.6)
+                        .opacity(appeared ? 1.0 : 0.0)
+                        .animation(
+                            .easeInOut(duration: 1.8)
+                                .repeatForever(autoreverses: true)
+                                .delay(Double(i) * 0.3),
+                            value: appeared
+                        )
+                }
+
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 22, weight: .medium))
+                    .foregroundStyle(CredoColors.cardio)
+                    .scaleEffect(appeared ? 1.0 : 0.8)
+                    .animation(
+                        .easeInOut(duration: 1.0)
+                            .repeatForever(autoreverses: true),
+                        value: appeared
+                    )
+            }
+            .frame(height: 100)
+
+            VStack(spacing: 6) {
+                Text("Every heartbeat counts")
+                    .font(.credoDisplay(size: 18))
+                    .foregroundStyle(CredoColors.textPrimary)
+
+                Text("Start a cardio session to begin tracking your conditioning")
+                    .font(.credoBody(size: 13, weight: .regular))
+                    .foregroundStyle(CredoColors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+
+            Button(action: onStartSession) {
+                Text("Log Your First Session")
+                    .font(.credoBody(size: 14, weight: .semibold))
+                    .foregroundStyle(CredoColors.cardio)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(CredoColors.cardioLight)
+                    .clipShape(Capsule())
+            }
         }
         .padding(24)
         .frame(maxWidth: .infinity)
@@ -216,6 +272,9 @@ struct CardioView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(CredoColors.border, lineWidth: 1)
         )
+        .onAppear {
+            appeared = true
+        }
     }
 }
 
