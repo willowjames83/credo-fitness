@@ -7,23 +7,26 @@ class ProgramStore {
     var selectedProgramId: String?
     var currentWeek: Int
     var currentDayIndex: Int
+    var savedPrograms: [WorkoutProgram] = []
 
     private let programIdKey = "credo_program_selectedProgramId"
     private let weekKey = "credo_program_currentWeek"
     private let dayIndexKey = "credo_program_currentDayIndex"
+    private let savedProgramsKey = "credo_program_saved"
 
     init() {
         let defaults = UserDefaults.standard
         selectedProgramId = defaults.string(forKey: programIdKey)
         currentWeek = max(defaults.integer(forKey: weekKey), 1)
         currentDayIndex = defaults.integer(forKey: dayIndexKey)
+        loadSavedPrograms()
     }
 
     // MARK: - Computed
 
     var currentProgram: WorkoutProgram? {
         guard let id = selectedProgramId else { return nil }
-        return ProgramLibrary.find(id)
+        return ProgramLibrary.find(id) ?? savedPrograms.first { $0.id == id }
     }
 
     var currentDay: WorkoutProgramDay? {
@@ -64,6 +67,24 @@ class ProgramStore {
         save()
     }
 
+    // MARK: - AI Program Management
+
+    func saveProgram(_ program: WorkoutProgram) {
+        // Remove existing with same ID if regenerated
+        savedPrograms.removeAll { $0.id == program.id }
+        savedPrograms.insert(program, at: 0)
+        persistSavedPrograms()
+    }
+
+    func deleteProgram(id: String) {
+        savedPrograms.removeAll { $0.id == id }
+        if selectedProgramId == id {
+            selectedProgramId = nil
+        }
+        persistSavedPrograms()
+        save()
+    }
+
     // MARK: - Persistence
 
     private func save() {
@@ -71,5 +92,18 @@ class ProgramStore {
         defaults.set(selectedProgramId, forKey: programIdKey)
         defaults.set(currentWeek, forKey: weekKey)
         defaults.set(currentDayIndex, forKey: dayIndexKey)
+    }
+
+    private func persistSavedPrograms() {
+        if let data = try? JSONEncoder().encode(savedPrograms) {
+            UserDefaults.standard.set(data, forKey: savedProgramsKey)
+        }
+    }
+
+    private func loadSavedPrograms() {
+        if let data = UserDefaults.standard.data(forKey: savedProgramsKey),
+           let decoded = try? JSONDecoder().decode([WorkoutProgram].self, from: data) {
+            savedPrograms = decoded
+        }
     }
 }

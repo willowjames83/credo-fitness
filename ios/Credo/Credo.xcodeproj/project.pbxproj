@@ -185,6 +185,10 @@
 		A017900000000000000000179 /* ScoreTrendChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B017900000000000000000179 /* ScoreTrendChart.swift */; };
 		A018000000000000000000180 /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B018000000000000000000180 /* TrendsView.swift */; };
 		A018100000000000000000181 /* WeeklyComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B018100000000000000000181 /* WeeklyComparisonChart.swift */; };
+		A0180000000000000000180 /* ProgramGeneratorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0180000000000000000180 /* ProgramGeneratorService.swift */; };
+		A0190000000000000000190 /* ProgramGeneratorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0190000000000000000190 /* ProgramGeneratorViewModel.swift */; };
+		A0200000000000000000200 /* GenerateProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0200000000000000000200 /* GenerateProgramView.swift */; };
+		A0210000000000000000210 /* GeneratedProgramCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0210000000000000000210 /* GeneratedProgramCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -367,6 +371,10 @@
 		B017900000000000000000179 /* ScoreTrendChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTrendChart.swift; sourceTree = "<group>"; };
 		B018000000000000000000180 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		B018100000000000000000181 /* WeeklyComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyComparisonChart.swift; sourceTree = "<group>"; };
+		B0180000000000000000180 /* ProgramGeneratorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramGeneratorService.swift; sourceTree = "<group>"; };
+		B0190000000000000000190 /* ProgramGeneratorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramGeneratorViewModel.swift; sourceTree = "<group>"; };
+		B0200000000000000000200 /* GenerateProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateProgramView.swift; sourceTree = "<group>"; };
+		B0210000000000000000210 /* GeneratedProgramCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedProgramCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -515,6 +523,7 @@
 		D00900000000000000000009 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B0190000000000000000190 /* ProgramGeneratorViewModel.swift */,
 				B012900000000000000000129 /* AuthViewModel.swift */,
 				B013000000000000000000130 /* CardioViewModel.swift */,
 				B013100000000000000000131 /* HealthKitViewModel.swift */,
@@ -539,6 +548,8 @@
 		D01800000000000000000018 /* Programs */ = {
 			isa = PBXGroup;
 			children = (
+				B0210000000000000000210 /* GeneratedProgramCard.swift */,
+				B0200000000000000000200 /* GenerateProgramView.swift */,
 				B017500000000000000000175 /* ProgramDayCard.swift */,
 				B017600000000000000000176 /* ProgramDetailView.swift */,
 				B017700000000000000000177 /* ProgramSelectionView.swift */,
@@ -674,6 +685,7 @@
 		A1D00100000000000000D001 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B0180000000000000000180 /* ProgramGeneratorService.swift */,
 				B011900000000000000000119 /* APIClient.swift */,
 				B012000000000000000000120 /* AuthService.swift */,
 				B012100000000000000000121 /* CardioStore.swift */,
@@ -850,6 +862,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0210000000000000000210 /* GeneratedProgramCard.swift in Sources */,
+				A0200000000000000000200 /* GenerateProgramView.swift in Sources */,
+				A0190000000000000000190 /* ProgramGeneratorViewModel.swift in Sources */,
+				A0180000000000000000180 /* ProgramGeneratorService.swift in Sources */,
 				A00100000000000000000001 /* CredoApp.swift in Sources */,
 				A00200000000000000000002 /* ContentView.swift in Sources */,
 				A00300000000000000000003 /* CredoColors.swift in Sources */,
