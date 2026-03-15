@@ -81,7 +81,8 @@ class HealthKitStore {
 
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: Date())
-        let predicate = HKQuery.predicateForSamples(withStart: calendar.date(byAdding: .day, value: -7, to: startOfDay), end: Date())
+        guard let weekAgo = calendar.date(byAdding: .day, value: -7, to: startOfDay) else { return }
+        let predicate = HKQuery.predicateForSamples(withStart: weekAgo, end: Date())
 
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
 
