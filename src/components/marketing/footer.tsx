@@ -33,7 +33,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#0D0D0F] pt-16 pb-8 px-6 relative">
+    <footer className="bg-[#0D0D0F] pt-12 md:pt-16 pb-8 px-5 md:px-6 relative">
       {/* Gradient top border */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#E8501A]/20 to-transparent" />
 

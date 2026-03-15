@@ -21,7 +21,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#0D0D0F] bg-noise relative">
-      <div className="mx-auto max-w-6xl px-6 pb-24 pt-12 relative">
+      <div className="mx-auto max-w-6xl px-5 md:px-6 pb-16 md:pb-24 pt-8 md:pt-12 relative">
         {/* Nav back */}
         <Link
           href="/"
@@ -55,7 +55,7 @@ export default function BlogPage() {
         >
           <button
             onClick={() => setActiveCategory("all")}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
+            className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
               activeCategory === "all"
                 ? "bg-white text-[#0D0D0F] shadow-lg shadow-white/10"
                 : "bg-white/[0.05] text-[#9E9EA3] hover:text-white hover:bg-white/[0.08]"
@@ -69,7 +69,7 @@ export default function BlogPage() {
               <button
                 key={cat.key}
                 onClick={() => setActiveCategory(cat.key)}
-                className="rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200"
+                className="rounded-full px-4 py-2 text-sm font-medium transition-all duration-200"
                 style={{
                   backgroundColor: isActive
                     ? cat.color

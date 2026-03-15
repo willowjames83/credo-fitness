@@ -16,14 +16,14 @@ const headlineWords = ["Train", "for", "the", "body", "you", "want", "today,", "
 
 export function HeroSection() {
   return (
-    <section className="relative bg-[#0D0D0F] bg-noise pt-32 pb-24 md:pb-32 px-6 overflow-hidden">
+    <section className="relative bg-[#0D0D0F] bg-noise pt-24 pb-16 md:pt-32 md:pb-32 px-5 md:px-6 overflow-hidden">
       {/* Radial glow behind content */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#E8501A] rounded-full opacity-[0.04] blur-[120px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-12">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-12">
         {/* Text */}
         <div className="md:w-[60%]">
-          <h1 className="font-[family-name:var(--font-dm-serif)] text-5xl md:text-7xl text-white leading-[1.1]">
+          <h1 className="font-[family-name:var(--font-dm-serif)] text-[2.5rem] sm:text-5xl md:text-7xl text-white leading-[1.1]">
             {headlineWords.map((word, i) => (
               <motion.span
                 key={i}

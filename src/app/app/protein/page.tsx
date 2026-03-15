@@ -103,15 +103,20 @@ export default function ProteinPage() {
             onClick={() => setCurrent((prev) => prev + amount)}
             style={{
               flex: 1,
-              padding: "10px 0",
+              padding: "14px 0",
               background: COLORS.surface,
-              borderRadius: 10,
+              borderRadius: 12,
               textAlign: "center",
-              fontSize: 14,
+              fontSize: 15,
               fontWeight: 600,
               color: COLORS.textPrimary,
               cursor: "pointer",
               border: `1px solid ${COLORS.border}`,
+              minHeight: 48,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background 0.15s ease",
             }}
           >
             +{amount}g
@@ -182,14 +187,15 @@ export default function ProteinPage() {
           key={i}
           onClick={() => setCurrent((prev) => prev + m.grams)}
           style={{
-            padding: "12px 16px",
+            padding: "14px 16px",
             background: COLORS.surface,
-            borderRadius: 10,
+            borderRadius: 12,
             marginBottom: 6,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             cursor: "pointer",
+            minHeight: 48,
           }}
         >
           <span style={{ fontSize: 14, color: COLORS.textPrimary }}>

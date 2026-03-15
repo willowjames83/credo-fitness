@@ -28,7 +28,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-28 px-6">
+    <section className="py-16 md:py-28 px-5 md:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
@@ -39,7 +39,7 @@ export function TestimonialsSection() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="bg-white border border-[#E5E5E8] rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
+              className="bg-white border border-[#E5E5E8] rounded-2xl p-6 md:p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
             >
               {/* Large decorative quote mark */}
               <span className="absolute top-4 right-6 text-[80px] leading-none font-[family-name:var(--font-dm-serif)] text-[#E8501A]/[0.06] select-none pointer-events-none">

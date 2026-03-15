@@ -13,7 +13,7 @@ const pillarScores = [
 
 export function ScoreSection() {
   return (
-    <section className="relative bg-[#0D0D0F] bg-noise py-28 px-6 overflow-hidden">
+    <section className="relative bg-[#0D0D0F] bg-noise py-16 md:py-28 px-5 md:px-6 overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E8501A] rounded-full opacity-[0.03] blur-[100px] pointer-events-none" />
 

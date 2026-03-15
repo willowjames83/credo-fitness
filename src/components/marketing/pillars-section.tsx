@@ -18,9 +18,9 @@ export function PillarsSection() {
   const pillars = Object.values(PILLARS);
 
   return (
-    <section id="pillars" className="py-28 px-6">
+    <section id="pillars" className="py-16 md:py-28 px-5 md:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ export function PillarsSection() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group bg-white border border-[#E5E5E8] rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
+                className="group bg-white border border-[#E5E5E8] rounded-2xl p-6 md:p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
               >
                 {/* Top gradient bar */}
                 <div

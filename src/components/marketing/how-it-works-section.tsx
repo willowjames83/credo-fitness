@@ -37,10 +37,10 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="py-28 px-6 bg-[#FAFAFA] relative">
+    <section id="how-it-works" className="py-16 md:py-28 px-5 md:px-6 bg-[#FAFAFA] relative">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.02] pointer-events-none" />
       <div className="max-w-6xl mx-auto relative">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

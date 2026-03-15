@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function ProblemSection() {
   return (
-    <section className="relative py-28 px-6 bg-[#FAFAFA]">
+    <section className="relative py-16 md:py-28 px-5 md:px-6 bg-[#FAFAFA]">
       {/* Faint dot grid */}
       <div className="absolute inset-0 bg-dot-grid opacity-[0.03] pointer-events-none" />
 
@@ -23,7 +23,7 @@ export function ProblemSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-xl md:text-[1.65rem] text-[#1A1A1E] leading-relaxed font-light"
+          className="text-lg md:text-[1.65rem] text-[#1A1A1E] leading-relaxed font-light"
         >
           You know VO&#8322; max, zone 2, grip strength, and progressive
           overload. You know exercise is the most powerful longevity
@@ -36,7 +36,7 @@ export function ProblemSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="mt-8 text-xl md:text-[1.65rem] text-[#1A1A1E] leading-relaxed font-light"
+          className="mt-6 md:mt-8 text-lg md:text-[1.65rem] text-[#1A1A1E] leading-relaxed font-light"
         >
           You don&apos;t need another workout logger. You need a system
           that programs, tracks, and scores every dimension of exercise

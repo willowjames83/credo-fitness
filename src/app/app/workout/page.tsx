@@ -121,7 +121,7 @@ export default function WorkoutPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "40px 1fr 1fr 50px",
+              gridTemplateColumns: "40px 1fr 1fr 56px",
               padding: "10px 0",
               borderBottom: `1px solid ${COLORS.surfaceElevated}`,
             }}
@@ -173,13 +173,14 @@ export default function WorkoutPage() {
                 key={s.set}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "40px 1fr 1fr 50px",
-                  padding: "12px 0",
+                  gridTemplateColumns: "40px 1fr 1fr 56px",
+                  padding: "10px 0",
                   borderBottom:
                     i < activeExercise.sets.length - 1
                       ? `1px solid ${COLORS.surfaceElevated}`
                       : "none",
                   opacity: done ? 0.5 : 1,
+                  alignItems: "center",
                 }}
               >
                 <span
@@ -215,19 +216,21 @@ export default function WorkoutPage() {
                   <div
                     onClick={() => toggleSet(s.set)}
                     style={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: 7,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
                       background: done ? COLORS.success : COLORS.surfaceElevated,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       cursor: "pointer",
+                      transition: "background 0.15s ease",
                     }}
                   >
                     <Check
-                      size={14}
+                      size={18}
                       color={done ? "#fff" : COLORS.textTertiary}
+                      strokeWidth={2.5}
                     />
                   </div>
                 </div>
@@ -242,7 +245,7 @@ export default function WorkoutPage() {
         style={{
           background: COLORS.accentLight,
           borderRadius: 12,
-          padding: "12px 16px",
+          padding: "14px 16px",
           marginBottom: 12,
           display: "flex",
           justifyContent: "space-between",
@@ -250,7 +253,7 @@ export default function WorkoutPage() {
         }}
       >
         <span
-          style={{ fontSize: 13, fontWeight: 500, color: COLORS.accent }}
+          style={{ fontSize: 14, fontWeight: 500, color: COLORS.accent }}
         >
           Rest Timer
         </span>
@@ -271,13 +274,15 @@ export default function WorkoutPage() {
         <div
           key={i}
           style={{
-            padding: "12px 16px",
+            padding: "14px 16px",
             background: COLORS.surface,
             borderRadius: 12,
             marginBottom: 8,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            minHeight: 48,
+            cursor: "pointer",
           }}
         >
           <div>

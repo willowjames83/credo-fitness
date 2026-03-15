@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 
@@ -23,6 +23,13 @@ const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Credo — Train for Longevity",

@@ -17,11 +17,13 @@ export function TabBar() {
 
   return (
     <div
+      className="pb-[env(safe-area-inset-bottom,0px)]"
       style={{
         display: "flex",
         justifyContent: "space-around",
-        alignItems: "center",
-        padding: "8px 0 22px",
+        alignItems: "stretch",
+        paddingTop: 4,
+        paddingBottom: 8,
         background: "#FFFFFF",
         borderTop: "1px solid #E5E5E8",
       }}
@@ -37,17 +39,21 @@ export function TabBar() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 2,
+              justifyContent: "center",
+              gap: 3,
               textDecoration: "none",
-              opacity: isActive ? 1 : 0.4,
+              opacity: isActive ? 1 : 0.5,
               transition: "opacity 0.15s",
+              minWidth: 48,
+              minHeight: 48,
+              padding: "6px 8px",
             }}
           >
-            <Icon size={22} color={isActive ? "#E8501A" : "#6B6B73"} />
+            <Icon size={22} color={isActive ? "#E8501A" : "#6B6B73"} strokeWidth={isActive ? 2.2 : 1.8} />
             <span
               style={{
                 fontSize: 10,
-                fontWeight: 500,
+                fontWeight: isActive ? 600 : 500,
                 color: isActive ? "#E8501A" : "#6B6B73",
               }}
             >

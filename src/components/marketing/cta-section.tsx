@@ -5,7 +5,7 @@ import { AppDownloadBadges } from "@/components/shared/app-download-badges";
 
 export function CtaSection() {
   return (
-    <section id="cta" className="relative bg-[#0D0D0F] bg-noise py-28 px-6 overflow-hidden">
+    <section id="cta" className="relative bg-[#0D0D0F] bg-noise py-16 md:py-28 px-5 md:px-6 overflow-hidden">
       {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#E8501A] rounded-full opacity-[0.05] blur-[100px] pointer-events-none" />
 

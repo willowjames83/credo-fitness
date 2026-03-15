@@ -198,14 +198,19 @@ export default function CredoTenPage() {
       <div
         style={{
           marginTop: 16,
-          padding: "12px 0",
+          padding: "14px 0",
           background: COLORS.teal,
           borderRadius: 12,
           textAlign: "center",
           color: "#fff",
-          fontSize: 15,
+          fontSize: 16,
           fontWeight: 600,
           cursor: "pointer",
+          minHeight: 48,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transition: "opacity 0.15s ease",
         }}
       >
         Log Benchmark Test

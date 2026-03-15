@@ -67,27 +67,27 @@ export function Navbar() {
         <Sheet>
           <SheetTrigger
             render={
-              <button className="md:hidden p-2 -mr-2" aria-label="Open menu">
+              <button className="md:hidden p-3 -mr-3" aria-label="Open menu">
                 <Menu className={`w-5 h-5 ${isDark ? "text-white" : "text-[#1A1A1E]"}`} />
               </button>
             }
           />
           <SheetContent side="right" className="w-72 bg-white pt-12">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
               {NAV_LINKS.map((link) => (
                 <SheetClose
                   key={link.href}
                   render={
                     <a
                       href={link.href}
-                      className="text-lg text-[#1A1A1E] font-medium"
+                      className="text-lg text-[#1A1A1E] font-medium py-3 px-2 rounded-lg active:bg-[#F7F7F8] transition-colors"
                     >
                       {link.label}
                     </a>
                   }
                 />
               ))}
-              <AppDownloadBadges badgeHeight={36} className="pt-2" />
+              <AppDownloadBadges badgeHeight={36} className="pt-4" />
             </div>
           </SheetContent>
         </Sheet>

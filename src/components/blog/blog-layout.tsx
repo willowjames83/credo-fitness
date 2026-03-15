@@ -74,7 +74,7 @@ export function BlogPostLayout({ post }: { post: BlogPost }) {
 
   return (
     <div className="min-h-screen bg-[#0D0D0F] bg-noise relative">
-      <div className="mx-auto max-w-[720px] px-6 pb-24 pt-12 relative">
+      <div className="mx-auto max-w-[720px] px-5 md:px-6 pb-16 md:pb-24 pt-8 md:pt-12 relative">
         {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -8 }}
@@ -83,7 +83,7 @@ export function BlogPostLayout({ post }: { post: BlogPost }) {
         >
           <Link
             href="/blog"
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-[#9E9EA3] hover:text-white transition-colors"
+            className="mb-8 inline-flex items-center gap-1.5 text-sm text-[#9E9EA3] hover:text-white transition-colors py-2"
           >
             <ArrowLeft size={14} />
             Back to Blog
@@ -150,7 +150,7 @@ export function BlogPostLayout({ post }: { post: BlogPost }) {
         </div>
 
         {/* CTA */}
-        <div className="mt-10 relative rounded-2xl bg-[#1A1A1E] p-8 text-center overflow-hidden">
+        <div className="mt-10 relative rounded-2xl bg-[#1A1A1E] p-6 md:p-8 text-center overflow-hidden">
           {/* Subtle glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[200px] bg-[#E8501A] rounded-full opacity-[0.04] blur-[80px] pointer-events-none" />
           <div className="relative">

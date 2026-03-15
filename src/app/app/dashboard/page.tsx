@@ -105,14 +105,19 @@ export default function DashboardPage() {
         <div
           style={{
             marginTop: 12,
-            padding: "10px 0",
+            padding: "14px 0",
             background: COLORS.accent,
-            borderRadius: 10,
+            borderRadius: 12,
             textAlign: "center",
             color: "#fff",
-            fontSize: 15,
+            fontSize: 16,
             fontWeight: 600,
             cursor: "pointer",
+            minHeight: 48,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "opacity 0.15s ease",
           }}
         >
           Start Workout

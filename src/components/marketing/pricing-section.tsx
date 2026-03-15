@@ -37,7 +37,7 @@ export function PricingSection() {
   const [annual, setAnnual] = useState(true);
 
   return (
-    <section id="pricing" className="py-28 px-6 bg-[#FAFAFA] relative">
+    <section id="pricing" className="py-16 md:py-28 px-5 md:px-6 bg-[#FAFAFA] relative">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.02] pointer-events-none" />
       <div className="max-w-4xl mx-auto relative">
         <div className="text-center mb-12">
@@ -95,7 +95,7 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="bg-white border border-[#E5E5E8] rounded-2xl p-8"
+            className="bg-white border border-[#E5E5E8] rounded-2xl p-6 md:p-8"
           >
             <h3 className="text-lg font-semibold text-[#1A1A1E]">Free</h3>
             <p className="text-sm text-[#6B6B73] mt-1">Free forever</p>
@@ -129,7 +129,7 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative rounded-2xl p-8 bg-white shadow-xl shadow-[#E8501A]/[0.06]"
+            className="relative rounded-2xl p-6 md:p-8 bg-white shadow-xl shadow-[#E8501A]/[0.06]"
             style={{
               border: "2px solid transparent",
               backgroundClip: "padding-box",

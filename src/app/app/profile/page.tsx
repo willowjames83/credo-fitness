@@ -93,7 +93,7 @@ export default function ProfilePage() {
                 <div
                   key={i}
                   style={{
-                    padding: "13px 16px",
+                    padding: "14px 16px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -102,6 +102,7 @@ export default function ProfilePage() {
                         ? `1px solid ${COLORS.surfaceElevated}`
                         : "none",
                     cursor: "pointer",
+                    minHeight: 48,
                   }}
                 >
                   <span
