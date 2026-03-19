@@ -55,35 +55,61 @@ struct HealthKitOnboardingView: View {
 
             // MARK: - Actions
             VStack(spacing: 12) {
-                Button {
-                    isConnecting = true
-                    Task {
-                        await viewModel.requestAccess()
-                        isConnecting = false
-                        onComplete?()
-                        dismiss()
-                    }
-                } label: {
+                if let error = viewModel.errorMessage {
+                    Text(error)
+                        .font(.credoBody(size: 13, weight: .medium))
+                        .foregroundStyle(CredoColors.danger)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 16)
+                }
+
+                if viewModel.authorizationStatus == .authorized {
                     HStack(spacing: 8) {
-                        if isConnecting {
-                            ProgressView()
-                                .tint(.white)
-                        }
-                        Text("Connect Apple Health")
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(CredoColors.success)
+                        Text("Connected to Apple Health")
                             .font(.credoBody(size: 16, weight: .semibold))
+                            .foregroundStyle(CredoColors.success)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(CredoColors.accent)
-                    .foregroundStyle(.white)
+                    .background(CredoColors.success.opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            onComplete?()
+                            dismiss()
+                        }
+                    }
+                } else {
+                    Button {
+                        isConnecting = true
+                        Task {
+                            await viewModel.requestAccess()
+                            isConnecting = false
+                        }
+                    } label: {
+                        HStack(spacing: 8) {
+                            if isConnecting {
+                                ProgressView()
+                                    .tint(.white)
+                            }
+                            Text("Connect Apple Health")
+                                .font(.credoBody(size: 16, weight: .semibold))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(CredoColors.accent)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    .disabled(isConnecting)
                 }
-                .disabled(isConnecting)
 
                 Button {
                     dismiss()
                 } label: {
-                    Text("Maybe Later")
+                    Text(viewModel.authorizationStatus == .authorized ? "Done" : "Maybe Later")
                         .font(.credoBody(size: 15))
                         .foregroundStyle(CredoColors.textSecondary)
                 }

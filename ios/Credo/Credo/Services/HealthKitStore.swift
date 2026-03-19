@@ -35,7 +35,9 @@ class HealthKitStore {
     // MARK: - Authorization
 
     func requestAuthorization() async throws {
-        guard isAvailable, let store = healthStore else { return }
+        guard isAvailable, let store = healthStore else {
+            throw HealthKitError.notAvailable
+        }
 
         try await store.requestAuthorization(
             toShare: HealthKitPermissions.writeTypes,
@@ -44,6 +46,17 @@ class HealthKitStore {
 
         await MainActor.run {
             self.isAuthorized = true
+        }
+    }
+
+    enum HealthKitError: LocalizedError {
+        case notAvailable
+
+        var errorDescription: String? {
+            switch self {
+            case .notAvailable:
+                return "Apple Health is not available on this device."
+            }
         }
     }
 
