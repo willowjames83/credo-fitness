@@ -108,6 +108,14 @@ class ProfileViewModel {
     var isLoggedIn: Bool { authService.isLoggedIn }
     var accountEmail: String { authService.currentUserEmail ?? "" }
 
+    var healthKitStatus: String {
+        HealthKitStore.shared.isAuthorized ? "Connected" : "Not Connected"
+    }
+
+    var healthKitStatusColor: Color {
+        HealthKitStore.shared.isAuthorized ? CredoColors.success : CredoColors.textSecondary
+    }
+
     func logout() {
         authService.logout()
     }
@@ -148,7 +156,7 @@ class ProfileViewModel {
                 SettingsRow(label: "Biomarkers"),
             ]),
             SettingsSection(title: "Integrations", rows: [
-                SettingsRow(label: "Apple Health", detail: "Manage", action: {
+                SettingsRow(label: "Apple Health", detail: healthKitStatus, detailColor: healthKitStatusColor, action: {
                     self.showHealthKitOnboarding = true
                 }),
                 SettingsRow(label: "Peloton"),

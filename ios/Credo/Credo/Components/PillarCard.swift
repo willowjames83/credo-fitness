@@ -1,5 +1,13 @@
 import SwiftUI
 
+struct PillarCardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
 struct PillarCard: View {
     let pillar: Pillar
     let score: Int
@@ -8,7 +16,6 @@ struct PillarCard: View {
     var index: Int = 0
 
     @State private var appeared = false
-    @State private var isPressed = false
 
     var body: some View {
         HStack(spacing: 0) {
@@ -43,6 +50,11 @@ struct PillarCard: View {
                             .font(.credoBody(size: 12, weight: .medium))
                             .foregroundStyle(CredoColors.textSecondary)
                     }
+
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(CredoColors.textTertiary)
+                        .padding(.leading, 4)
                 }
 
                 // Metric rows
@@ -74,13 +86,6 @@ struct PillarCard: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(CredoColors.border, lineWidth: 1)
                 )
-        )
-        .scaleEffect(isPressed ? 0.97 : 1.0)
-        .animation(.easeInOut(duration: 0.15), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
         )
         .scaleEffect(appeared ? 1 : 0.95)
         .opacity(appeared ? 1 : 0)

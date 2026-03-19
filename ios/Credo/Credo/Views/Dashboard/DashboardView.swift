@@ -64,13 +64,18 @@ struct DashboardView: View {
                 VStack(spacing: 10) {
                     ForEach(Array(Pillar.allCases.enumerated()), id: \.element) { index, pillar in
                         if let pillarScore = vm.pillarScores[pillar] {
-                            PillarCard(
-                                pillar: pillar,
-                                score: pillarScore.score,
-                                metrics: pillarScore.metrics,
-                                isWeakest: pillarScore.isWeakest,
-                                index: index
-                            )
+                            NavigationLink {
+                                pillarDestination(for: pillar)
+                            } label: {
+                                PillarCard(
+                                    pillar: pillar,
+                                    score: pillarScore.score,
+                                    metrics: pillarScore.metrics,
+                                    isWeakest: pillarScore.isWeakest,
+                                    index: index
+                                )
+                            }
+                            .buttonStyle(PillarCardButtonStyle())
                         }
                     }
                 }
@@ -128,6 +133,22 @@ struct DashboardView: View {
             .padding(.horizontal, 20)
             .padding(.top, 8)
             .padding(.bottom, 24)
+        }
+    }
+
+    // MARK: - Pillar Navigation
+
+    @ViewBuilder
+    private func pillarDestination(for pillar: Pillar) -> some View {
+        switch pillar {
+        case .strength:
+            WorkoutHistoryView()
+        case .cardio:
+            CardioView()
+        case .nutrition:
+            NutritionView()
+        case .stability:
+            StabilityDetailView()
         }
     }
 
