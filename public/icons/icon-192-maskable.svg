@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 512 512" role="img" aria-label="Credo">
+  <rect width="512" height="512" fill="#E8501A"/>
+  <circle
+    cx="256" cy="256" r="140"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="60"
+    stroke-linecap="round"
+    stroke-dasharray="718.38 161.27"
+    stroke-dashoffset="-80.64"
+  />
+</svg>

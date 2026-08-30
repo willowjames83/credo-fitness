@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Sans, DM_Serif_Display } from "next/font/google";
+import { ServiceWorkerRegistration } from "@/components/pwa/service-worker-registration";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -40,6 +41,16 @@ export const metadata: Metadata = {
     description:
       "Strength, stability, cardio, and nutrition in one app. One score for every dimension of exercise that matters for longevity.",
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Credo",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#E8501A",
 };
 
 export default function RootLayout({
@@ -53,6 +64,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${dmSerifDisplay.variable} antialiased`}
       >
         {children}
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );
