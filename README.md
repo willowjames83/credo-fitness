@@ -40,7 +40,11 @@ see `PRD-adaptive-training-engine.md` for the full design.
   `src/components/pwa/service-worker-registration.tsx`.
 - **`mcp-server/`** — a separate, standalone package (own `package.json`,
   Prisma client, and MCP SDK dependency) exposing Credo data over the Model
-  Context Protocol. Not part of the Next.js build.
+  Context Protocol. Not part of the Next.js build. It keeps its own
+  `prisma/schema.prisma` so it can generate its own client, but that file is
+  a synced copy of the root schema (`npm run sync:schema` inside
+  `mcp-server/`) — the root `prisma/schema.prisma` stays the single source
+  of truth; see `mcp-server/README.md`.
 
 ## Getting Started
 

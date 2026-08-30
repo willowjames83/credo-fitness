@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# Cancel superseded runs on the same branch/PR to keep the queue short.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+
+    # Dummy values are sufficient here: `next build` and `vitest` never open
+    # a real database connection or sign a real session, they just need the
+    # env vars to be present so config/module-level reads don't throw.
+    env:
+      DATABASE_URL: "postgresql://ci:ci@localhost:5432/credo_ci"
+      JWT_SECRET: "ci-dummy-jwt-secret"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Lint
+        run: npm run lint
+
+      # `next build` doesn't fail on type errors alone, so run `tsc --noEmit`
+      # (via the `typecheck` script) to make sure the project still typechecks.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build

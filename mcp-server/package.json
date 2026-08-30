@@ -1,14 +1,15 @@
 {
   "name": "credo-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for Credo fitness app",
+  "description": "MCP server for Credo fitness app. Standalone package (own deps/build/install), but prisma/schema.prisma is a synced copy of ../prisma/schema.prisma (the source of truth) — run `npm run sync:schema` after the root schema changes, then `npm run db:generate`. See README.md.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev"
+    "db:migrate": "prisma migrate dev",
+    "sync:schema": "node -e \"require('fs').copyFileSync('../prisma/schema.prisma', 'prisma/schema.prisma')\""
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
