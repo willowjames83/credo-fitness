@@ -9,6 +9,7 @@ const PUBLIC_API_ROUTES = [
   '/api/auth/login',
   '/api/auth/logout',
   '/api/share', // GET /api/share/:code is public; write ops re-check auth in handlers
+  '/api/health', // public liveness/readiness probe (no auth)
 ];
 
 function looksLikeJwt(token: string): boolean {

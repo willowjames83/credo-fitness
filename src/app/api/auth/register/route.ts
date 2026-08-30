@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, setSessionCookie, signToken } from '@/lib/auth';
 import { registerSchema } from '@/lib/validation';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
+
+// Abuse protection: 10 attempts per 15 minutes, keyed on client IP + email.
+// Per-instance only (see rate-limit.ts).
+const REGISTER_LIMIT = 10;
+const REGISTER_WINDOW_MS = 15 * 60 * 1000;
 
 export async function POST(request: Request) {
   try {
@@ -16,6 +22,17 @@ export async function POST(request: Request) {
     }
 
     const { email, password, name, age, sex, weight, experienceLevel, trainingGoal } = parsed.data;
+
+    const limit = rateLimit(`register:${clientIp(request)}:${email.toLowerCase()}`, {
+      limit: REGISTER_LIMIT,
+      windowMs: REGISTER_WINDOW_MS,
+    });
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: 'Too many registration attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } }
+      );
+    }
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {

@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
+import { getJwtSecret } from '@/lib/env';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = getJwtSecret();
 const SALT_ROUNDS = 12;
 
 export const SESSION_COOKIE = 'credo_session';

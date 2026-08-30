@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { comparePassword, setSessionCookie, signToken } from '@/lib/auth';
 import { loginSchema } from '@/lib/validation';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
+
+// Brute-force protection: 10 attempts per 15 minutes, keyed on client IP +
+// email. Per-instance only (see rate-limit.ts). Applied after we know the
+// email so distinct accounts from a shared IP don't collide.
+const LOGIN_LIMIT = 10;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 
 export async function POST(request: Request) {
   try {
@@ -16,6 +23,17 @@ export async function POST(request: Request) {
     }
 
     const { email, password } = parsed.data;
+
+    const limit = rateLimit(`login:${clientIp(request)}:${email.toLowerCase()}`, {
+      limit: LOGIN_LIMIT,
+      windowMs: LOGIN_WINDOW_MS,
+    });
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } }
+      );
+    }
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
