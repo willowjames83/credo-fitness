@@ -8,25 +8,43 @@ generator client {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  email           String    @unique
-  passwordHash    String
-  name            String
-  age             Int?
-  sex             String?
-  weight          Int?
-  experienceLevel String?
-  trainingGoal    String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  name                String
+  age                 Int?
+  sex                 String?
+  weight              Int?
+  heightIn            Int?
+  experienceLevel     String?
+  trainingGoal        String?
+  onboardingCompleted Boolean   @default(false)
+  proteinTargetG      Int?
+  zone2TargetMin      Int?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
-  workouts        Workout[]
-  exercise1RMs    Exercise1RM[]
-  personalRecords PersonalRecord[]
-  scoreSnapshots  ScoreSnapshot[]
-  userProgram     UserProgram?
+  workouts            Workout[]
+  exercise1RMs        Exercise1RM[]
+  personalRecords     PersonalRecord[]
+  scoreSnapshots      ScoreSnapshot[]
+  userProgram         UserProgram?
+  trainingPreferences TrainingPreferences?
+  gymProfiles         GymProfile[]
+  exerciseLogs        ExerciseLog[]
+  workoutPlans        WorkoutPlan[]
+  muscleRecovery      MuscleRecovery[]
+  strengthScores      StrengthScoreRecord[]
+  benchmarkResults    BenchmarkResult[]
+  coachThreads        CoachThread[]
+  workoutSplits       WorkoutSplit[]
+  sharedWorkouts      SharedWorkout[]
+  proteinEntries      ProteinEntry[]
+  cardioSessions      CardioSession[]
+  stabilitySessions   StabilitySession[]
 }
 
+// Legacy models kept for the /api/sync contract
 model Workout {
   id              String   @id @default(cuid())
   userId          String
@@ -97,4 +115,309 @@ model UserProgram {
   currentDayIndex Int    @default(0)
 
   user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ── Adaptive training engine (PRD) ──────────────────────────────
+
+model TrainingPreferences {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  goal               String   @default("longevity")
+  daysPerWeek        Int      @default(3)
+  sessionDuration    Int      @default(60)
+  preferredSplit     String   @default("ai_optimized")
+  trainingLocation   String   @default("commercial_gym")
+  availableEquipment String[]
+  muscleGroupFocus   String[]
+  muscleGroupExclude String[]
+  enableSupersets    Boolean  @default(true)
+  varietyLevel       String   @default("medium")
+  updatedAt          DateTime @updatedAt
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GymProfile {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  location  String
+  equipment String[]
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Exercise {
+  id               String   @id // stable slug, e.g. "barbell-bench-press"
+  name             String
+  primaryMuscles   String[]
+  secondaryMuscles String[]
+  equipment        String[]
+  movementPattern  String
+  difficulty       String
+  videoUrl         String?
+  thumbnailUrl     String?
+  formCues         String[]
+  commonMistakes   String[]
+  alternatives     String[]
+
+  exerciseLogs     ExerciseLog[]
+  plannedExercises PlannedExercise[]
+}
+
+model ExerciseLog {
+  id             String   @id @default(cuid())
+  userId         String
+  exerciseId     String
+  workoutPlanId  String?
+  date           DateTime @default(now())
+  estimated1RM   Float?
+  exertionRating Int?
+  notes          String?
+
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise       Exercise      @relation(fields: [exerciseId], references: [id])
+  workoutPlan    WorkoutPlan?  @relation(fields: [workoutPlanId], references: [id])
+  sets           CompletedSet[]
+
+  @@index([userId, exerciseId, date])
+  @@index([userId, date])
+}
+
+model CompletedSet {
+  id            String  @id @default(cuid())
+  exerciseLogId String
+  setNumber     Int
+  weight        Float
+  reps          Int
+  rpe           Int?
+  restDuration  Int?
+
+  exerciseLog   ExerciseLog @relation(fields: [exerciseLogId], references: [id], onDelete: Cascade)
+
+  @@index([exerciseLogId])
+}
+
+model WorkoutPlan {
+  id                String    @id @default(cuid())
+  userId            String
+  weekNumber        Int
+  dayNumber         Int
+  totalDays         Int
+  splitType         String
+  focus             String
+  estimatedDuration Int
+  includesWarmup    Boolean   @default(true)
+  status            String    @default("planned") // planned | in_progress | completed | skipped
+  scheduledDate     DateTime?
+  createdAt         DateTime  @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercises         PlannedExercise[]
+  exerciseLogs      ExerciseLog[]
+
+  @@index([userId, status])
+  @@index([userId, scheduledDate])
+}
+
+model PlannedExercise {
+  id                String  @id @default(cuid())
+  workoutPlanId     String
+  exerciseId        String
+  order             Int
+  targetSets        Int
+  targetRepMin      Int
+  targetRepMax      Int
+  recommendedWeight Float
+  restPeriod        Int
+  isSuperset        Boolean @default(false)
+  supersetWith      String?
+  rationale         String?
+  isWarmup          Boolean @default(false)
+
+  workoutPlan       WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  exercise          Exercise    @relation(fields: [exerciseId], references: [id])
+
+  @@index([workoutPlanId])
+}
+
+model MuscleRecovery {
+  id                    String   @id @default(cuid())
+  userId                String
+  muscleGroup           String
+  lastTrainedDate       DateTime
+  volumeLastSession     Int
+  estimatedRecoveryDate DateTime
+  fatigueLevel          String   @default("fresh") // fresh | recovering | fatigued
+
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, muscleGroup])
+}
+
+model StrengthScoreRecord {
+  id                 String   @id @default(cuid())
+  userId             String
+  overall            Int
+  percentile         Int
+  demographicContext String
+  trend              String   @default("stable")
+  trendDelta         Int      @default(0)
+  calculatedAt       DateTime @default(now())
+
+  user               User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscores          StrengthSubscoreRecord[]
+
+  @@index([userId, calculatedAt])
+}
+
+model StrengthSubscoreRecord {
+  id               String @id @default(cuid())
+  scoreRecordId    String
+  category         String
+  score            Int
+  keyLift          String
+  estimated1RM     Float
+  relativeStrength Float
+  percentile       Int
+
+  scoreRecord      StrengthScoreRecord @relation(fields: [scoreRecordId], references: [id], onDelete: Cascade)
+
+  @@index([scoreRecordId])
+}
+
+model StrengthStandard {
+  id                String @id @default(cuid())
+  exercise          String
+  sex               String
+  ageBracket        String
+  experienceLevel   String
+  p10               Float
+  p25               Float
+  p50               Float
+  p75               Float
+  p90               Float
+  p95               Float
+
+  @@unique([exercise, sex, ageBracket, experienceLevel])
+}
+
+model BenchmarkResult {
+  id            String   @id @default(cuid())
+  userId        String
+  benchmarkName String
+  value         Float
+  unit          String
+  percentile    Int?
+  pillar        String
+  testedAt      DateTime @default(now())
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, benchmarkName, testedAt])
+}
+
+model CoachThread {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String   @default("Coach")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  CoachMessage[]
+
+  @@index([userId, updatedAt])
+}
+
+model CoachMessage {
+  id         String   @id @default(cuid())
+  threadId   String
+  senderType String // "user" | "coach"
+  content    String
+  createdAt  DateTime @default(now())
+  readAt     DateTime?
+
+  thread     CoachThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId, createdAt])
+}
+
+model WorkoutSplit {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  type        String // ai_recovery | ai_optimized | preset | custom
+  days        Json // SplitDay[]
+  isShareable Boolean  @default(false)
+  isActive    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SharedWorkout {
+  id        String   @id @default(cuid())
+  shareCode String   @unique
+  createdBy String
+  type      String // "split" | "workout_summary"
+  data      Json
+  viewCount Int      @default(0)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+// ── Pillar tracking (Phase 4) ───────────────────────────────────
+
+model ProteinEntry {
+  id       String   @id @default(cuid())
+  userId   String
+  date     DateTime @default(now())
+  grams    Int
+  calories Int?
+  label    String?
+  mealType String?
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model CardioSession {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime @default(now())
+  type      String // zone2 | vo2max | intervals | outdoor_run | ride | row | other
+  minutes   Int
+  avgHr     Int?
+  maxHr     Int?
+  distanceM Int?
+  source    String   @default("manual") // manual | apple_health | strava | peloton
+  notes     String?
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model StabilitySession {
+  id       String   @id @default(cuid())
+  userId   String
+  date     DateTime @default(now())
+  type     String // warmup | mobility | balance | core
+  minutes  Int
+  notes    String?
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
 }

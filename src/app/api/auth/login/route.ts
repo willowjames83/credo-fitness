@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { comparePassword, signToken } from '@/lib/auth';
+import { comparePassword, setSessionCookie, signToken } from '@/lib/auth';
 import { loginSchema } from '@/lib/validation';
 
 export async function POST(request: Request) {
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
     const token = signToken(user.id);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       data: {
         token,
         user: {
@@ -47,10 +47,13 @@ export async function POST(request: Request) {
           weight: user.weight,
           experienceLevel: user.experienceLevel,
           trainingGoal: user.trainingGoal,
+          onboardingCompleted: user.onboardingCompleted,
           createdAt: user.createdAt,
         },
       },
     });
+    setSessionCookie(response, token);
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
