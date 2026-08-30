@@ -1,0 +1,128 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { getUserIdFromRequest } from "@/lib/auth";
+import {
+  CARDIO_TYPES,
+  type CardioSessionDTO,
+  type CardioType,
+} from "@/components/pillars/dto";
+
+const createSessionSchema = z.object({
+  type: z.enum(CARDIO_TYPES, {
+    errorMap: () => ({ message: "Unknown cardio session type" }),
+  }),
+  minutes: z
+    .number()
+    .int("Minutes must be a whole number")
+    .min(1, "Minutes must be at least 1")
+    .max(600, "Minutes must be 600 or less"),
+  avgHr: z.number().int().min(30).max(240).nullish(),
+  maxHr: z.number().int().min(30).max(240).nullish(),
+  distanceM: z.number().int().min(0).max(500_000).nullish(),
+  date: z.string().datetime({ offset: true }).nullish(),
+  notes: z.string().trim().max(280).nullish(),
+});
+
+interface SessionRow {
+  id: string;
+  date: Date;
+  type: string;
+  minutes: number;
+  avgHr: number | null;
+  maxHr: number | null;
+  distanceM: number | null;
+  notes: string | null;
+}
+
+function toDTO(row: SessionRow): CardioSessionDTO {
+  return {
+    id: row.id,
+    date: row.date.toISOString(),
+    type: row.type as CardioType,
+    minutes: row.minutes,
+    avgHr: row.avgHr,
+    maxHr: row.maxHr,
+    distanceM: row.distanceM,
+    notes: row.notes,
+  };
+}
+
+export async function POST(request: Request) {
+  try {
+    const userId = getUserIdFromRequest(request);
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const parsed = createSessionSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.errors[0].message },
+        { status: 400 },
+      );
+    }
+
+    const { type, minutes, avgHr, maxHr, distanceM, date, notes } = parsed.data;
+    const when = date ? new Date(date) : new Date();
+    if (Number.isNaN(when.getTime())) {
+      return NextResponse.json({ error: "Invalid date" }, { status: 400 });
+    }
+
+    const session = await prisma.cardioSession.create({
+      data: {
+        userId,
+        type,
+        minutes,
+        date: when,
+        avgHr: avgHr ?? null,
+        maxHr: maxHr ?? null,
+        distanceM: distanceM ?? null,
+        notes: notes && notes.length > 0 ? notes : null,
+        source: "manual",
+      },
+    });
+
+    return NextResponse.json({ data: { session: toDTO(session) } });
+  } catch (error) {
+    console.error("Create cardio session error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const userId = getUserIdFromRequest(request);
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const url = new URL(request.url);
+    const limitRaw = Number(url.searchParams.get("limit") ?? 20);
+    const offsetRaw = Number(url.searchParams.get("offset") ?? 0);
+    const limit = Number.isFinite(limitRaw)
+      ? Math.min(100, Math.max(1, Math.floor(limitRaw)))
+      : 20;
+    const offset = Number.isFinite(offsetRaw)
+      ? Math.max(0, Math.floor(offsetRaw))
+      : 0;
+
+    const [rows, total] = await Promise.all([
+      prisma.cardioSession.findMany({
+        where: { userId },
+        orderBy: { date: "desc" },
+        skip: offset,
+        take: limit,
+      }),
+      prisma.cardioSession.count({ where: { userId } }),
+    ]);
+
+    return NextResponse.json({
+      data: { sessions: rows.map(toDTO), total },
+    });
+  } catch (error) {
+    console.error("List cardio sessions error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
