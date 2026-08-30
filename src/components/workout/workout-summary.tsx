@@ -6,10 +6,14 @@ import { Trophy } from "lucide-react";
 import type { CompleteWorkoutResponse, ScoreWithDelta } from "@/lib/types";
 import { PILLARS, type PillarKey } from "@/lib/constants";
 import { SectionHeader } from "@/components/shared/section-header";
+import { postJson } from "@/components/share/api";
+import { ShareLinkButton } from "@/components/share/share-link-button";
 
 interface WorkoutSummaryProps {
   focus: string;
   result: CompleteWorkoutResponse;
+  /** WorkoutPlan id, used to share this completed workout. */
+  planId: string;
 }
 
 function formatDuration(seconds: number): string {
@@ -33,7 +37,7 @@ function DeltaText({ delta }: { delta: number }) {
   );
 }
 
-export function WorkoutSummary({ focus, result }: WorkoutSummaryProps) {
+export function WorkoutSummary({ focus, result, planId }: WorkoutSummaryProps) {
   const { summary, personalRecords, scores } = result;
   const pillarKeys: PillarKey[] = ["strength", "stability", "cardio", "nutrition"];
 
@@ -50,6 +54,17 @@ export function WorkoutSummary({ focus, result }: WorkoutSummaryProps) {
           Workout complete
         </p>
         <h1 className="mt-1 text-xl font-semibold text-[#1A1A1E]">{focus}</h1>
+        <div className="mt-3 flex justify-center">
+          <ShareLinkButton
+            label="Share workout"
+            onShare={() =>
+              postJson<{ shareCode: string; url: string }>("/api/share", {
+                type: "workout_summary",
+                workoutPlanId: planId,
+              })
+            }
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2.5">

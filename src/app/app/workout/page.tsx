@@ -408,7 +408,7 @@ export default function WorkoutPage() {
   }
 
   if (result && plan) {
-    return <WorkoutSummary focus={plan.focus} result={result} />;
+    return <WorkoutSummary focus={plan.focus} result={result} planId={plan.id} />;
   }
 
   if (!plan) {

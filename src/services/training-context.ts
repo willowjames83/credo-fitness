@@ -305,7 +305,15 @@ export async function loadTrainingContext(
 /** Preferences with the default gym profile's equipment substituted in. */
 export function generationPreferences(ctx: TrainingContext): TrainingPreferencesInput | null {
   if (!ctx.preferences) return null;
-  return { ...ctx.preferences, availableEquipment: ctx.equipment };
+  // generateWorkout's determineSplit() has no channel to inject a specific
+  // WorkoutSplit's per-day muscle groups (it only switches on the
+  // preferredSplit enum) — map "custom" to the same days-per-week-driven
+  // fallback "ai_optimized" already uses so generation never breaks on a
+  // custom split. A future generator change that accepts an explicit day
+  // override could target the user's active WorkoutSplit here instead.
+  const preferredSplit =
+    ctx.preferences.preferredSplit === "custom" ? "ai_optimized" : ctx.preferences.preferredSplit;
+  return { ...ctx.preferences, preferredSplit, availableEquipment: ctx.equipment };
 }
 
 // ── Exercise row upserts (library is the source of truth) ───────────────────
