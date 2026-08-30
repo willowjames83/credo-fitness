@@ -73,7 +73,7 @@ export function CredoScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={dark ? "rgba(255,255,255,0.1)" : "#EEEFF1"}
+          style={{ stroke: dark ? "rgba(255,255,255,0.1)" : "var(--surface-elevated)" }}
           strokeWidth={strokeWidth}
         />
         <circle
@@ -95,14 +95,14 @@ export function CredoScoreRing({
       >
         <span
           className="font-mono font-bold leading-none"
-          style={{ fontSize: size * 0.275, color: dark ? "#FFFFFF" : "#1A1A1E" }}
+          style={{ fontSize: size * 0.275, color: dark ? "#FFFFFF" : "var(--text-primary)" }}
         >
           {displayed}
         </span>
         {showLabel && (
           <span
             className="font-medium"
-            style={{ fontSize: 13, color: dark ? "#9E9EA3" : "#6B6B73", letterSpacing: 0.5, marginTop: 2 }}
+            style={{ fontSize: 13, color: dark ? "#9E9EA3" : "var(--text-secondary)", letterSpacing: 0.5, marginTop: 2 }}
           >
             {label}
           </span>

@@ -23,6 +23,32 @@ export const COLORS = {
   danger: "#C43B3B",
 } as const;
 
+/**
+ * Theme-aware CSS custom properties from the Credo semantic layer
+ * (defined in src/app/globals.css; these flip automatically between
+ * light and dark). Use in an inline `style` when a Tailwind class isn't
+ * practical, e.g. `style={{ color: CSS_VARS.textSecondary }}`. Prefer the
+ * Tailwind classes (text-text-secondary, bg-surface, border-app, …) when
+ * you can. `COLORS` above stays as fixed brand/reference hex.
+ */
+export const CSS_VARS = {
+  bg: "var(--bg)",
+  surface: "var(--surface)",
+  surfaceElevated: "var(--surface-elevated)",
+  card: "var(--card-bg)",
+  border: "var(--app-border)",
+  textPrimary: "var(--text-primary)",
+  textSecondary: "var(--text-secondary)",
+  textTertiary: "var(--text-tertiary)",
+  accentLight: "var(--credo-light)",
+  tealLight: "var(--teal-light)",
+  cardioLight: "var(--cardio-light)",
+  nutritionLight: "var(--nutrition-light)",
+  successLight: "var(--success-light)",
+  warningLight: "var(--warning-light)",
+  dangerLight: "var(--danger-light)",
+} as const;
+
 export const PILLARS = {
   strength: {
     key: "strength" as const,

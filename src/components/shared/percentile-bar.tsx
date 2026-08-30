@@ -5,7 +5,7 @@ interface PercentileBarProps {
 
 export function PercentileBar({ value, color }: PercentileBarProps) {
   return (
-    <div className="w-full" style={{ height: 4, background: "#EEEFF1", borderRadius: 2 }}>
+    <div className="w-full rounded-full bg-surface-elevated" style={{ height: 4 }}>
       <div
         style={{
           width: `${value}%`,

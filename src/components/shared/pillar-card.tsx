@@ -19,45 +19,33 @@ export function PillarCard({ pillar, score, metrics, isWeakest, onClick }: Pilla
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer transition-all duration-150 hover:shadow-sm"
-      style={{
-        background: "#FFFFFF",
-        border: "1px solid #E5E5E8",
-        borderRadius: 14,
-        padding: "14px 16px",
-        borderLeft: `3px solid ${p.color}`,
-      }}
+      className="cursor-pointer rounded-[14px] border border-app bg-card-surface px-4 py-[14px] transition-all duration-150 hover:shadow-sm"
+      style={{ borderLeft: `3px solid ${p.color}` }}
     >
-      <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
-        <div className="flex items-center" style={{ gap: 8 }}>
+      <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <Icon size={14} color={p.color} />
-          <span
-            className="font-semibold uppercase"
-            style={{ fontSize: 13, color: "#1A1A1E", letterSpacing: 0.3 }}
-          >
+          <span className="text-[13px] font-semibold uppercase tracking-[0.3px] text-text-primary">
             {p.label}
           </span>
         </div>
-        <div className="flex items-center" style={{ gap: 6 }}>
-          <span className="font-mono font-semibold" style={{ fontSize: 17, color: "#1A1A1E" }}>
+        <div className="flex items-center gap-1.5">
+          <span className="font-mono text-[17px] font-semibold text-text-primary">
             {score}
           </span>
-          <span style={{ fontSize: 12, color: "#6B6B73" }}>{label}</span>
+          <span className="text-[12px] text-text-secondary">{label}</span>
         </div>
       </div>
-      <div className="flex flex-col" style={{ gap: 3 }}>
+      <div className="flex flex-col gap-[3px]">
         {metrics.map((m, i) => (
-          <span key={i} style={{ fontSize: 13, color: "#6B6B73" }}>
+          <span key={i} className="text-[13px] text-text-secondary">
             {m}
           </span>
         ))}
       </div>
       {isWeakest && (
-        <div
-          className="inline-block"
-          style={{ marginTop: 8, padding: "4px 8px", background: "#FFF3E0", borderRadius: 6 }}
-        >
-          <span style={{ fontSize: 11, fontWeight: 500, color: "#C47A1A" }}>↑ Weakest pillar</span>
+        <div className="mt-2 inline-block rounded-md bg-warning-light px-2 py-1">
+          <span className="text-[11px] font-medium text-warning">↑ Weakest pillar</span>
         </div>
       )}
     </div>

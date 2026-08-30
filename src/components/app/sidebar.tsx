@@ -8,6 +8,7 @@ import {
   isNavActive,
   type AppNavItem,
 } from "./nav";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 interface SidebarProps {
   name: string;
@@ -21,10 +22,10 @@ function NavLink({ item, active }: { item: AppNavItem; active: boolean }) {
     <Link
       href={item.href}
       aria-current={active ? "page" : undefined}
-      className={`flex items-center gap-3 rounded-[10px] px-3 py-2 text-sm font-medium transition-colors ${
+      className={`focus-ring flex items-center gap-3 rounded-[10px] px-3 py-2 text-sm font-medium transition-colors ${
         active
-          ? "bg-[var(--shell-accent-light)] text-[var(--shell-accent)]"
-          : "text-[var(--shell-text-secondary)] hover:bg-[var(--shell-surface)] hover:text-[var(--shell-text-primary)]"
+          ? "bg-credo-light text-credo"
+          : "text-text-secondary hover:bg-surface hover:text-text-primary"
       }`}
     >
       <Icon size={18} strokeWidth={active ? 2.2 : 1.8} />
@@ -37,13 +38,13 @@ export function Sidebar({ name, email, initials }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-[var(--shell-border)] bg-[var(--shell-bg)] lg:flex">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-app bg-canvas lg:flex">
       <div className="px-6 pb-3 pt-6">
         <Link
           href="/app/dashboard"
-          className="font-display text-[26px] leading-none text-[var(--shell-text-primary)]"
+          className="focus-ring rounded-md font-display text-[26px] leading-none text-text-primary"
         >
-          Credo<span className="text-[var(--shell-accent)]">.</span>
+          Credo<span className="text-credo">.</span>
         </Link>
       </div>
 
@@ -56,7 +57,7 @@ export function Sidebar({ name, email, initials }: SidebarProps) {
           ))}
         </ul>
 
-        <p className="mb-1.5 mt-7 px-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
+        <p className="mb-1.5 mt-7 px-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-text-tertiary">
           Pillars
         </p>
         <ul className="space-y-0.5">
@@ -68,27 +69,30 @@ export function Sidebar({ name, email, initials }: SidebarProps) {
         </ul>
       </nav>
 
-      <div className="border-t border-[var(--shell-border)] p-3">
-        <Link
-          href="/app/profile"
-          className={`flex items-center gap-3 rounded-[10px] px-2.5 py-2 transition-colors ${
-            isNavActive(pathname, "/app/profile")
-              ? "bg-[var(--shell-accent-light)]"
-              : "hover:bg-[var(--shell-surface)]"
-          }`}
-        >
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--shell-surface-elevated)] text-[12px] font-semibold text-[var(--shell-text-secondary)]">
-            {initials}
-          </span>
-          <span className="min-w-0">
-            <span className="block truncate text-[13px] font-semibold text-[var(--shell-text-primary)]">
-              {name}
+      <div className="border-t border-app p-3">
+        <div className="flex items-center gap-2">
+          <Link
+            href="/app/profile"
+            className={`focus-ring flex min-w-0 flex-1 items-center gap-3 rounded-[10px] px-2.5 py-2 transition-colors ${
+              isNavActive(pathname, "/app/profile")
+                ? "bg-credo-light"
+                : "hover:bg-surface"
+            }`}
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[12px] font-semibold text-text-secondary">
+              {initials}
             </span>
-            <span className="block truncate text-[11px] text-[var(--shell-text-tertiary)]">
-              {email || "View profile"}
+            <span className="min-w-0">
+              <span className="block truncate text-[13px] font-semibold text-text-primary">
+                {name}
+              </span>
+              <span className="block truncate text-[11px] text-text-tertiary">
+                {email || "View profile"}
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
+          <ThemeToggle />
+        </div>
       </div>
     </aside>
   );

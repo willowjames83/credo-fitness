@@ -10,26 +10,70 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Credo custom colors */
+  /* ============================================================
+     CREDO SEMANTIC TOKEN LAYER  (light + dark, theme-aware)
+     ------------------------------------------------------------
+     WAVE B: use these Tailwind classes instead of hardcoded hex.
+     Every neutral / tint token below flips automatically with the
+     active theme (next-themes toggles `.dark` on <html>). The
+     brand + status *base* hues stay constant across themes; only
+     their soft `-light` tints flip to dark-surface-friendly values.
+
+     NEUTRAL SURFACES  (light  ->  dark)
+       bg-canvas            page background          #FFFFFF -> #0F0F12   (--bg)
+       bg-surface           sunken / subtle surface  #F7F7F8 -> #17171A   (--surface)
+       bg-surface-elevated  raised chip / ring track #EEEFF1 -> #232327   (--surface-elevated)
+       bg-card-surface      card background          #FFFFFF -> #1B1B1F   (--card-bg)
+       border-app           hairline border/divider  #E5E5E8 -> #2A2A30   (--app-border)
+                            (border-credo-border is a legacy alias of the same value)
+
+     TEXT  (light  ->  dark)
+       text-text-primary    headings / primary copy  #1A1A1E -> #F5F5F7   (--text-primary)
+       text-text-secondary  body / secondary copy    #6B6B73 -> #A2A2A9   (--text-secondary)
+       text-text-tertiary   captions / muted labels  #9E9EA3 -> #6E6E77   (--text-tertiary)
+
+     BRAND + PILLAR HUES  (constant across themes)
+       *-credo  #E8501A (orange)   *-teal   #1A7A6D (teal)
+       *-cardio #2563EB (blue)     *-nutrition #7C3AED (purple)
+       each ships a themed soft tint:  bg-credo-light / bg-teal-light /
+       bg-cardio-light / bg-nutrition-light  (dark tints are deep and
+       dark-surface-friendly, NOT the light #FFF0E9 wash).
+
+     STATUS  (base constant, tint themed)
+       *-success #2D8A4E   *-warning #C47A1A   *-danger #C43B3B
+       + bg-success-light / bg-warning-light / bg-danger-light
+     ============================================================ */
+
+  /* neutral surfaces (themed) */
+  --color-canvas: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-card-surface: var(--card-bg);
+  --color-app: var(--app-border);
+  --color-credo-border: var(--app-border); /* legacy alias */
+
+  /* text (themed) */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  /* brand + pillar base hues (constant) + themed soft tints */
   --color-credo: #E8501A;
-  --color-credo-light: #FFF0E9;
+  --color-credo-light: var(--credo-light);
   --color-teal: #1A7A6D;
-  --color-teal-light: #E8F5F3;
+  --color-teal-light: var(--teal-light);
   --color-cardio: #2563EB;
-  --color-cardio-light: #EFF4FF;
+  --color-cardio-light: var(--cardio-light);
   --color-nutrition: #7C3AED;
-  --color-nutrition-light: #F3EEFF;
-  --color-surface: #F7F7F8;
-  --color-surface-elevated: #EEEFF1;
-  --color-credo-border: #E5E5E8;
-  --color-text-primary: #1A1A1E;
-  --color-text-secondary: #6B6B73;
-  --color-text-tertiary: #9E9EA3;
+  --color-nutrition-light: var(--nutrition-light);
+
+  /* status base hues (constant) + themed soft tints */
   --color-success: #2D8A4E;
-  --color-success-light: #E8F5ED;
+  --color-success-light: var(--success-light);
   --color-warning: #C47A1A;
-  --color-warning-light: #FFF3E0;
+  --color-warning-light: var(--warning-light);
   --color-danger: #C43B3B;
+  --color-danger-light: var(--danger-light);
 
   /* shadcn defaults */
   --color-sidebar-ring: var(--sidebar-ring);
@@ -106,6 +150,27 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* --- Credo semantic layer: LIGHT values --- */
+  color-scheme: light;
+  /* neutral surfaces */
+  --bg: #FFFFFF;
+  --surface: #F7F7F8;
+  --surface-elevated: #EEEFF1;
+  --card-bg: #FFFFFF;
+  --app-border: #E5E5E8;
+  /* text */
+  --text-primary: #1A1A1E;
+  --text-secondary: #6B6B73;
+  --text-tertiary: #9E9EA3;
+  /* soft brand + status tints */
+  --credo-light: #FFF0E9;
+  --teal-light: #E8F5F3;
+  --cardio-light: #EFF4FF;
+  --nutrition-light: #F3EEFF;
+  --success-light: #E8F5ED;
+  --warning-light: #FFF3E0;
+  --danger-light: #FCECEC;
 }
 
 .dark {
@@ -141,12 +206,26 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  --color-surface: #1A1A1E;
-  --color-surface-elevated: #252528;
-  --color-credo-border: #2E2E33;
-  --color-text-primary: #F5F5F7;
-  --color-text-secondary: #9E9EA3;
-  --color-text-tertiary: #6B6B73;
+  /* --- Credo semantic layer: DARK overrides --- */
+  color-scheme: dark;
+  /* neutral surfaces */
+  --bg: #0F0F12;
+  --surface: #17171A;
+  --surface-elevated: #232327;
+  --card-bg: #1B1B1F;
+  --app-border: #2A2A30;
+  /* text */
+  --text-primary: #F5F5F7;
+  --text-secondary: #A2A2A9;
+  --text-tertiary: #6E6E77;
+  /* dark-surface-friendly tints (deep, not the light wash) */
+  --credo-light: #3A2018;
+  --teal-light: #14302B;
+  --cardio-light: #1A2540;
+  --nutrition-light: #271D40;
+  --success-light: #16301F;
+  --warning-light: #302713;
+  --danger-light: #331B1B;
 }
 
 @layer base {
@@ -158,6 +237,23 @@
   }
   html {
     @apply font-sans;
+  }
+  /* Accessible focus ring for interactive elements that opt in via
+     the `focus-ring` utility (used by shell nav + theme toggle). */
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-credo/55 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+}
+
+/* Honor reduced-motion: neutralize non-essential animation/transition. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -232,4 +328,50 @@
   --shell-text-tertiary: #9E9EA3;
   --shell-success: #2D8A4E;
   --shell-danger: #C43B3B;
+}
+
+/* Shell DARK overrides — kept in sync with the Credo semantic layer so
+   surfaces that still consume `--shell-*` (auth, onboarding, profile,
+   share) theme correctly until Wave B migrates them to the classes above.
+   Placed AFTER the shell :root so it wins on equal specificity. */
+.dark {
+  --shell-bg: #0F0F12;
+  --shell-surface: #17171A;
+  --shell-surface-elevated: #232327;
+  --shell-border: #2A2A30;
+  --shell-accent: #FF6B3D;
+  --shell-accent-hover: #FF824F;
+  --shell-accent-light: #3A2018;
+  --shell-text-primary: #F5F5F7;
+  --shell-text-secondary: #A2A2A9;
+  --shell-text-tertiary: #6E6E77;
+  --shell-success: #4FBE75;
+  --shell-danger: #E86A6A;
+}
+
+/* ============================================================
+   Skeleton shimmer (themed) — powers <Skeleton /> in src/components/ui.
+   Sweeps between two themed surface tones; falls back to a static
+   surface under prefers-reduced-motion (handled by the global rule).
+   ============================================================ */
+@keyframes credo-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+.credo-skeleton {
+  background-color: var(--surface-elevated);
+  background-image: linear-gradient(
+    90deg,
+    var(--surface-elevated) 0%,
+    var(--surface) 20%,
+    var(--surface-elevated) 40%,
+    var(--surface-elevated) 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: credo-shimmer 1.6s ease-in-out infinite;
 }

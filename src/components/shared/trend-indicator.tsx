@@ -5,11 +5,16 @@ interface TrendIndicatorProps {
 }
 
 export function TrendIndicator({ delta, direction, positive = true }: TrendIndicatorProps) {
-  const color = direction === "flat" ? "#9E9EA3" : positive ? "#2D8A4E" : "#C43B3B";
+  const colorClass =
+    direction === "flat"
+      ? "text-text-tertiary"
+      : positive
+        ? "text-success"
+        : "text-danger";
   const arrow = direction === "up" ? "↑" : direction === "down" ? "↓" : "→";
 
   return (
-    <span style={{ fontSize: 12, fontWeight: 500, color }}>
+    <span className={`text-[12px] font-medium ${colorClass}`}>
       {arrow} {delta}
     </span>
   );
