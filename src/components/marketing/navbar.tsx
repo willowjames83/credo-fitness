@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { AppDownloadBadges } from "@/components/shared/app-download-badges";
 
 const NAV_LINKS = [
   { label: "Features", href: "#pillars" },
@@ -37,12 +37,12 @@ export function Navbar() {
       } ${pastHero && scrolled ? "shadow-sm" : ""}`}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
-        <a
+        <Link
           href="/"
           className="text-xs font-bold tracking-[2.5px] uppercase text-[#E8501A] hover:opacity-80 transition-opacity"
         >
           CREDO
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
@@ -60,8 +60,23 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:block">
-          <AppDownloadBadges badgeHeight={30} />
+        <div className="hidden md:flex items-center gap-5">
+          <Link
+            href="/login"
+            className={`text-sm transition-colors ${
+              isDark
+                ? "text-white/60 hover:text-white"
+                : "text-[#6B6B73] hover:text-[#1A1A1E]"
+            }`}
+          >
+            Log in
+          </Link>
+          <Link
+            href="/register"
+            className="rounded-full bg-[#E8501A] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#D3480F]"
+          >
+            Start free
+          </Link>
         </div>
 
         <Sheet>
@@ -87,7 +102,28 @@ export function Navbar() {
                   }
                 />
               ))}
-              <AppDownloadBadges badgeHeight={36} className="pt-2" />
+              <div className="flex flex-col gap-4 pt-2">
+                <SheetClose
+                  render={
+                    <Link
+                      href="/register"
+                      className="rounded-full bg-[#E8501A] px-5 py-2.5 text-center text-sm font-semibold text-white"
+                    >
+                      Start free
+                    </Link>
+                  }
+                />
+                <SheetClose
+                  render={
+                    <Link
+                      href="/login"
+                      className="text-center text-sm font-medium text-[#6B6B73]"
+                    >
+                      Log in
+                    </Link>
+                  }
+                />
+              </div>
             </div>
           </SheetContent>
         </Sheet>

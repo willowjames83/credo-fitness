@@ -2,60 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, Dumbbell, Hexagon, Activity, User } from "lucide-react";
-
-const tabs = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutGrid, href: "/app/dashboard" },
-  { id: "workout", label: "Workout", icon: Dumbbell, href: "/app/workout" },
-  { id: "credo-ten", label: "Credo Ten", icon: Hexagon, href: "/app/credo-ten" },
-  { id: "protein", label: "Scores", icon: Activity, href: "/app/protein" },
-  { id: "profile", label: "Profile", icon: User, href: "/app/profile" },
-];
+import { MOBILE_TABS, isNavActive } from "./nav";
 
 export function TabBar() {
   const pathname = usePathname();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        padding: "8px 0 22px",
-        background: "#FFFFFF",
-        borderTop: "1px solid #E5E5E8",
-      }}
+    <nav
+      aria-label="Primary"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--shell-border)] bg-[var(--shell-bg)]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
     >
-      {tabs.map((t) => {
-        const isActive = pathname === t.href;
-        const Icon = t.icon;
-        return (
-          <Link
-            key={t.id}
-            href={t.href}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 2,
-              textDecoration: "none",
-              opacity: isActive ? 1 : 0.4,
-              transition: "opacity 0.15s",
-            }}
-          >
-            <Icon size={22} color={isActive ? "#E8501A" : "#6B6B73"} />
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 500,
-                color: isActive ? "#E8501A" : "#6B6B73",
-              }}
+      <div className="mx-auto flex h-16 max-w-[640px] items-stretch">
+        {MOBILE_TABS.map((tab) => {
+          const active = isNavActive(pathname, tab.href);
+          const Icon = tab.icon;
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              aria-current={active ? "page" : undefined}
+              className={`flex flex-1 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors ${
+                active
+                  ? "text-[var(--shell-accent)]"
+                  : "text-[var(--shell-text-tertiary)] hover:text-[var(--shell-text-secondary)]"
+              }`}
             >
-              {t.label}
-            </span>
-          </Link>
-        );
-      })}
-    </div>
+              <Icon size={22} strokeWidth={active ? 2.2 : 1.8} />
+              <span>{tab.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
   );
 }

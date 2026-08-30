@@ -212,3 +212,24 @@
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
 }
+
+/* ============================================================
+   App shell (authenticated /app area + auth pages)
+   Tokens mirror COLORS in src/lib/constants.ts.
+   Appended by the app-shell work — marketing styles above are
+   untouched; keep this section self-contained.
+   ============================================================ */
+:root {
+  --shell-bg: #FFFFFF;
+  --shell-surface: #F7F7F8;
+  --shell-surface-elevated: #EEEFF1;
+  --shell-border: #E5E5E8;
+  --shell-accent: #E8501A;
+  --shell-accent-hover: #D3480F;
+  --shell-accent-light: #FFF0E9;
+  --shell-text-primary: #1A1A1E;
+  --shell-text-secondary: #6B6B73;
+  --shell-text-tertiary: #9E9EA3;
+  --shell-success: #2D8A4E;
+  --shell-danger: #C43B3B;
+}

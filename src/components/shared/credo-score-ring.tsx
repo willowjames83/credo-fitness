@@ -28,16 +28,14 @@ export function CredoScoreRing({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
-  const [displayed, setDisplayed] = useState(animate ? 0 : score);
-  const [offset, setOffset] = useState(animate ? circumference : circumference - (score / 100) * circumference);
+  // Raw animated value (0..score). Only used while animating; when
+  // animate is false the displayed value is derived directly from props,
+  // so no synchronous setState in the effect is needed.
+  const [animatedValue, setAnimatedValue] = useState(0);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    if (!animate) {
-      setDisplayed(score);
-      setOffset(circumference - (score / 100) * circumference);
-      return;
-    }
+    if (!animate) return;
 
     const duration = 1500; // ms
     const start = performance.now();
@@ -49,9 +47,7 @@ export function CredoScoreRing({
       const t = Math.min(elapsed / duration, 1);
       // ease out cubic
       const eased = 1 - Math.pow(1 - t, 3);
-      const current = from + (to - from) * eased;
-      setDisplayed(Math.round(current));
-      setOffset(circumference - (current / 100) * circumference);
+      setAnimatedValue(from + (to - from) * eased);
 
       if (t < 1) {
         rafRef.current = requestAnimationFrame(tick);
@@ -62,8 +58,11 @@ export function CredoScoreRing({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [score, animate, circumference]);
+  }, [score, animate]);
 
+  const current = animate ? animatedValue : score;
+  const displayed = Math.round(current);
+  const offset = circumference - (current / 100) * circumference;
   const label = getTierLabel(displayed, domain);
 
   return (
