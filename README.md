@@ -52,21 +52,24 @@ see `PRD-adaptive-training-engine.md` for the full design.
 # 1. Install dependencies (runs `prisma generate` via postinstall)
 npm install
 
-# 2. Copy the env template and fill in real values
+# 2. Copy the env template — its defaults match docker-compose out of the box
 cp .env.example .env
 
-# 3. Apply database migrations
-npm run prisma:migrate
+# 3. Start Postgres (or point DATABASE_URL at your own)
+npm run db:up
 
-# 4. Seed reference data (exercise library, strength standards, etc.)
-npx prisma db seed
+# 4. Migrate + seed reference data + seed the demo account, in one shot
+npm run setup
 
 # 5. Start the dev server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Marketing pages are
-public; `/app/*` and `/onboarding` require a signed-in session.
+Open [http://localhost:3000](http://localhost:3000) and sign in as
+**demo@credo.app** / **CredoDemo2026!** — a fully-populated demo account with
+8 weeks of training history, benchmarks, and scores. Or register a fresh
+account and go through onboarding. Marketing pages are public; `/app/*` and
+`/onboarding` require a signed-in session.
 
 ## Scripts
 
@@ -81,6 +84,9 @@ public; `/app/*` and `/onboarding` require a signed-in session.
 | `npm run prisma:generate` | Regenerate the Prisma client |
 | `npm run prisma:migrate` | Run Prisma migrations (dev) |
 | `npm run prisma:seed` | Seed the database (`prisma/seed.ts`) |
+| `npm run db:up` | Start the dockerized Postgres (`docker-compose.yml`) |
+| `npm run setup` | Migrate + seed reference data + seed the demo account |
+| `npm run seed:demo` | (Re)create the demo account only |
 
 ## Environment Variables
 
