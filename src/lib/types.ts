@@ -223,3 +223,120 @@ export interface ApiSuccess<T> {
 export interface ApiError {
   error: string;
 }
+
+// ── API DTOs (contract between route handlers and UI) ───────────
+
+export interface PlannedExerciseDTO {
+  id: string; // PlannedExercise row id
+  exerciseId: string;
+  name: string;
+  muscleGroup: MuscleGroup;
+  movementPattern: MovementPattern;
+  order: number;
+  targetSets: number;
+  targetRepMin: number;
+  targetRepMax: number;
+  recommendedWeight: number;
+  restPeriod: number;
+  rationale: string | null;
+  isWarmup: boolean;
+  isSuperset: boolean;
+  supersetWith: string | null;
+  formCues: string[];
+  previousSession: string | null; // e.g. "3x8 @ 185 lb" or null
+  alternatives: { exerciseId: string; name: string }[];
+}
+
+export interface WarmupMoveDTO {
+  exerciseId: string;
+  name: string;
+  prescription: string; // e.g. "2x10" or "30 sec"
+}
+
+export interface WorkoutPlanDTO {
+  id: string;
+  weekNumber: number;
+  dayNumber: number;
+  totalDays: number;
+  splitType: string;
+  focus: string;
+  estimatedDuration: number;
+  status: "planned" | "in_progress" | "completed" | "skipped";
+  scheduledDate: string | null;
+  startedAt: string | null;
+  warmup: WarmupMoveDTO[];
+  exercises: PlannedExerciseDTO[];
+}
+
+export interface CompleteWorkoutRequest {
+  durationSeconds: number;
+  exercises: {
+    exerciseId: string;
+    exertionRating?: number; // 1-5
+    sets: CompletedSetInput[];
+  }[];
+}
+
+export interface CompleteWorkoutResponse {
+  personalRecords: {
+    exerciseId: string;
+    name: string;
+    previous1RM: number | null;
+    new1RM: number;
+  }[];
+  scores: PillarScoresDTO;
+  summary: {
+    totalVolume: number;
+    durationSeconds: number;
+    exerciseCount: number;
+    setCount: number;
+  };
+}
+
+export interface ScoreWithDelta {
+  score: number;
+  delta: number; // vs previous weekly snapshot
+}
+
+export interface PillarScoresDTO {
+  weekNumber: number;
+  credo: ScoreWithDelta;
+  strength: ScoreWithDelta;
+  stability: ScoreWithDelta;
+  cardio: ScoreWithDelta;
+  nutrition: ScoreWithDelta;
+}
+
+export interface BenchmarkDTO {
+  name: string;
+  unit: string;
+  pillar: string;
+  isInversed: boolean;
+  description: string;
+  instructions: string;
+  latest: { value: number; percentile: number | null; testedAt: string } | null;
+  previous: { value: number } | null;
+}
+
+export interface WorkoutHistoryItemDTO {
+  id: string;
+  date: string;
+  focus: string;
+  durationSeconds: number | null;
+  totalVolume: number;
+  exerciseCount: number;
+  setCount: number;
+  prCount: number;
+}
+
+export interface OnboardingCompleteRequest {
+  profile: {
+    age: number;
+    sex: Sex;
+    weight: number;
+    heightIn?: number;
+    experienceLevel: Difficulty;
+  };
+  preferences: TrainingPreferencesInput;
+  benchmarks?: { name: string; value: number }[];
+}
