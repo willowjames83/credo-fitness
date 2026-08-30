@@ -1,214 +1,326 @@
 "use client";
 
+// The Credo Ten — functional fitness benchmarks, grouped by pillar,
+// fetched from /api/benchmarks with a bottom-sheet flow to log results.
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PercentileBar } from "@/components/shared/percentile-bar";
-import { mockBenchmarks, mockCompositePercentile } from "@/data/mock-benchmarks";
-import { COLORS, PILLARS } from "@/lib/constants";
+import { TrendIndicator } from "@/components/shared/trend-indicator";
+import { PILLARS } from "@/lib/constants";
+import type { BenchmarkDTO } from "@/lib/types";
+import {
+  LogBenchmarkSheet,
+  type LoggedBenchmarkResult,
+} from "@/components/scores/log-benchmark-sheet";
+import {
+  fetchData,
+  formatMmss,
+  ordinal,
+  relativeDate,
+  UnauthorizedError,
+} from "@/components/scores/utils";
 
-const pillarColorMap: Record<string, string> = {
-  strength: COLORS.accent,
-  stability: COLORS.teal,
-  cardio: COLORS.cardio,
-};
+function pillarColor(pillar: string): string {
+  if (pillar in PILLARS) return PILLARS[pillar as keyof typeof PILLARS].color;
+  return "#E8501A";
+}
 
-function formatRowTime(seconds: number): string {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
+// The 1000m Row is the only inversed seconds test — display as m:ss.
+function isRowTime(b: BenchmarkDTO): boolean {
+  return b.isInversed && b.unit === "sec";
+}
+
+function displayValue(b: BenchmarkDTO, value: number): string {
+  if (isRowTime(b)) return formatMmss(value);
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function displayUnit(b: BenchmarkDTO): string {
+  if (isRowTime(b)) return ""; // "3:18" needs no unit
+  if (b.unit === "lbs") return "lb";
+  return b.unit;
+}
+
+function deltaLabel(b: BenchmarkDTO, diff: number): string {
+  const abs = Math.abs(diff);
+  const absStr = Number.isInteger(abs) ? String(abs) : abs.toFixed(1);
+  if (b.unit === "sec") return `${absStr} sec`;
+  if (b.unit.startsWith("lbs")) return `${absStr} lb`;
+  if (b.unit === "reps") return `${absStr} reps`;
+  if (b.unit.includes("watt")) return `${absStr} W`;
+  return `${absStr} ${b.unit}`;
+}
+
+interface PillarGroup {
+  key: string;
+  label: string;
+  color: string;
+  items: BenchmarkDTO[];
 }
 
 export default function CredoTenPage() {
-  const { value: compositeValue, context } = mockCompositePercentile;
-  const suffix =
-    compositeValue % 10 === 1 && compositeValue !== 11
-      ? "st"
-      : compositeValue % 10 === 2 && compositeValue !== 12
-      ? "nd"
-      : compositeValue % 10 === 3 && compositeValue !== 13
-      ? "rd"
-      : "th";
+  const router = useRouter();
+  const [benchmarks, setBenchmarks] = useState<BenchmarkDTO[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeName, setActiveName] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Flip after first paint so percentile bars animate from 0 on mount.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchData<{ benchmarks: BenchmarkDTO[] }>(
+        "/api/benchmarks",
+      );
+      setBenchmarks(data.benchmarks ?? []);
+    } catch (e) {
+      if (e instanceof UnauthorizedError) {
+        router.replace("/login");
+        return;
+      }
+      setError(e instanceof Error ? e.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  // Optimistic card update from the log sheet.
+  const handleLogged = useCallback((result: LoggedBenchmarkResult) => {
+    setBenchmarks((prev) =>
+      prev
+        ? prev.map((b) =>
+            b.name === result.name
+              ? {
+                  ...b,
+                  previous: b.latest ? { value: b.latest.value } : b.previous,
+                  latest: {
+                    value: result.value,
+                    percentile: result.percentile,
+                    testedAt: result.testedAt,
+                  },
+                }
+              : b,
+          )
+        : prev,
+    );
+  }, []);
+
+  const groups = useMemo<PillarGroup[]>(() => {
+    if (!benchmarks) return [];
+    const known: PillarGroup[] = Object.values(PILLARS)
+      .map((p) => ({
+        key: p.key as string,
+        label: p.label,
+        color: p.color,
+        items: benchmarks.filter((b) => b.pillar === p.key),
+      }))
+      .filter((g) => g.items.length > 0);
+    const other = benchmarks.filter((b) => !(b.pillar in PILLARS));
+    if (other.length > 0) {
+      known.push({ key: "other", label: "Other", color: "#E8501A", items: other });
+    }
+    return known;
+  }, [benchmarks]);
+
+  const activeBenchmark =
+    benchmarks?.find((b) => b.name === activeName) ?? null;
+
+  if (loading) return <CredoTenSkeleton />;
+
+  if (error || !benchmarks) {
+    return (
+      <div className="flex flex-1 items-center justify-center px-5 pb-10">
+        <div className="w-full rounded-[14px] border border-[#E5E5E8] bg-white p-6 text-center">
+          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+            Couldn&apos;t load the Credo Ten
+          </div>
+          <div className="mt-1 text-[13px] text-[#6B6B73]">
+            {error ?? "Something went wrong"}
+          </div>
+          <button
+            type="button"
+            onClick={() => void load()}
+            className="mt-4 rounded-[10px] bg-[#E8501A] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+          >
+            Try again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const testedCount = benchmarks.filter((b) => b.latest !== null).length;
+  const total = benchmarks.length;
 
   return (
-    <div style={{ padding: "0 20px 20px", flex: 1 }}>
-      {/* Title */}
-      <div style={{ marginBottom: 16 }}>
-        <div
-          style={{
-            fontSize: 18,
-            fontWeight: 600,
-            color: COLORS.textPrimary,
-          }}
-        >
+    <div className="flex-1 px-5 pb-6">
+      {/* ── Header ───────────────────────────────────────── */}
+      <div className="pb-5">
+        <h1 className="text-[18px] font-semibold text-[#1A1A1E]">
           The Credo Ten
+        </h1>
+        <p className="mt-1 text-[13px] leading-relaxed text-[#6B6B73]">
+          Ten functional benchmarks that anchor your scores to real-world
+          strength, stability, and engine.
+        </p>
+        {total > 0 && (
+          <div className="mt-3 flex items-center gap-2.5">
+            <div className="flex-1">
+              <PercentileBar
+                value={mounted ? (testedCount / total) * 100 : 0}
+                color="#E8501A"
+              />
+            </div>
+            <span className="shrink-0 font-mono text-[12px] font-semibold text-[#6B6B73]">
+              {testedCount} of {total} tested
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* ── Pillar groups ────────────────────────────────── */}
+      {groups.map((group, gi) => (
+        <div key={group.key} className={gi === 0 ? "" : "mt-6"}>
+          <div className="mb-2.5 flex items-center gap-2">
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ background: group.color }}
+            />
+            <SectionHeader>{group.label}</SectionHeader>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            {group.items.map((b) => (
+              <BenchmarkCard
+                key={b.name}
+                benchmark={b}
+                color={group.color}
+                mounted={mounted}
+                onLog={() => setActiveName(b.name)}
+              />
+            ))}
+          </div>
         </div>
-        <div
-          style={{ fontSize: 13, color: COLORS.textSecondary, marginTop: 2 }}
-        >
-          Your functional fitness benchmarks
+      ))}
+
+      {/* ── Log sheet ────────────────────────────────────── */}
+      <AnimatePresence>
+        {activeBenchmark && (
+          <LogBenchmarkSheet
+            key={activeBenchmark.name}
+            benchmark={activeBenchmark}
+            color={pillarColor(activeBenchmark.pillar)}
+            onClose={() => setActiveName(null)}
+            onLogged={handleLogged}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+interface BenchmarkCardProps {
+  benchmark: BenchmarkDTO;
+  color: string;
+  mounted: boolean;
+  onLog: () => void;
+}
+
+function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardProps) {
+  const latest = b.latest;
+  const diff =
+    latest && b.previous !== null ? latest.value - b.previous.value : null;
+  const unit = displayUnit(b);
+
+  return (
+    <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+            {b.name}
+          </div>
+          <div className="mt-0.5 text-[11px] text-[#9E9EA3]">
+            {latest ? `Tested ${relativeDate(latest.testedAt)}` : "Never tested"}
+          </div>
+        </div>
+        <div className="shrink-0 text-right">
+          {latest ? (
+            <>
+              <div className="font-mono text-[20px] font-semibold leading-tight text-[#1A1A1E]">
+                {displayValue(b, latest.value)}
+                {unit && (
+                  <span className="ml-1 text-[12px] font-normal text-[#6B6B73]">
+                    {unit}
+                  </span>
+                )}
+              </div>
+              {diff !== null && diff !== 0 && (
+                <TrendIndicator
+                  delta={deltaLabel(b, diff)}
+                  direction={diff > 0 ? "up" : "down"}
+                  // For inversed tests (1000m Row) a decrease is the win.
+                  positive={b.isInversed ? diff < 0 : diff > 0}
+                />
+              )}
+            </>
+          ) : (
+            <span className="font-mono text-[20px] font-semibold text-[#9E9EA3]">
+              —
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Composite card */}
-      <div
-        style={{
-          background: COLORS.surface,
-          borderRadius: 14,
-          padding: 16,
-          marginBottom: 16,
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 11,
-            fontWeight: 600,
-            color: COLORS.textTertiary,
-            letterSpacing: 1,
-            textTransform: "uppercase",
-            marginBottom: 6,
-          }}
-        >
-          Credo Ten Composite
-        </div>
-        <div
-          style={{
-            fontFamily: "'SF Mono', ui-monospace, monospace",
-            fontSize: 36,
-            fontWeight: 700,
-            color: COLORS.textPrimary,
-          }}
-        >
-          {compositeValue}
-          <span
-            style={{
-              fontSize: 16,
-              fontWeight: 400,
-              color: COLORS.textTertiary,
-            }}
-          >
-            {suffix}
+      {latest && latest.percentile !== null && (
+        <div className="mt-3 flex items-center gap-2">
+          <div className="flex-1">
+            <PercentileBar
+              value={mounted ? latest.percentile : 0}
+              color={color}
+            />
+          </div>
+          <span className="w-9 shrink-0 text-right text-[11px] font-medium text-[#6B6B73]">
+            {ordinal(latest.percentile)}
           </span>
         </div>
-        <div style={{ fontSize: 12, color: COLORS.textSecondary }}>
-          percentile for {context}
-        </div>
-      </div>
+      )}
 
-      {/* Benchmark cards */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {mockBenchmarks.map((b, i) => {
-          const displayValue = b.isInversed ? formatRowTime(b.value) : b.value;
-          const deltaColor = b.isInversed ? COLORS.success : COLORS.success;
-          const barColor = pillarColorMap[b.pillar] ?? COLORS.accent;
-
-          return (
-            <div
-              key={i}
-              style={{
-                background: COLORS.bg,
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: 12,
-                padding: "12px 16px",
-                cursor: "pointer",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  marginBottom: 8,
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: COLORS.textPrimary,
-                    }}
-                  >
-                    {b.name}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: COLORS.textTertiary,
-                      marginTop: 2,
-                    }}
-                  >
-                    Last tested: {b.lastTested}
-                  </div>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <div
-                    style={{
-                      fontFamily: "'SF Mono', ui-monospace, monospace",
-                      fontSize: 20,
-                      fontWeight: 600,
-                      color: COLORS.textPrimary,
-                    }}
-                  >
-                    {displayValue}{" "}
-                    <span
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 400,
-                        color: COLORS.textSecondary,
-                      }}
-                    >
-                      {b.unit}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 500,
-                      color: deltaColor,
-                      marginTop: 1,
-                    }}
-                  >
-                    {b.delta}
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: 8 }}
-              >
-                <div style={{ flex: 1 }}>
-                  <PercentileBar value={b.percentile} color={barColor} />
-                </div>
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 500,
-                    color: COLORS.textSecondary,
-                    minWidth: 30,
-                  }}
-                >
-                  {b.percentile}th
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Log button */}
-      <div
-        style={{
-          marginTop: 16,
-          padding: "12px 0",
-          background: COLORS.teal,
-          borderRadius: 12,
-          textAlign: "center",
-          color: "#fff",
-          fontSize: 15,
-          fontWeight: 600,
-          cursor: "pointer",
-        }}
+      <button
+        type="button"
+        onClick={onLog}
+        className="mt-3 w-full rounded-[10px] border border-[#E5E5E8] bg-white py-2 text-[13px] font-semibold text-[#1A1A1E] transition-colors hover:bg-[#F7F7F8]"
       >
-        Log Benchmark Test
+        Log result
+      </button>
+    </div>
+  );
+}
+
+function CredoTenSkeleton() {
+  return (
+    <div className="flex-1 px-5 pb-6">
+      <div className="h-5 w-32 animate-pulse rounded bg-[#EEEFF1]" />
+      <div className="mt-2 h-3 w-full animate-pulse rounded bg-[#EEEFF1]" />
+      <div className="mt-2 h-3 w-3/4 animate-pulse rounded bg-[#EEEFF1]" />
+      <div className="mt-6 flex flex-col gap-2.5">
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={i}
+            className="h-[118px] animate-pulse rounded-[14px] bg-[#EEEFF1]"
+          />
+        ))}
       </div>
     </div>
   );
