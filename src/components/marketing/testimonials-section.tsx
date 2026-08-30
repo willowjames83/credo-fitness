@@ -39,13 +39,13 @@ export function TestimonialsSection() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="bg-white border border-[#E5E5E8] rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
+              className="bg-card-surface border border-app rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
             >
               {/* Large decorative quote mark */}
-              <span className="absolute top-4 right-6 text-[80px] leading-none font-[family-name:var(--font-dm-serif)] text-[#E8501A]/[0.06] select-none pointer-events-none">
+              <span className="absolute top-4 right-6 text-[80px] leading-none font-[family-name:var(--font-dm-serif)] text-credo/[0.06] select-none pointer-events-none">
                 &ldquo;
               </span>
-              <p className="text-[#1A1A1E] leading-relaxed mb-6 relative">
+              <p className="text-text-primary leading-relaxed mb-6 relative">
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
@@ -53,10 +53,10 @@ export function TestimonialsSection() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[#1A1A1E]">
+                  <p className="text-sm font-semibold text-text-primary">
                     {t.name}
                   </p>
-                  <p className="text-xs text-[#9E9EA3]">{t.context}</p>
+                  <p className="text-xs text-text-tertiary">{t.context}</p>
                 </div>
               </div>
             </motion.div>

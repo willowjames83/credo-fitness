@@ -26,7 +26,7 @@ export function PillarsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-[#1A1A1E]"
+            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-text-primary"
           >
             The Four Pillars
           </motion.h2>
@@ -35,7 +35,7 @@ export function PillarsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-[#6B6B73] text-lg"
+            className="mt-4 text-text-secondary text-lg"
           >
             Every dimension of exercise that matters for longevity
           </motion.p>
@@ -52,7 +52,7 @@ export function PillarsSection() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group bg-white border border-[#E5E5E8] rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
+                className="group bg-card-surface border border-app rounded-2xl p-8 relative overflow-hidden hover:shadow-lg hover:shadow-black/[0.04] transition-shadow duration-300"
               >
                 {/* Top gradient bar */}
                 <div
@@ -80,7 +80,7 @@ export function PillarsSection() {
                     {pillar.label}
                   </h3>
                 </div>
-                <p className="text-[#6B6B73] leading-relaxed">
+                <p className="text-text-secondary leading-relaxed">
                   {pillarDescriptions[pillar.key]}
                 </p>
               </motion.div>

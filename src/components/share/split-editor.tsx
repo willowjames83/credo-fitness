@@ -95,7 +95,7 @@ export function SplitEditor({
   }
 
   return (
-    <div className="rounded-[14px] border border-[var(--shell-border)] bg-white p-4 sm:p-5">
+    <div className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-4 sm:p-5">
       <div className="mb-4">
         <label
           htmlFor="split-name"
@@ -110,7 +110,7 @@ export function SplitEditor({
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. My Push Pull Legs"
           maxLength={60}
-          className="h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-white px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
+          className="h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-card-surface px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
         />
       </div>
 
@@ -138,7 +138,7 @@ export function SplitEditor({
                   onChange={(e) => updateDay(d.dayNumber, { label: e.target.value })}
                   placeholder="Day label, e.g. Push"
                   maxLength={30}
-                  className="mb-2.5 h-9 w-full max-w-xs rounded-[8px] border border-[var(--shell-border)] bg-white px-3 text-[13.5px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
+                  className="mb-2.5 h-9 w-full max-w-xs rounded-[8px] border border-[var(--shell-border)] bg-card-surface px-3 text-[13.5px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
                 />
                 <ChipMultiSelect
                   ariaLabel={`Muscle groups for ${dayShortName(d.dayNumber)}`}
@@ -155,7 +155,7 @@ export function SplitEditor({
       {error && (
         <p
           role="alert"
-          className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {error}
         </p>
@@ -166,7 +166,7 @@ export function SplitEditor({
           type="button"
           onClick={handleSave}
           disabled={saving}
-          className="h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="focus-ring h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {saving ? "Saving…" : "Save split"}
         </button>
@@ -174,7 +174,7 @@ export function SplitEditor({
           type="button"
           onClick={onCancel}
           disabled={saving}
-          className="h-10 rounded-full border border-[var(--shell-border)] px-5 text-sm font-medium text-[var(--shell-text-secondary)] transition-colors hover:border-[var(--shell-text-tertiary)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="focus-ring h-10 rounded-full border border-[var(--shell-border)] px-5 text-sm font-medium text-[var(--shell-text-secondary)] transition-colors hover:border-[var(--shell-text-tertiary)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           Cancel
         </button>

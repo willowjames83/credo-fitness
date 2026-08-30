@@ -37,7 +37,7 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="py-28 px-6 bg-[#FAFAFA] relative">
+    <section id="how-it-works" className="py-28 px-6 bg-surface relative">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.02] pointer-events-none" />
       <div className="max-w-6xl mx-auto relative">
         <div className="text-center mb-16">
@@ -46,7 +46,7 @@ export function HowItWorksSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-[#1A1A1E]"
+            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-text-primary"
           >
             How It Works
           </motion.h2>
@@ -54,7 +54,7 @@ export function HowItWorksSection() {
 
         <div className="relative grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4">
           {/* Connecting line (desktop) */}
-          <div className="hidden md:block absolute top-5 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#E5E5E8] to-transparent" />
+          <div className="hidden md:block absolute top-5 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-app to-transparent" />
 
           {steps.map((step, i) => (
             <motion.div
@@ -66,15 +66,15 @@ export function HowItWorksSection() {
               className="flex flex-col items-center text-center relative"
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-[#E8501A] rounded-full opacity-20 blur-[8px]" />
-                <div className="relative w-10 h-10 rounded-full bg-[#E8501A] text-white flex items-center justify-center text-sm font-bold mb-4">
+                <div className="absolute inset-0 bg-credo rounded-full opacity-20 blur-[8px]" />
+                <div className="relative w-10 h-10 rounded-full bg-credo text-white flex items-center justify-center text-sm font-bold mb-4">
                   {step.number}
                 </div>
               </div>
-              <h3 className="text-[#1A1A1E] font-semibold mb-2">
+              <h3 className="text-text-primary font-semibold mb-2">
                 {step.title}
               </h3>
-              <p className="text-sm text-[#6B6B73] leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {step.description}
               </p>
             </motion.div>

@@ -35,12 +35,12 @@ export function ImportSplitButton({ code }: { code: string }) {
         type="button"
         onClick={handleImport}
         disabled={state === "loading"}
-        className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-[#E8501A] px-6 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F] disabled:cursor-not-allowed disabled:opacity-70"
+        className="focus-ring inline-flex h-11 items-center gap-2 rounded-[12px] bg-[var(--shell-accent)] px-6 text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
       >
         {state === "loading" && <Loader2 size={16} className="animate-spin" />}
         Import this split
       </button>
-      {error && <p className="mt-2 text-[13px] text-[#C43B3B]">{error}</p>}
+      {error && <p className="mt-2 text-[13px] text-[var(--shell-danger)]">{error}</p>}
     </div>
   );
 }

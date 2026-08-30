@@ -96,10 +96,10 @@ export function EquipmentStep({
               type="button"
               aria-pressed={selected}
               onClick={() => dispatch({ type: "toggleEquipment", equipment })}
-              className={`flex h-12 items-center justify-between gap-2 rounded-[10px] border px-3.5 text-left text-[14px] font-medium transition-colors ${
+              className={`focus-ring flex h-12 items-center justify-between gap-2 rounded-[10px] border px-3.5 text-left text-[14px] font-medium transition-colors ${
                 selected
                   ? "border-[var(--shell-accent)] bg-[var(--shell-accent-light)] text-[var(--shell-text-primary)]"
-                  : "border-[var(--shell-border)] bg-white text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
+                  : "border-[var(--shell-border)] bg-card-surface text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
               }`}
             >
               {EQUIPMENT_LABELS[equipment]}
@@ -121,7 +121,7 @@ export function EquipmentStep({
         type="button"
         aria-pressed={bodyweightOnly}
         onClick={() => dispatch({ type: "bodyweightOnly" })}
-        className={`mt-4 w-full rounded-[10px] border border-dashed px-3.5 py-2.5 text-[13px] font-medium transition-colors ${
+        className={`focus-ring mt-4 w-full rounded-[10px] border border-dashed px-3.5 py-2.5 text-[13px] font-medium transition-colors ${
           bodyweightOnly
             ? "border-[var(--shell-accent)] text-[var(--shell-accent)]"
             : "border-[var(--shell-border)] text-[var(--shell-text-secondary)] hover:border-[var(--shell-text-tertiary)] hover:text-[var(--shell-text-primary)]"
@@ -202,7 +202,7 @@ export function SplitStep({
           type="button"
           aria-expanded={advancedOpen}
           onClick={() => setAdvancedOpen((open) => !open)}
-          className="flex w-full items-center justify-between px-4 py-3 text-[13px] font-semibold text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
+          className="focus-ring flex w-full items-center justify-between rounded-[12px] px-4 py-3 text-[13px] font-semibold text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
         >
           Advanced
           <ChevronDown

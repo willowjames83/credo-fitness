@@ -42,14 +42,14 @@ export function BenchmarksStep({
             onClick={() =>
               dispatch({ type: "patch", patch: { benchmarkMode: "enter" } })
             }
-            className="h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
+            className="focus-ring h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
           >
             Enter what you know
           </button>
           <button
             type="button"
             onClick={onSkip}
-            className="h-11 w-full rounded-full border border-[var(--shell-border)] bg-white text-[15px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)]"
+            className="focus-ring h-11 w-full rounded-full border border-[var(--shell-border)] bg-card-surface text-[15px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)]"
           >
             Skip for now
           </button>
@@ -79,7 +79,7 @@ export function BenchmarksStep({
           <button
             type="button"
             onClick={onSkip}
-            className="mt-3 text-[13px] font-medium text-[var(--shell-text-secondary)] underline-offset-2 transition-colors hover:text-[var(--shell-text-primary)] hover:underline"
+            className="focus-ring mt-3 rounded-sm text-[13px] font-medium text-[var(--shell-text-secondary)] underline-offset-2 transition-colors hover:text-[var(--shell-text-primary)] hover:underline"
           >
             Actually, skip for now
           </button>
@@ -128,14 +128,14 @@ export function ReadyStep({
         </h1>
         <p
           role="alert"
-          className="mx-auto mt-4 max-w-[40ch] rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="mx-auto mt-4 max-w-[40ch] rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {error ?? "Something went wrong building your plan."}
         </p>
         <button
           type="button"
           onClick={onRetry}
-          className="mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
+          className="focus-ring mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
         >
           Try again
         </button>
@@ -163,7 +163,7 @@ export function ReadyStep({
         {sorted.map((plan) => (
           <div
             key={plan.id}
-            className="flex items-center gap-3.5 rounded-[12px] border border-[var(--shell-border)] bg-white p-3.5"
+            className="flex items-center gap-3.5 rounded-[12px] border border-[var(--shell-border)] bg-card-surface p-3.5"
           >
             <div className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-[10px] bg-[var(--shell-accent-light)]">
               <span className="text-[9px] font-bold uppercase tracking-wide text-[var(--shell-accent)]">
@@ -189,7 +189,7 @@ export function ReadyStep({
 
       <a
         href="/app/dashboard"
-        className="mt-7 flex h-11 w-full items-center justify-center rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
+        className="focus-ring mt-7 flex h-11 w-full items-center justify-center rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
       >
         Go to my dashboard
       </a>

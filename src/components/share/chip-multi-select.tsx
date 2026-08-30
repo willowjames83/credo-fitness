@@ -27,10 +27,10 @@ export function ChipMultiSelect<T extends string>({
             aria-pressed={isSelected}
             disabled={disabled}
             onClick={() => onToggle(option.value)}
-            className={`h-8 rounded-full border px-3 text-[12.5px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+            className={`focus-ring h-8 rounded-full border px-3 text-[12.5px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
               isSelected
                 ? "border-[var(--shell-accent)] bg-[var(--shell-accent-light)] text-[var(--shell-accent)]"
-                : "border-[var(--shell-border)] bg-white text-[var(--shell-text-secondary)] hover:border-[var(--shell-text-tertiary)]"
+                : "border-[var(--shell-border)] bg-card-surface text-[var(--shell-text-secondary)] hover:border-[var(--shell-text-tertiary)]"
             }`}
           >
             {option.label}

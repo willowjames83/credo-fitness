@@ -37,7 +37,7 @@ export function PricingSection() {
   const [annual, setAnnual] = useState(true);
 
   return (
-    <section id="pricing" className="py-28 px-6 bg-[#FAFAFA] relative">
+    <section id="pricing" className="py-28 px-6 bg-surface relative">
       <div className="absolute inset-0 bg-dot-grid opacity-[0.02] pointer-events-none" />
       <div className="max-w-4xl mx-auto relative">
         <div className="text-center mb-12">
@@ -46,7 +46,7 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-[#1A1A1E]"
+            className="font-[family-name:var(--font-dm-serif)] text-3xl md:text-[2.75rem] text-text-primary"
           >
             Simple pricing
           </motion.h2>
@@ -55,33 +55,33 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-[#6B6B73] text-lg"
+            className="mt-4 text-text-secondary text-lg"
           >
             Start free. Upgrade when you&apos;re ready.
           </motion.p>
 
           {/* Toggle */}
-          <div className="mt-6 inline-flex items-center gap-1 bg-[#EEEFF1] rounded-full p-1">
+          <div className="mt-6 inline-flex items-center gap-1 bg-surface-elevated rounded-full p-1">
             <button
               onClick={() => setAnnual(false)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`focus-ring px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 !annual
-                  ? "bg-white text-[#1A1A1E] shadow-sm"
-                  : "text-[#6B6B73] hover:text-[#1A1A1E]"
+                  ? "bg-card-surface text-text-primary shadow-sm"
+                  : "text-text-secondary hover:text-text-primary"
               }`}
             >
               Monthly
             </button>
             <button
               onClick={() => setAnnual(true)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`focus-ring px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 annual
-                  ? "bg-white text-[#1A1A1E] shadow-sm"
-                  : "text-[#6B6B73] hover:text-[#1A1A1E]"
+                  ? "bg-card-surface text-text-primary shadow-sm"
+                  : "text-text-secondary hover:text-text-primary"
               }`}
             >
               Annual
-              <span className="ml-1.5 text-xs text-[#2D8A4E] font-semibold">
+              <span className="ml-1.5 text-xs text-success font-semibold">
                 Save 37%
               </span>
             </button>
@@ -95,25 +95,25 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="bg-white border border-[#E5E5E8] rounded-2xl p-8"
+            className="bg-card-surface border border-app rounded-2xl p-8"
           >
-            <h3 className="text-lg font-semibold text-[#1A1A1E]">Free</h3>
-            <p className="text-sm text-[#6B6B73] mt-1">Free forever</p>
+            <h3 className="text-lg font-semibold text-text-primary">Free</h3>
+            <p className="text-sm text-text-secondary mt-1">Free forever</p>
             <div className="mt-4 mb-6">
-              <span className="text-4xl font-bold text-[#1A1A1E]">$0</span>
+              <span className="text-4xl font-bold text-text-primary">$0</span>
             </div>
             <AppDownloadBadges badgeHeight={34} />
             <ul className="mt-8 space-y-3">
               {freeFeatures.map((f) => (
                 <li key={f.label} className="flex items-center gap-3">
                   {f.included ? (
-                    <Check className="w-4 h-4 text-[#2D8A4E] shrink-0" />
+                    <Check className="w-4 h-4 text-success shrink-0" />
                   ) : (
-                    <Minus className="w-4 h-4 text-[#9E9EA3] shrink-0" />
+                    <Minus className="w-4 h-4 text-text-tertiary shrink-0" />
                   )}
                   <span
                     className={`text-sm ${
-                      f.included ? "text-[#1A1A1E]" : "text-[#9E9EA3]"
+                      f.included ? "text-text-primary" : "text-text-tertiary"
                     }`}
                   >
                     {f.label}
@@ -129,42 +129,43 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative rounded-2xl p-8 bg-white shadow-xl shadow-[#E8501A]/[0.06]"
+            className="relative rounded-2xl p-8 bg-card-surface shadow-xl shadow-[#E8501A]/[0.06]"
             style={{
               border: "2px solid transparent",
               backgroundClip: "padding-box",
-              backgroundImage: "linear-gradient(white, white), linear-gradient(135deg, #E8501A, #E8501A66, #E8501A)",
+              backgroundImage:
+                "linear-gradient(var(--card-bg), var(--card-bg)), linear-gradient(135deg, #E8501A, #E8501A66, #E8501A)",
               backgroundOrigin: "padding-box, border-box",
             }}
           >
-            <div className="absolute -top-3 right-6 bg-[#E8501A] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg shadow-[#E8501A]/20">
+            <div className="absolute -top-3 right-6 bg-credo text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg shadow-[#E8501A]/20">
               Most Popular
             </div>
-            <h3 className="text-lg font-semibold text-[#1A1A1E]">Pro</h3>
-            <p className="text-sm text-[#6B6B73] mt-1">
+            <h3 className="text-lg font-semibold text-text-primary">Pro</h3>
+            <p className="text-sm text-text-secondary mt-1">
               Every pillar. Every score. Full system.
             </p>
             <div className="mt-4 mb-1">
-              <span className="text-4xl font-bold text-[#1A1A1E]">
+              <span className="text-4xl font-bold text-text-primary">
                 {annual ? "$12.50" : "$19.99"}
               </span>
-              <span className="text-[#6B6B73] text-sm ml-1">/month</span>
+              <span className="text-text-secondary text-sm ml-1">/month</span>
             </div>
             {annual && (
-              <p className="text-xs text-[#6B6B73] mb-5">
+              <p className="text-xs text-text-secondary mb-5">
                 $149.99 billed annually
               </p>
             )}
             {!annual && <div className="mb-5" />}
-            <p className="text-xs text-[#9E9EA3] mb-6">
+            <p className="text-xs text-text-tertiary mb-6">
               Also available: $299.99 lifetime
             </p>
             <AppDownloadBadges badgeHeight={34} />
             <ul className="mt-8 space-y-3">
               {proFeatures.map((f) => (
                 <li key={f.label} className="flex items-center gap-3">
-                  <Check className="w-4 h-4 text-[#2D8A4E] shrink-0" />
-                  <span className="text-sm text-[#1A1A1E]">{f.label}</span>
+                  <Check className="w-4 h-4 text-success shrink-0" />
+                  <span className="text-sm text-text-primary">{f.label}</span>
                 </li>
               ))}
             </ul>

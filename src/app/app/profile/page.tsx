@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, LogOut } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProfileData {
   id: string;
@@ -45,7 +46,7 @@ const TRAINING_LINKS = [
 ];
 
 const inputClass =
-  "h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-white px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]";
+  "h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-card-surface px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]";
 const labelClass =
   "mb-1.5 block text-[13px] font-medium text-[var(--shell-text-primary)]";
 
@@ -148,10 +149,14 @@ export default function ProfilePage() {
     <div className="flex flex-col gap-6 px-5 pb-10 pt-2 lg:px-0">
       {/* Identity */}
       <div className="flex items-center gap-4">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--shell-surface-elevated)] text-lg font-semibold text-[var(--shell-text-secondary)]">
-          {initialsOf(displayName)}
-        </span>
-        <div className="min-w-0">
+        {profile ? (
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--shell-surface-elevated)] text-lg font-semibold text-[var(--shell-text-secondary)]">
+            {initialsOf(displayName)}
+          </span>
+        ) : (
+          <Skeleton className="h-14 w-14 shrink-0 rounded-full" />
+        )}
+        <div className="min-w-0 flex-1">
           <h1 className="truncate text-xl font-semibold text-[var(--shell-text-primary)]">
             {displayName}
           </h1>
@@ -164,14 +169,14 @@ export default function ProfilePage() {
       {loadError && (
         <p
           role="alert"
-          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {loadError}
         </p>
       )}
 
       {/* Profile form */}
-      <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5 sm:p-6">
+      <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5 sm:p-6">
         <h2 className="text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
           Profile
         </h2>
@@ -280,7 +285,7 @@ export default function ProfilePage() {
           {saveError && (
             <p
               role="alert"
-              className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+              className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
             >
               {saveError}
             </p>
@@ -290,7 +295,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={!form || saving}
-              className="h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="focus-ring h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? "Saving…" : "Save changes"}
             </button>
@@ -304,7 +309,7 @@ export default function ProfilePage() {
       </section>
 
       {/* Training settings */}
-      <section className="overflow-hidden rounded-[14px] border border-[var(--shell-border)] bg-white">
+      <section className="overflow-hidden rounded-[14px] border border-[var(--shell-border)] bg-card-surface">
         <h2 className="px-5 pt-5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)] sm:px-6">
           Training
         </h2>
@@ -313,7 +318,7 @@ export default function ProfilePage() {
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center justify-between px-5 py-3.5 text-[15px] text-[var(--shell-text-primary)] transition-colors hover:bg-[var(--shell-surface)] sm:px-6 ${
+              className={`focus-ring flex items-center justify-between px-5 py-3.5 text-[15px] text-[var(--shell-text-primary)] transition-colors hover:bg-[var(--shell-surface)] sm:px-6 ${
                 i < TRAINING_LINKS.length - 1
                   ? "border-b border-[var(--shell-surface-elevated)]"
                   : ""
@@ -327,12 +332,12 @@ export default function ProfilePage() {
       </section>
 
       {/* Sign out */}
-      <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5 sm:p-6">
+      <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5 sm:p-6">
         <button
           type="button"
           onClick={handleSignOut}
           disabled={signingOut}
-          className="inline-flex items-center gap-2 text-[15px] font-medium text-[var(--shell-danger)] transition-opacity hover:opacity-80 disabled:opacity-60"
+          className="focus-ring inline-flex items-center gap-2 rounded-sm text-[15px] font-medium text-[var(--shell-danger)] transition-opacity hover:opacity-80 disabled:opacity-60"
         >
           <LogOut size={16} />
           {signingOut ? "Signing out…" : "Sign out"}

@@ -69,7 +69,7 @@ export function NumberInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-white px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
+        className="h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-card-surface px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]"
       />
       {suffix && (
         <span className="pointer-events-none absolute inset-y-0 right-3.5 flex items-center text-[13px] text-[var(--shell-text-tertiary)]">
@@ -100,10 +100,10 @@ export function OptionCard({
       role="radio"
       aria-checked={selected}
       onClick={onSelect}
-      className={`w-full rounded-[12px] border p-4 text-left transition-colors ${
+      className={`focus-ring w-full rounded-[12px] border p-4 text-left transition-colors ${
         selected
           ? "border-[var(--shell-accent)] bg-[var(--shell-accent-light)]"
-          : "border-[var(--shell-border)] bg-white hover:border-[var(--shell-text-tertiary)]"
+          : "border-[var(--shell-border)] bg-card-surface hover:border-[var(--shell-text-tertiary)]"
       }`}
     >
       <span className="flex items-start justify-between gap-3">
@@ -129,7 +129,7 @@ export function OptionCard({
           className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
             selected
               ? "border-[var(--shell-accent)] bg-[var(--shell-accent)] text-white"
-              : "border-[var(--shell-border)] bg-white text-transparent"
+              : "border-[var(--shell-border)] bg-card-surface text-transparent"
           }`}
         >
           <Check size={12} strokeWidth={3} />
@@ -164,10 +164,10 @@ export function PillGroup<T extends string | number>({
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(option)}
-            className={`h-11 min-w-[52px] rounded-full border px-4 text-[14px] font-semibold transition-colors ${
+            className={`focus-ring h-11 min-w-[52px] rounded-full border px-4 text-[14px] font-semibold transition-colors ${
               selected
                 ? "border-[var(--shell-accent)] bg-[var(--shell-accent)] text-white"
-                : "border-[var(--shell-border)] bg-white text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
+                : "border-[var(--shell-border)] bg-card-surface text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
             }`}
           >
             {format ? format(option) : String(option)}
@@ -206,9 +206,9 @@ export function SegmentedControl<T extends string>({
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(option.value)}
-            className={`h-9 rounded-[8px] text-[14px] font-medium transition-colors ${
+            className={`focus-ring h-9 rounded-[8px] text-[14px] font-medium transition-colors ${
               selected
-                ? "bg-white text-[var(--shell-text-primary)] shadow-[0_1px_2px_rgba(26,26,30,0.08)]"
+                ? "bg-card-surface text-[var(--shell-text-primary)] shadow-[0_1px_2px_rgba(26,26,30,0.08)]"
                 : "text-[var(--shell-text-secondary)] hover:text-[var(--shell-text-primary)]"
             }`}
           >
@@ -254,13 +254,13 @@ export function Toggle({
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+        className={`focus-ring relative h-6 w-11 shrink-0 rounded-full transition-colors ${
           checked ? "bg-[var(--shell-accent)]" : "bg-[var(--shell-border)]"
         }`}
       >
         <span
           aria-hidden
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-[0_1px_2px_rgba(26,26,30,0.2)] transition-transform ${
+          className={`absolute top-0.5 h-5 w-5 rounded-full bg-card-surface shadow-[0_1px_2px_rgba(26,26,30,0.2)] transition-transform ${
             checked ? "translate-x-[22px]" : "translate-x-0.5"
           }`}
         />
@@ -273,7 +273,7 @@ export function ErrorNote({ message }: { message: string }) {
   return (
     <p
       role="alert"
-      className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+      className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
     >
       {message}
     </p>

@@ -134,7 +134,7 @@ export function OnboardingWizard() {
               <button
                 type="button"
                 onClick={handleBack}
-                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-sm text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
               >
                 <ArrowLeft size={14} />
                 Back
@@ -162,7 +162,7 @@ export function OnboardingWizard() {
         </div>
 
         {/* Card */}
-        <div className="overflow-hidden rounded-[14px] border border-[var(--shell-border)] bg-white p-6 shadow-[0_1px_2px_rgba(26,26,30,0.04)] sm:p-8">
+        <div className="overflow-hidden rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-6 shadow-[0_1px_2px_rgba(26,26,30,0.04)] sm:p-8">
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <motion.div
               key={step}
@@ -228,7 +228,7 @@ export function OnboardingWizard() {
                 <button
                   type="button"
                   onClick={handleContinue}
-                  className="mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
+                  className="focus-ring mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
                 >
                   {step === 9 ? "Finish" : "Continue"}
                 </button>

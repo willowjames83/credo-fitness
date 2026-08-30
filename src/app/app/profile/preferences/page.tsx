@@ -20,6 +20,7 @@ import {
   Toggle,
 } from "@/components/onboarding/fields";
 import { fetchData, putJson } from "@/components/share/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DAY_OPTIONS = [2, 3, 4, 5, 6] as const;
 const DURATION_OPTIONS = [30, 45, 60, 75, 90] as const;
@@ -112,7 +113,7 @@ export default function PreferencesPage() {
       <div>
         <Link
           href="/app/profile"
-          className="inline-flex items-center gap-1 text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
+          className="focus-ring inline-flex items-center gap-1 rounded-sm text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
         >
           <ChevronLeft size={15} />
           Profile
@@ -125,16 +126,33 @@ export default function PreferencesPage() {
       {loadError && (
         <p
           role="alert"
-          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {loadError}
         </p>
       )}
 
+      {!form && !loadError && (
+        <div className="flex flex-col gap-6" aria-busy="true" aria-label="Loading preferences">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5"
+            >
+              <Skeleton className="mb-4 h-3 w-24" />
+              <div className="space-y-2.5">
+                <Skeleton className="h-11 w-full rounded-[12px]" />
+                <Skeleton className="h-11 w-full rounded-[12px]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {form && (
         <div className="flex flex-col gap-6">
           {/* Goal */}
-          <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5">
+          <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
               Goal
             </h2>
@@ -152,7 +170,7 @@ export default function PreferencesPage() {
           </section>
 
           {/* Schedule */}
-          <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5">
+          <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
               Schedule
             </h2>
@@ -180,7 +198,7 @@ export default function PreferencesPage() {
           </section>
 
           {/* Equipment */}
-          <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5">
+          <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
               Equipment
             </h2>
@@ -193,10 +211,10 @@ export default function PreferencesPage() {
                     type="button"
                     aria-pressed={selected}
                     onClick={() => toggleEquipment(equipment)}
-                    className={`flex h-12 items-center justify-between gap-2 rounded-[10px] border px-3.5 text-left text-[14px] font-medium transition-colors ${
+                    className={`focus-ring flex h-12 items-center justify-between gap-2 rounded-[10px] border px-3.5 text-left text-[14px] font-medium transition-colors ${
                       selected
                         ? "border-[var(--shell-accent)] bg-[var(--shell-accent-light)] text-[var(--shell-text-primary)]"
-                        : "border-[var(--shell-border)] bg-white text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
+                        : "border-[var(--shell-border)] bg-card-surface text-[var(--shell-text-primary)] hover:border-[var(--shell-text-tertiary)]"
                     }`}
                   >
                     {EQUIPMENT_LABELS[equipment]}
@@ -216,7 +234,10 @@ export default function PreferencesPage() {
             </div>
             <p className="mt-3 text-[12px] text-[var(--shell-text-tertiary)]">
               Your default gym&apos;s equipment takes priority —{" "}
-              <Link href="/app/profile/gyms" className="text-[var(--shell-accent)] hover:underline">
+              <Link
+                href="/app/profile/gyms"
+                className="focus-ring rounded-sm text-[var(--shell-accent)] hover:underline"
+              >
                 manage in Gym profiles
               </Link>
               .
@@ -224,7 +245,7 @@ export default function PreferencesPage() {
           </section>
 
           {/* Location */}
-          <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5">
+          <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
               Location
             </h2>
@@ -242,7 +263,7 @@ export default function PreferencesPage() {
           </section>
 
           {/* Variety + supersets */}
-          <section className="rounded-[14px] border border-[var(--shell-border)] bg-white p-5">
+          <section className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[var(--shell-text-tertiary)]">
               Workout style
             </h2>
@@ -276,7 +297,7 @@ export default function PreferencesPage() {
           {saveError && (
             <p
               role="alert"
-              className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+              className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
             >
               {saveError}
             </p>
@@ -287,7 +308,7 @@ export default function PreferencesPage() {
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="focus-ring h-10 rounded-full bg-[var(--shell-accent)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? "Saving…" : "Save changes"}
             </button>

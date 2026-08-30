@@ -39,7 +39,7 @@ export function RegisterForm() {
   }
 
   const inputClass =
-    "h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-white px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]";
+    "h-11 w-full rounded-[10px] border border-[var(--shell-border)] bg-card-surface px-3.5 text-[15px] text-[var(--shell-text-primary)] outline-none transition-colors placeholder:text-[var(--shell-text-tertiary)] focus:border-[var(--shell-accent)] focus:ring-2 focus:ring-[var(--shell-accent-light)]";
   const labelClass =
     "mb-1.5 block text-[13px] font-medium text-[var(--shell-text-primary)]";
 
@@ -49,7 +49,7 @@ export function RegisterForm() {
         <div className="mb-8 text-center">
           <Link
             href="/"
-            className="text-xs font-bold uppercase tracking-[2.5px] text-[var(--shell-accent)] transition-opacity hover:opacity-80"
+            className="focus-ring rounded-sm text-xs font-bold uppercase tracking-[2.5px] text-[var(--shell-accent)] transition-opacity hover:opacity-80"
           >
             Credo
           </Link>
@@ -63,7 +63,7 @@ export function RegisterForm() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-[14px] border border-[var(--shell-border)] bg-white p-6 shadow-[0_1px_2px_rgba(26,26,30,0.04)] sm:p-8"
+          className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-6 shadow-[0_1px_2px_rgba(26,26,30,0.04)] sm:p-8"
         >
           <div className="space-y-4">
             <div>
@@ -117,7 +117,7 @@ export function RegisterForm() {
           {error && (
             <p
               role="alert"
-              className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+              className="mt-4 rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
             >
               {error}
             </p>
@@ -126,7 +126,7 @@ export function RegisterForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="focus-ring mt-6 h-11 w-full rounded-full bg-[var(--shell-accent)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? "Creating account…" : "Start free"}
           </button>
@@ -136,7 +136,7 @@ export function RegisterForm() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-semibold text-[var(--shell-accent)] hover:underline"
+            className="focus-ring rounded-sm font-semibold text-[var(--shell-accent)] hover:underline"
           >
             Log in
           </Link>
@@ -144,7 +144,7 @@ export function RegisterForm() {
         <p className="mt-3 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-[13px] text-[var(--shell-text-tertiary)] transition-colors hover:text-[var(--shell-text-secondary)]"
+            className="focus-ring inline-flex items-center gap-1.5 rounded-sm text-[13px] text-[var(--shell-text-tertiary)] transition-colors hover:text-[var(--shell-text-secondary)]"
           >
             <ArrowLeft size={14} />
             Back to credo

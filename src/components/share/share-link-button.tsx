@@ -41,7 +41,7 @@ export function ShareLinkButton({
       type="button"
       onClick={handleClick}
       disabled={state === "loading"}
-      className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--shell-border)] bg-white px-3.5 text-[13px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)] disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+      className={`focus-ring inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--shell-border)] bg-card-surface px-3.5 text-[13px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)] disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
     >
       {state === "loading" ? (
         <Loader2 size={14} className="animate-spin" />

@@ -10,6 +10,7 @@ import { DayChips } from "@/components/share/day-chips";
 import { SPLIT_TYPE_LABELS } from "@/components/share/labels";
 import { ShareLinkButton } from "@/components/share/share-link-button";
 import { SplitEditor } from "@/components/share/split-editor";
+import { EmptyState } from "@/components/ui/empty-state";
 
 interface SplitRow {
   id: string;
@@ -124,7 +125,7 @@ export default function SplitsPage() {
       <div>
         <Link
           href="/app/profile"
-          className="inline-flex items-center gap-1 text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
+          className="focus-ring inline-flex items-center gap-1 rounded-sm text-[13px] font-medium text-[var(--shell-text-secondary)] transition-colors hover:text-[var(--shell-text-primary)]"
         >
           <ChevronLeft size={15} />
           Profile
@@ -137,7 +138,7 @@ export default function SplitsPage() {
       {error && (
         <p
           role="alert"
-          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {error}
         </p>
@@ -156,7 +157,7 @@ export default function SplitsPage() {
       {actionError && (
         <p
           role="alert"
-          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-[#FDF1F1] px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
+          className="rounded-[10px] border border-[var(--shell-danger)]/25 bg-danger-light px-3.5 py-2.5 text-[13px] text-[var(--shell-danger)]"
         >
           {actionError}
         </p>
@@ -175,7 +176,7 @@ export default function SplitsPage() {
             return (
               <div
                 key={preset.id}
-                className="rounded-[14px] border border-[var(--shell-border)] bg-white p-4 sm:p-5"
+                className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-4 sm:p-5"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -190,7 +191,7 @@ export default function SplitsPage() {
                     type="button"
                     onClick={() => activatePreset(preset.id)}
                     disabled={busyId === preset.id || isCurrent}
-                    className="h-9 shrink-0 rounded-full bg-[var(--shell-accent)] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="focus-ring h-9 shrink-0 rounded-full bg-[var(--shell-accent)] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isCurrent ? "Active" : busyId === preset.id ? "…" : "Activate"}
                   </button>
@@ -218,7 +219,7 @@ export default function SplitsPage() {
                 setEditingSplit(null);
                 setEditorOpen(true);
               }}
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--shell-accent)] transition-opacity hover:opacity-80"
+              className="focus-ring inline-flex items-center gap-1 rounded-sm text-[13px] font-semibold text-[var(--shell-accent)] transition-opacity hover:opacity-80"
             >
               <Plus size={15} />
               Build custom split
@@ -239,17 +240,31 @@ export default function SplitsPage() {
         )}
 
         {!loading && customSplits.length === 0 && !editorOpen && (
-          <p className="rounded-[14px] border border-dashed border-[var(--shell-border)] px-4 py-6 text-center text-[13px] text-[var(--shell-text-secondary)]">
-            No custom splits yet. Build one to pick exactly which muscle groups train on which
-            days.
-          </p>
+          <EmptyState
+            icon={Plus}
+            title="No custom splits yet"
+            description="Build one to pick exactly which muscle groups train on which days."
+            action={
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingSplit(null);
+                  setEditorOpen(true);
+                }}
+                className="focus-ring inline-flex h-9 items-center gap-1.5 rounded-full bg-[var(--shell-accent)] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)]"
+              >
+                <Plus size={15} />
+                Build custom split
+              </button>
+            }
+          />
         )}
 
         <div className="flex flex-col gap-3">
           {customSplits.map((split) => (
             <div
               key={split.id}
-              className="rounded-[14px] border border-[var(--shell-border)] bg-white p-4 sm:p-5"
+              className="rounded-[14px] border border-[var(--shell-border)] bg-card-surface p-4 sm:p-5"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -269,7 +284,7 @@ export default function SplitsPage() {
                   type="button"
                   onClick={() => activateCustom(split.id)}
                   disabled={busyId === split.id || split.isActive}
-                  className="h-9 rounded-full bg-[var(--shell-accent)] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="focus-ring h-9 rounded-full bg-[var(--shell-accent)] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--shell-accent-hover)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {split.isActive ? "Active" : "Activate"}
                 </button>
@@ -279,7 +294,7 @@ export default function SplitsPage() {
                     setEditingSplit(split);
                     setEditorOpen(true);
                   }}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--shell-border)] bg-white px-3.5 text-[13px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)]"
+                  className="focus-ring inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--shell-border)] bg-card-surface px-3.5 text-[13px] font-semibold text-[var(--shell-text-primary)] transition-colors hover:border-[var(--shell-text-tertiary)]"
                 >
                   <Pencil size={14} />
                   Edit
@@ -305,14 +320,14 @@ export default function SplitsPage() {
                       type="button"
                       onClick={() => deleteSplit(split.id)}
                       disabled={busyId === split.id}
-                      className="font-semibold text-[var(--shell-danger)] hover:opacity-80"
+                      className="focus-ring rounded-sm font-semibold text-[var(--shell-danger)] hover:opacity-80"
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => setConfirmDeleteId(null)}
-                      className="font-medium text-[var(--shell-text-secondary)] hover:opacity-80"
+                      className="focus-ring rounded-sm font-medium text-[var(--shell-text-secondary)] hover:opacity-80"
                     >
                       Cancel
                     </button>
@@ -321,7 +336,7 @@ export default function SplitsPage() {
                   <button
                     type="button"
                     onClick={() => setConfirmDeleteId(split.id)}
-                    className="inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-2 text-[13px] font-medium text-[var(--shell-danger)] transition-colors hover:bg-[#FDF1F1]"
+                    className="focus-ring inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-2 text-[13px] font-medium text-[var(--shell-danger)] transition-colors hover:bg-danger-light"
                   >
                     <Trash2 size={14} />
                   </button>
