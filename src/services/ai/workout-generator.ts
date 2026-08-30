@@ -53,8 +53,29 @@ function cycle<T>(items: T[], length: number): T[] {
  * calculate the optimal split from daysPerWeek:
  * 2d → Full Body, 3d → Push/Pull/Legs (or Full Body), 4d → Upper/Lower,
  * 5-6d → Push/Pull/Legs cycled.
+ *
+ * When preferredSplit is "custom" and a non-empty `customSplit` is supplied,
+ * that user-authored split drives the rotation: rest days are dropped, order
+ * and labels are preserved, and days are renumbered 1..N. If "custom" is
+ * selected but no usable customSplit is provided, fall back to the safe
+ * daysPerWeek-derived split so generation never breaks.
  */
-export function determineSplit(preferences: TrainingPreferencesInput): SplitDay[] {
+export function determineSplit(
+  preferences: TrainingPreferencesInput,
+  customSplit?: SplitDay[],
+): SplitDay[] {
+  if (preferences.preferredSplit === "custom" && customSplit && customSplit.length > 0) {
+    const trainingDays = customSplit.filter((d) => !d.isRestDay);
+    if (trainingDays.length > 0) {
+      return trainingDays.map((d, i) => ({
+        dayNumber: i + 1,
+        label: d.label,
+        muscleGroups: d.muscleGroups,
+        isRestDay: false,
+      }));
+    }
+  }
+
   const days = Math.min(6, Math.max(2, Math.round(preferences.daysPerWeek)));
   const preferred = preferences.preferredSplit;
 
@@ -128,15 +149,30 @@ export function determineSplit(preferences: TrainingPreferencesInput): SplitDay[
   }));
 }
 
-/** Human-readable split name for a preferences object. */
-export function splitTypeName(preferences: TrainingPreferencesInput): string {
+/**
+ * Human-readable split name for a preferences object. When "custom" is selected
+ * and a usable customSplit is supplied, returns the split's name (or "Custom");
+ * without one it falls back to the safe daysPerWeek-derived name.
+ */
+export function splitTypeName(
+  preferences: TrainingPreferencesInput,
+  customSplit?: SplitDay[],
+  customSplitName?: string,
+): string {
   const days = Math.min(6, Math.max(2, Math.round(preferences.daysPerWeek)));
+  if (preferences.preferredSplit === "custom") {
+    const hasCustom = !!customSplit && customSplit.some((d) => !d.isRestDay);
+    if (hasCustom) return customSplitName ?? "Custom";
+    // No usable custom split → safe daysPerWeek-derived fallback.
+    if (days === 2) return "Full Body";
+    if (days === 4) return "Upper/Lower";
+    return "Push/Pull/Legs";
+  }
   switch (preferences.preferredSplit) {
     case "full_body": return "Full Body";
     case "upper_lower": return "Upper/Lower";
     case "push_pull_legs": return "Push/Pull/Legs";
     case "bro_split": return "Bro Split";
-    case "custom": return days === 2 ? "Full Body" : days === 4 ? "Upper/Lower" : days === 3 ? "Push/Pull/Legs" : "Push/Pull/Legs";
     default:
       if (days === 2) return "Full Body";
       if (days === 3) return "Push/Pull/Legs";
@@ -204,6 +240,81 @@ function restPeriodFor(exercise: ExerciseDefinition, pctOf1RM: number): number {
   return 75; // isolation / core / carry: 60-90s
 }
 
+// ── Supersets ────────────────────────────────────────────────────────────────
+
+const MAX_SUPERSET_PAIRS = 2;
+
+/**
+ * Pair working exercises into supersets in place (PRD: enableSupersets).
+ *
+ * Rule: skip the first 1-2 heavy compounds (they anchor the session and should
+ * be trained straight-set), then pair each remaining isolation/accessory
+ * exercise with the next available working exercise targeting a DIFFERENT
+ * primary muscle group. Paired exercises get isSuperset=true, mutual
+ * supersetWith references (by stable exerciseId), and a 60s rest period
+ * ("60 sec between pairs"). Deterministic — walks the ordered list front to
+ * back, capped at MAX_SUPERSET_PAIRS pairs.
+ */
+function pairSupersets(
+  working: PlannedExerciseSpec[],
+  byId: Map<string, ExerciseDefinition>,
+): void {
+  const isComp = (spec: PlannedExerciseSpec): boolean => {
+    const ex = byId.get(spec.exerciseId);
+    return ex ? isCompound(ex) : false;
+  };
+  const primaryGroup = (spec: PlannedExerciseSpec): MuscleGroup | undefined =>
+    byId.get(spec.exerciseId)?.primaryMuscles[0];
+
+  // Anchor: skip up to the first 2 heavy compounds — never supersetted.
+  const anchored = new Set<string>();
+  for (const spec of working) {
+    if (anchored.size >= 2) break;
+    if (isComp(spec)) anchored.add(spec.exerciseId);
+  }
+
+  const paired = new Set<number>();
+  let pairs = 0;
+  for (let i = 0; i < working.length && pairs < MAX_SUPERSET_PAIRS; i++) {
+    const a = working[i];
+    // A is an isolation/accessory exercise, never one of the anchor compounds.
+    if (paired.has(i) || anchored.has(a.exerciseId) || isComp(a)) continue;
+    const groupA = primaryGroup(a);
+    if (!groupA) continue;
+
+    // Eligible partners: any other working exercise (excluding the anchor
+    // compounds and already-paired specs) targeting a different primary group.
+    // Prefer another accessory over a compound, then earliest in the session
+    // order — fully deterministic.
+    let bestJ = -1;
+    let bestRank: [number, number] | null = null;
+    for (let j = 0; j < working.length; j++) {
+      if (j === i || paired.has(j)) continue;
+      const b = working[j];
+      if (anchored.has(b.exerciseId)) continue;
+      const groupB = primaryGroup(b);
+      if (!groupB || groupB === groupA) continue;
+      const rank: [number, number] = [isComp(b) ? 1 : 0, j];
+      if (!bestRank || rank[0] < bestRank[0] || (rank[0] === bestRank[0] && rank[1] < bestRank[1])) {
+        bestRank = rank;
+        bestJ = j;
+      }
+    }
+    if (bestJ < 0) continue;
+
+    const b = working[bestJ];
+    a.isSuperset = true;
+    a.supersetWith = b.exerciseId;
+    a.restPeriod = 60;
+    b.isSuperset = true;
+    b.supersetWith = a.exerciseId;
+    b.restPeriod = 60;
+    paired.add(i);
+    paired.add(bestJ);
+    pairs++;
+  }
+}
+
 // ── Main generator ──────────────────────────────────────────────────────────
 
 export interface GenerateWorkoutParams {
@@ -216,6 +327,10 @@ export interface GenerateWorkoutParams {
   dayNumber: number; // 1-based training day within the split
   recentPlans?: GeneratedWorkoutPlan[];
   standardsLookup?: DemographicLookup;
+  /** User-authored split (SplitDay[]); only used when preferredSplit === "custom". */
+  customSplit?: SplitDay[];
+  /** Display name for the custom split (WorkoutSplit.name), surfaced as splitType. */
+  customSplitName?: string;
   now: Date;
 }
 
@@ -223,14 +338,15 @@ export interface GenerateWorkoutParams {
 export function generateWorkout(params: GenerateWorkoutParams): GeneratedWorkoutPlan {
   const {
     profile, preferences, history, recoveryStates, library,
-    weekNumber, dayNumber, recentPlans = [], standardsLookup, now,
+    weekNumber, dayNumber, recentPlans = [], standardsLookup,
+    customSplit, customSplitName, now,
   } = params;
 
   const byId = new Map(library.map((ex) => [ex.id, ex]));
   const stateByGroup = new Map(recoveryStates.map((s) => [s.muscleGroup, s]));
 
   // Step 1: split.
-  const split = determineSplit(preferences);
+  const split = determineSplit(preferences, customSplit);
   const splitDay = split[(dayNumber - 1) % split.length];
 
   // Step 2: today's muscle groups = split day's groups, minus fatigued ones,
@@ -349,6 +465,12 @@ export function generateWorkout(params: GenerateWorkoutParams): GeneratedWorkout
     };
   });
 
+  // Superset programming (opt-in): pair accessory work with a non-competing
+  // exercise so the two are performed back-to-back. Never touches warmups.
+  if (preferences.enableSupersets) {
+    pairSupersets(working, byId);
+  }
+
   // Step 7: warmup sets (50% / 70% of working weight) for first 2 compounds.
   const finalExercises: PlannedExerciseSpec[] = [];
   let warmupCount = 0;
@@ -379,7 +501,7 @@ export function generateWorkout(params: GenerateWorkoutParams): GeneratedWorkout
     weekNumber,
     dayNumber,
     totalDays: preferences.daysPerWeek,
-    splitType: splitTypeName(preferences),
+    splitType: splitTypeName(preferences, customSplit, customSplitName),
     focus: `${splitDay.label} — ${targetGroups.slice(0, 3).join(", ")}`,
     exercises: finalExercises,
     estimatedDuration,

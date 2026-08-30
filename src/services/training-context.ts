@@ -19,6 +19,7 @@ import type {
   PlannedExerciseDTO,
   PlannedExerciseSpec,
   Sex,
+  SplitDay,
   StrengthScoreResult,
   TrainingPreferencesInput,
   UserProfileInput,
@@ -305,15 +306,52 @@ export async function loadTrainingContext(
 /** Preferences with the default gym profile's equipment substituted in. */
 export function generationPreferences(ctx: TrainingContext): TrainingPreferencesInput | null {
   if (!ctx.preferences) return null;
-  // generateWorkout's determineSplit() has no channel to inject a specific
-  // WorkoutSplit's per-day muscle groups (it only switches on the
-  // preferredSplit enum) — map "custom" to the same days-per-week-driven
-  // fallback "ai_optimized" already uses so generation never breaks on a
-  // custom split. A future generator change that accepts an explicit day
-  // override could target the user's active WorkoutSplit here instead.
-  const preferredSplit =
-    ctx.preferences.preferredSplit === "custom" ? "ai_optimized" : ctx.preferences.preferredSplit;
-  return { ...ctx.preferences, preferredSplit, availableEquipment: ctx.equipment };
+  // preferredSplit is preserved as-is: a "custom" split is driven by injecting
+  // the user's active WorkoutSplit into generateWorkout/generateWeek via the
+  // `customSplit` param (see customSplitForUser). determineSplit() falls back
+  // to the safe daysPerWeek-derived split when no custom split is supplied.
+  return { ...ctx.preferences, availableEquipment: ctx.equipment };
+}
+
+/**
+ * Parse a WorkoutSplit's `days: Json` column into SplitDay[]. Returns undefined
+ * for a missing/malformed/empty value so callers fall back to the safe split.
+ */
+function parseSplitDays(days: unknown): SplitDay[] | undefined {
+  if (!Array.isArray(days)) return undefined;
+  const parsed: SplitDay[] = [];
+  for (let i = 0; i < days.length; i++) {
+    const d = days[i] as Partial<SplitDay> | null;
+    if (!d || typeof d !== "object") continue;
+    parsed.push({
+      dayNumber: typeof d.dayNumber === "number" ? d.dayNumber : i + 1,
+      label: typeof d.label === "string" ? d.label : `Day ${i + 1}`,
+      muscleGroups: Array.isArray(d.muscleGroups) ? (d.muscleGroups as MuscleGroup[]) : [],
+      isRestDay: Boolean(d.isRestDay),
+    });
+  }
+  return parsed.length > 0 ? parsed : undefined;
+}
+
+/**
+ * The custom split to drive generation, when preferredSplit is "custom":
+ * the user's active WorkoutSplit (isActive:true), else their most recent
+ * custom split. Returns {} for any other split preference or when no usable
+ * split row exists (callers then get the safe daysPerWeek fallback).
+ */
+async function customSplitForUser(
+  userId: string,
+  preferences: TrainingPreferencesInput,
+): Promise<{ customSplit?: SplitDay[]; customSplitName?: string }> {
+  if (preferences.preferredSplit !== "custom") return {};
+  const row = await prisma.workoutSplit.findFirst({
+    where: { userId, type: "custom" },
+    orderBy: [{ isActive: "desc" }, { createdAt: "desc" }],
+  });
+  if (!row) return {};
+  const customSplit = parseSplitDays(row.days);
+  if (!customSplit) return {};
+  return { customSplit, customSplitName: row.name };
 }
 
 // ── Exercise row upserts (library is the source of truth) ───────────────────
@@ -593,6 +631,7 @@ export async function generateTodayWorkout(
   const ctx = await loadTrainingContext(userId, now);
   const preferences = generationPreferences(ctx);
   if (!preferences) return null;
+  const { customSplit, customSplitName } = await customSplitForUser(userId, preferences);
 
   const totalDays = Math.min(6, Math.max(2, Math.round(preferences.daysPerWeek)));
   const plansThisWeek = await prisma.workoutPlan.count({
@@ -610,6 +649,8 @@ export async function generateTodayWorkout(
     dayNumber,
     recentPlans: ctx.recentPlans,
     standardsLookup: demographicLookup,
+    customSplit,
+    customSplitName,
     now,
   });
   return persistGeneratedPlan(userId, plan, utcDayStart(now));
@@ -626,6 +667,7 @@ export async function ensureWeekPlans(
   const ctx = await loadTrainingContext(userId, now);
   const preferences = generationPreferences(ctx);
   if (!preferences) return [];
+  const { customSplit, customSplitName } = await customSplitForUser(userId, preferences);
 
   const existing = await prisma.workoutPlan.findMany({
     where: { userId, weekNumber: ctx.weekNumber },
@@ -645,6 +687,8 @@ export async function ensureWeekPlans(
     weekNumber: ctx.weekNumber,
     recentPlans: ctx.recentPlans,
     standardsLookup: demographicLookup,
+    customSplit,
+    customSplitName,
     now,
   });
 
