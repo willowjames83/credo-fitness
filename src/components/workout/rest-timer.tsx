@@ -35,21 +35,21 @@ export function RestTimer({ endsAt, onSkip, onExtend }: RestTimerProps) {
       aria-live="polite"
       className={`flex items-center justify-between rounded-[14px] border px-4 py-3 transition-colors ${
         done
-          ? "border-[#E8501A] bg-[#E8501A]"
-          : "border-[#E5E5E8] bg-[#FFF0E9]"
+          ? "border-credo bg-credo"
+          : "border-app bg-credo-light"
       }`}
     >
       <div className="flex flex-col">
         <span
           className={`text-xs font-semibold tracking-wide uppercase ${
-            done ? "text-white/85" : "text-[#E8501A]"
+            done ? "text-white/85" : "text-credo"
           }`}
         >
           {done ? "Rest over — next set" : "Rest"}
         </span>
         <span
           className={`font-mono text-3xl font-semibold tabular-nums ${
-            done ? "text-white" : "text-[#E8501A]"
+            done ? "text-white" : "text-credo"
           }`}
         >
           {formatClock(remaining)}
@@ -60,7 +60,7 @@ export function RestTimer({ endsAt, onSkip, onExtend }: RestTimerProps) {
           <button
             type="button"
             onClick={() => onExtend(30)}
-            className="h-11 rounded-[10px] border border-[#E8501A]/25 bg-white px-3 text-sm font-semibold text-[#E8501A] transition-colors hover:bg-[#FFF0E9]"
+            className="focus-ring h-11 rounded-[10px] border border-credo/25 bg-card-surface px-3 text-sm font-semibold text-credo transition-colors hover:bg-credo-light"
           >
             +30s
           </button>
@@ -68,10 +68,10 @@ export function RestTimer({ endsAt, onSkip, onExtend }: RestTimerProps) {
         <button
           type="button"
           onClick={onSkip}
-          className={`h-11 rounded-[10px] px-4 text-sm font-semibold transition-colors ${
+          className={`focus-ring h-11 rounded-[10px] px-4 text-sm font-semibold transition-colors ${
             done
-              ? "bg-white text-[#E8501A] hover:bg-[#FFF0E9]"
-              : "border border-[#E8501A]/25 bg-white text-[#E8501A] hover:bg-[#FFF0E9]"
+              ? "bg-card-surface text-credo hover:bg-credo-light"
+              : "border border-credo/25 bg-card-surface text-credo hover:bg-credo-light"
           }`}
         >
           {done ? "Go" : "Skip"}

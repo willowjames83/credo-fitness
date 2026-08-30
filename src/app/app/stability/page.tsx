@@ -37,8 +37,8 @@ import {
   UnauthorizedError,
 } from "@/components/pillars/utils";
 
-const TEAL = "#1A7A6D";
-const TEAL_LIGHT = "#E8F5F3";
+const TEAL = "var(--color-teal)";
+const TEAL_LIGHT = "var(--color-teal-light)";
 
 const STABILITY_BENCHMARKS = [
   { name: "Dead Hang", detail: "Grip and shoulder endurance" },
@@ -174,17 +174,17 @@ export default function StabilityPage() {
               >
                 {thisWeekMin}
               </span>
-              <span className="font-mono text-[18px] font-semibold text-[#9E9EA3]">
+              <span className="font-mono text-[18px] font-semibold text-text-tertiary">
                 / {weeklyTargetMin}
               </span>
-              <span className="ml-0.5 text-[13px] text-[#6B6B73]">min</span>
+              <span className="ml-0.5 text-[13px] text-text-secondary">min</span>
             </div>
           </div>
           <div className="pb-1 text-right">
-            <div className="font-mono text-[20px] font-semibold text-[#1A1A1E]">
+            <div className="font-mono text-[20px] font-semibold text-text-primary">
               {sessionsThisWeek}
             </div>
-            <div className="text-[11px] text-[#9E9EA3]">
+            <div className="text-[11px] text-text-tertiary">
               {sessionsThisWeek === 1 ? "session" : "sessions"}
             </div>
           </div>
@@ -193,7 +193,7 @@ export default function StabilityPage() {
         <div className="mt-3.5">
           <ProgressBar fraction={fraction} color={TEAL} active={mounted} />
         </div>
-        <div className="mt-2 text-[12px] text-[#6B6B73]">
+        <div className="mt-2 text-[12px] text-text-secondary">
           {remaining > 0
             ? `${remaining} min to the weekly target`
             : "Weekly target cleared"}
@@ -211,11 +211,11 @@ export default function StabilityPage() {
               transition={{ duration: 0.3 }}
               className={CARD_CLASS}
             >
-              <div className="border-b border-[#F0F0F2] px-4 py-3">
-                <div className="text-[14px] font-semibold text-[#1A1A1E]">
+              <div className="border-b border-app px-4 py-3">
+                <div className="text-[14px] font-semibold text-text-primary">
                   Pre-lift routine
                 </div>
-                <div className="mt-0.5 text-[12px] text-[#6B6B73]">
+                <div className="mt-0.5 text-[12px] text-text-secondary">
                   Matched to today&apos;s session
                   {summary.todaysFocus ? ` · ${summary.todaysFocus}` : ""}
                 </div>
@@ -226,10 +226,10 @@ export default function StabilityPage() {
                     key={`${move.exerciseId}-${i}`}
                     className="flex items-center justify-between gap-3 px-4 py-2.5"
                     style={{
-                      borderTop: i === 0 ? "none" : "1px solid #F5F5F6",
+                      borderTop: i === 0 ? "none" : "1px solid var(--app-border)",
                     }}
                   >
-                    <span className="min-w-0 truncate text-[13px] text-[#1A1A1E]">
+                    <span className="min-w-0 truncate text-[13px] text-text-primary">
                       {move.name}
                     </span>
                     <span
@@ -246,11 +246,11 @@ export default function StabilityPage() {
                   type="button"
                   onClick={() => void markWarmupDone()}
                   disabled={warmupPending || warmupDone}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-[10px] py-2.5 text-[13px] font-semibold transition-colors disabled:cursor-default"
+                  className="focus-ring flex w-full items-center justify-center gap-1.5 rounded-[10px] py-2.5 text-[13px] font-semibold transition-colors disabled:cursor-default"
                   style={
                     warmupDone
                       ? { background: TEAL_LIGHT, color: TEAL }
-                      : { background: TEAL, color: "#FFFFFF" }
+                      : { background: TEAL, color: "white" }
                   }
                 >
                   {warmupDone ? (
@@ -268,13 +268,13 @@ export default function StabilityPage() {
             </motion.div>
           ) : (
             <div className={`${CARD_CLASS} px-4 py-5 text-center`}>
-              <p className="text-[13px] leading-relaxed text-[#6B6B73]">
+              <p className="text-[13px] leading-relaxed text-text-secondary">
                 No lifting session scheduled today, so there&apos;s no matched
                 warmup. A standalone mobility block still counts.
               </p>
               <Link
                 href="/app/workout"
-                className="mt-3 inline-flex items-center gap-1 text-[13px] font-semibold"
+                className="focus-ring mt-3 inline-flex items-center gap-1 rounded-sm text-[13px] font-semibold"
                 style={{ color: TEAL }}
               >
                 Go to today&apos;s workout
@@ -288,7 +288,7 @@ export default function StabilityPage() {
       <button
         type="button"
         onClick={() => setSheetOpen(true)}
-        className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+        className="focus-ring mt-4 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
       >
         <Plus size={17} />
         Log session
@@ -313,7 +313,7 @@ export default function StabilityPage() {
             unit="min"
             active={mounted}
           />
-          <div className="mt-3 border-t border-[#F0F0F2] pt-3 text-[11px] text-[#6B6B73]">
+          <div className="mt-3 border-t border-app pt-3 text-[11px] text-text-secondary">
             Dashed line marks the {weeklyTargetMin}-min weekly target.
           </div>
         </div>
@@ -324,18 +324,18 @@ export default function StabilityPage() {
         <SectionLabel>Benchmarks</SectionLabel>
         <Link
           href="/app/credo-ten"
-          className={`${CARD_CLASS} mt-2.5 block p-4 transition-colors hover:bg-[#F7F7F8]`}
+          className={`${CARD_CLASS} focus-ring mt-2.5 block p-4 transition-colors hover:bg-surface`}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <div className="text-[14px] font-semibold text-[#1A1A1E]">
+              <div className="text-[14px] font-semibold text-text-primary">
                 Test your stability
               </div>
-              <div className="mt-0.5 text-[12px] text-[#6B6B73]">
+              <div className="mt-0.5 text-[12px] text-text-secondary">
                 Three of the Credo Ten score this pillar
               </div>
             </div>
-            <ArrowRight size={16} className="shrink-0 text-[#9E9EA3]" />
+            <ArrowRight size={16} className="shrink-0 text-text-tertiary" />
           </div>
           <div className="mt-3 flex flex-col gap-1.5">
             {STABILITY_BENCHMARKS.map((b) => (
@@ -344,10 +344,10 @@ export default function StabilityPage() {
                   className="h-1.5 w-1.5 shrink-0 rounded-full"
                   style={{ background: TEAL }}
                 />
-                <span className="text-[13px] font-medium text-[#1A1A1E]">
+                <span className="text-[13px] font-medium text-text-primary">
                   {b.name}
                 </span>
-                <span className="text-[11px] text-[#9E9EA3]">{b.detail}</span>
+                <span className="text-[11px] text-text-tertiary">{b.detail}</span>
               </div>
             ))}
           </div>

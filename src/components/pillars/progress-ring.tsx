@@ -42,7 +42,7 @@ export function ProgressRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#EEEFF1"
+          stroke="var(--surface-elevated)"
           strokeWidth={stroke}
         />
         <circle

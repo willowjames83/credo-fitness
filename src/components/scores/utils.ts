@@ -94,6 +94,7 @@ export function signed(n: number): string {
   return r > 0 ? `+${r}` : `${r}`;
 }
 
+/** Themed text-color class for a signed delta (positive/negative/flat). */
 export function deltaColor(d: number): string {
-  return d > 0 ? "#2D8A4E" : d < 0 ? "#C43B3B" : "#9E9EA3";
+  return d > 0 ? "text-success" : d < 0 ? "text-danger" : "text-text-tertiary";
 }

@@ -20,7 +20,7 @@ import {
 } from "./dto";
 import { apiPost, redirectToLogin, UnauthorizedError } from "./utils";
 
-const TEAL = "#1A7A6D";
+const TEAL = "var(--color-teal)";
 
 const TYPE_OPTIONS = STABILITY_TYPES.map((value) => ({
   value,

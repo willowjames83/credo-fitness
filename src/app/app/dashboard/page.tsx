@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, RefreshCw } from "lucide-react";
+import { CheckCircle2, ClipboardList, RefreshCw } from "lucide-react";
 import { CredoScoreRing } from "@/components/shared/credo-score-ring";
 import { PillarCard } from "@/components/shared/pillar-card";
 import { SectionHeader } from "@/components/shared/section-header";
 import { RecoveryStrip } from "@/components/workout/recovery-strip";
 import { getJSON, errorMessage } from "@/components/workout/api";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/ui/empty-state";
 import type {
   MuscleRecoveryState,
   PillarScoresDTO,
@@ -24,18 +26,14 @@ function deltaLine(delta: number): string {
   return "Even with last week";
 }
 
-function Skeleton({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded-[14px] bg-[#EEEFF1] ${className}`} />;
-}
-
 function ErrorCard({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[14px] border border-[#C43B3B]/25 bg-[#C43B3B]/5 px-4 py-3">
-      <p className="text-sm text-[#C43B3B]">{message}</p>
+    <div className="flex items-center justify-between gap-3 rounded-[14px] border border-danger/25 bg-danger-light px-4 py-3">
+      <p className="text-sm text-danger">{message}</p>
       <button
         type="button"
         onClick={onRetry}
-        className="shrink-0 rounded-[8px] border border-[#C43B3B]/30 px-3 py-1.5 text-xs font-semibold text-[#C43B3B] transition-colors hover:bg-[#C43B3B]/10"
+        className="focus-ring shrink-0 rounded-[8px] border border-danger/30 px-3 py-1.5 text-xs font-semibold text-danger transition-colors hover:bg-danger/10"
       >
         Retry
       </button>
@@ -132,7 +130,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            <p className="mb-4 text-[11px] font-medium tracking-[1.5px] text-[#9E9EA3] uppercase">
+            <p className="mb-4 text-[11px] font-medium tracking-[1.5px] text-text-tertiary uppercase">
               Week {scores.weekNumber}
             </p>
             <div className="inline-block">
@@ -141,10 +139,10 @@ export default function DashboardPage() {
             <p
               className={`mt-2 text-xs font-medium ${
                 scores.credo.delta > 0
-                  ? "text-[#2D8A4E]"
+                  ? "text-success"
                   : scores.credo.delta < 0
-                    ? "text-[#C43B3B]"
-                    : "text-[#9E9EA3]"
+                    ? "text-danger"
+                    : "text-text-tertiary"
               }`}
             >
               {deltaLine(scores.credo.delta)}
@@ -187,27 +185,26 @@ export default function DashboardPage() {
       ) : !planLoaded ? (
         <Skeleton className="h-[132px]" />
       ) : plan === null ? (
-        <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
-          <p className="text-sm font-medium text-[#1A1A1E]">
-            No training plan yet
-          </p>
-          <p className="mt-0.5 text-[13px] text-[#6B6B73]">
-            Tell us your goals and equipment and we&apos;ll build your first week.
-          </p>
-          <Link
-            href="/onboarding"
-            className="mt-3 flex h-11 items-center justify-center rounded-[10px] bg-[#E8501A] text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
-          >
-            Set up my plan
-          </Link>
-        </div>
+        <EmptyState
+          icon={ClipboardList}
+          title="No training plan yet"
+          description="Tell us your goals and equipment and we'll build your first week."
+          action={
+            <Link
+              href="/onboarding"
+              className="focus-ring flex h-11 items-center justify-center rounded-[10px] bg-credo px-4 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
+            >
+              Set up my plan
+            </Link>
+          }
+        />
       ) : plan.status === "completed" ? (
-        <div className="rounded-[14px] border border-[#2D8A4E]/25 bg-[#E8F5ED] p-4">
+        <div className="rounded-[14px] border border-success/25 bg-success-light p-4">
           <div className="flex items-center gap-2">
-            <CheckCircle2 size={16} className="text-[#2D8A4E]" />
-            <p className="text-sm font-semibold text-[#1A1A1E]">Done today</p>
+            <CheckCircle2 size={16} className="text-success" />
+            <p className="text-sm font-semibold text-text-primary">Done today</p>
           </div>
-          <p className="mt-1 text-[13px] text-[#6B6B73]">
+          <p className="mt-1 text-[13px] text-text-secondary">
             {plan.focus}
             {doneToday
               ? ` · ${Math.round(doneToday.totalVolume).toLocaleString()} lb moved · ${doneToday.setCount} sets`
@@ -215,26 +212,26 @@ export default function DashboardPage() {
           </p>
           <Link
             href="/app/history"
-            className="mt-2 inline-block text-[13px] font-medium text-[#2D8A4E] hover:underline"
+            className="focus-ring mt-2 inline-block rounded-sm text-[13px] font-medium text-success hover:underline"
           >
             View in history
           </Link>
         </div>
       ) : (
-        <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
-          <p className="text-sm font-medium text-[#1A1A1E]">{plan.focus}</p>
-          <p className="mt-0.5 text-[13px] text-[#6B6B73]">
+        <div className="rounded-[14px] border border-app bg-card-surface p-4">
+          <p className="text-sm font-medium text-text-primary">{plan.focus}</p>
+          <p className="mt-0.5 text-[13px] text-text-secondary">
             {plan.exercises.filter((e) => !e.isWarmup).length} exercises · ~
             {plan.estimatedDuration} min
           </p>
           {plan.warmup.length > 0 && (
-            <p className="mt-0.5 text-xs text-[#1A7A6D]">
+            <p className="mt-0.5 text-xs text-teal">
               {plan.warmup.length}-move warmup included
             </p>
           )}
           <Link
             href="/app/workout"
-            className="mt-3 flex h-11 items-center justify-center rounded-[10px] bg-[#E8501A] text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+            className="focus-ring mt-3 flex h-11 items-center justify-center rounded-[10px] bg-credo text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
           >
             {plan.status === "in_progress" ? "Resume workout" : "Start workout"}
           </Link>
@@ -248,14 +245,14 @@ export default function DashboardPage() {
           <button
             type="button"
             onClick={retryRecovery}
-            className="flex items-center gap-1 text-xs font-medium text-[#C43B3B] hover:underline"
+            className="focus-ring flex items-center gap-1 rounded-sm text-xs font-medium text-danger hover:underline"
           >
             <RefreshCw size={12} /> Retry
           </button>
         )}
       </div>
       {recoveryError ? (
-        <p className="text-[13px] text-[#6B6B73]">Couldn&apos;t load recovery data.</p>
+        <p className="text-[13px] text-text-secondary">Couldn&apos;t load recovery data.</p>
       ) : !recovery ? (
         <Skeleton className="h-[68px]" />
       ) : (

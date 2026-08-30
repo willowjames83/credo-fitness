@@ -103,7 +103,7 @@ export function LogBenchmarkSheet({
     benchmark.unit === "lbs" ? "lb" : benchmark.unit;
 
   const inputClass =
-    "w-full rounded-[10px] border border-[#E5E5E8] bg-white px-3 py-2.5 font-mono text-[18px] font-semibold text-[#1A1A1E] outline-none focus:border-[#E8501A]";
+    "w-full rounded-[10px] border border-app bg-card-surface px-3 py-2.5 font-mono text-[18px] font-semibold text-text-primary outline-none focus:border-credo";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center">
@@ -118,7 +118,7 @@ export function LogBenchmarkSheet({
       />
 
       <motion.div
-        className="relative w-full max-w-[640px] rounded-t-[20px] bg-white px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-3"
+        className="relative w-full max-w-[640px] rounded-t-[20px] bg-card-surface px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-3"
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
@@ -127,27 +127,27 @@ export function LogBenchmarkSheet({
         aria-modal="true"
         aria-label={`Log ${benchmark.name} result`}
       >
-        <div className="mx-auto mb-3 h-1 w-9 rounded-full bg-[#E5E5E8]" />
+        <div className="mx-auto mb-3 h-1 w-9 rounded-full bg-app" />
 
         {logged ? (
           /* ── Success state ─────────────────────────────── */
           <div className="pb-1 pt-2 text-center">
-            <div className="text-[13px] font-semibold uppercase tracking-widest text-[#9E9EA3]">
+            <div className="text-[13px] font-semibold uppercase tracking-widest text-text-tertiary">
               Result logged
             </div>
-            <div className="mt-3 font-mono text-[40px] font-bold leading-none text-[#1A1A1E]">
+            <div className="mt-3 font-mono text-[40px] font-bold leading-none text-text-primary">
               {isRowTime ? formatMmss(logged.value) : logged.value}
               {!isRowTime && (
-                <span className="ml-1.5 text-[15px] font-normal text-[#6B6B73]">
+                <span className="ml-1.5 text-[15px] font-normal text-text-secondary">
                   {unitAffordance}
                 </span>
               )}
             </div>
-            <div className="mt-2 text-[14px] font-medium text-[#1A1A1E]">
+            <div className="mt-2 text-[14px] font-medium text-text-primary">
               {benchmark.name}
             </div>
             {logged.percentile !== null && (
-              <div className="mt-1 text-[13px] text-[#6B6B73]">
+              <div className="mt-1 text-[13px] text-text-secondary">
                 {ordinal(logged.percentile)} percentile
               </div>
             )}
@@ -156,20 +156,20 @@ export function LogBenchmarkSheet({
                 initial={{ scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", damping: 14, stiffness: 300, delay: 0.1 }}
-                className="mt-3 inline-block rounded-full bg-[#E8F5ED] px-3.5 py-1.5 text-[13px] font-semibold text-[#2D8A4E]"
+                className="mt-3 inline-block rounded-full bg-success-light px-3.5 py-1.5 text-[13px] font-semibold text-success"
               >
                 Up {improvement} percentile point{improvement === 1 ? "" : "s"}
               </motion.div>
             )}
             {improvement === null && logged.percentile !== null && prev === null && (
-              <div className="mt-3 inline-block rounded-full bg-[#F7F7F8] px-3.5 py-1.5 text-[13px] font-medium text-[#6B6B73]">
+              <div className="mt-3 inline-block rounded-full bg-surface px-3.5 py-1.5 text-[13px] font-medium text-text-secondary">
                 First result on record
               </div>
             )}
             <button
               type="button"
               onClick={onClose}
-              className="mt-5 w-full rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+              className="focus-ring mt-5 w-full rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
             >
               Done
             </button>
@@ -184,11 +184,11 @@ export function LogBenchmarkSheet({
                     className="h-2 w-2 shrink-0 rounded-full"
                     style={{ background: color }}
                   />
-                  <span className="text-[16px] font-semibold text-[#1A1A1E]">
+                  <span className="text-[16px] font-semibold text-text-primary">
                     {benchmark.name}
                   </span>
                 </div>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-[#6B6B73]">
+                <p className="mt-1.5 text-[13px] leading-relaxed text-text-secondary">
                   {benchmark.description}
                 </p>
               </div>
@@ -196,17 +196,17 @@ export function LogBenchmarkSheet({
                 type="button"
                 onClick={onClose}
                 aria-label="Close"
-                className="rounded-full p-1.5 text-[#9E9EA3] transition-colors hover:bg-[#F7F7F8] hover:text-[#1A1A1E]"
+                className="focus-ring rounded-full p-1.5 text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="mt-3 rounded-[10px] bg-[#F7F7F8] p-3">
-              <div className="text-[11px] font-semibold uppercase tracking-widest text-[#9E9EA3]">
+            <div className="mt-3 rounded-[10px] bg-surface p-3">
+              <div className="text-[11px] font-semibold uppercase tracking-widest text-text-tertiary">
                 How to test
               </div>
-              <p className="mt-1 text-[13px] leading-relaxed text-[#6B6B73]">
+              <p className="mt-1 text-[13px] leading-relaxed text-text-secondary">
                 {benchmark.instructions}
               </p>
             </div>
@@ -217,7 +217,7 @@ export function LogBenchmarkSheet({
                 void submit();
               }}
             >
-              <label className="mt-4 block text-[11px] font-semibold uppercase tracking-widest text-[#9E9EA3]">
+              <label className="mt-4 block text-[11px] font-semibold uppercase tracking-widest text-text-tertiary">
                 Your result
               </label>
               {isRowTime ? (
@@ -233,9 +233,9 @@ export function LogBenchmarkSheet({
                       className={inputClass}
                       aria-label="Minutes"
                     />
-                    <div className="mt-1 text-center text-[11px] text-[#9E9EA3]">min</div>
+                    <div className="mt-1 text-center text-[11px] text-text-tertiary">min</div>
                   </div>
-                  <span className="pb-5 font-mono text-[20px] font-bold text-[#1A1A1E]">
+                  <span className="pb-5 font-mono text-[20px] font-bold text-text-primary">
                     :
                   </span>
                   <div className="flex-1">
@@ -248,11 +248,11 @@ export function LogBenchmarkSheet({
                       className={inputClass}
                       aria-label="Seconds"
                     />
-                    <div className="mt-1 text-center text-[11px] text-[#9E9EA3]">sec</div>
+                    <div className="mt-1 text-center text-[11px] text-text-tertiary">sec</div>
                   </div>
                 </div>
               ) : (
-                <div className="mt-2 flex items-center gap-2 rounded-[10px] border border-[#E5E5E8] bg-white px-3 focus-within:border-[#E8501A]">
+                <div className="mt-2 flex items-center gap-2 rounded-[10px] border border-app bg-card-surface px-3 focus-within:border-credo">
                   <input
                     type="text"
                     inputMode="decimal"
@@ -260,22 +260,22 @@ export function LogBenchmarkSheet({
                     placeholder="0"
                     value={valueStr}
                     onChange={(e) => setValueStr(e.target.value.replace(/[^0-9.]/g, ""))}
-                    className="w-full bg-transparent py-2.5 font-mono text-[18px] font-semibold text-[#1A1A1E] outline-none"
+                    className="w-full bg-transparent py-2.5 font-mono text-[18px] font-semibold text-text-primary outline-none"
                     aria-label={`${benchmark.name} result in ${unitAffordance}`}
                   />
-                  <span className="shrink-0 text-[13px] font-medium text-[#9E9EA3]">
+                  <span className="shrink-0 text-[13px] font-medium text-text-tertiary">
                     {unitAffordance}
                   </span>
                 </div>
               )}
 
               {secondsOutOfRange && (
-                <div className="mt-2 text-[12px] font-medium text-[#C43B3B]">
+                <div className="mt-2 text-[12px] font-medium text-danger">
                   Seconds must be between 0 and 59.
                 </div>
               )}
               {error && (
-                <div className="mt-2 text-[12px] font-medium text-[#C43B3B]">
+                <div className="mt-2 text-[12px] font-medium text-danger">
                   {error}
                 </div>
               )}
@@ -283,7 +283,7 @@ export function LogBenchmarkSheet({
               <button
                 type="submit"
                 disabled={!valid || submitting}
-                className="mt-4 w-full rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F] disabled:cursor-not-allowed disabled:opacity-40"
+                className="focus-ring mt-4 w-full rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {submitting ? "Logging…" : "Log result"}
               </button>

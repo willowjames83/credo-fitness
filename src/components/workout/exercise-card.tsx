@@ -28,33 +28,33 @@ export function ExerciseCard({
   onDismissAdjustment,
 }: ExerciseCardProps) {
   return (
-    <div className="overflow-hidden rounded-[14px] border border-[#E5E5E8] bg-white">
-      <div className="border-b border-[#E5E5E8] px-4 py-3.5">
+    <div className="overflow-hidden rounded-[14px] border border-app bg-card-surface">
+      <div className="border-b border-app px-4 py-3.5">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-base font-semibold text-[#1A1A1E]">
+          <span className="text-base font-semibold text-text-primary">
             {exercise.name}
           </span>
-          <span className="shrink-0 rounded-[6px] bg-[#F7F7F8] px-2 py-1 font-mono text-xs text-[#6B6B73]">
+          <span className="shrink-0 rounded-[6px] bg-surface px-2 py-1 font-mono text-xs text-text-secondary">
             {exercise.targetSets} × {exercise.targetRepMin}-{exercise.targetRepMax}
           </span>
         </div>
         {exercise.previousSession && (
-          <p className="mt-1 text-xs text-[#9E9EA3]">
+          <p className="mt-1 text-xs text-text-tertiary">
             Previous: {exercise.previousSession}
           </p>
         )}
         {exercise.rationale && (
-          <p className="mt-1 text-xs text-[#1A7A6D]">{exercise.rationale}</p>
+          <p className="mt-1 text-xs text-teal">{exercise.rationale}</p>
         )}
       </div>
 
       <div className="px-4 py-2">
-        <div className="grid grid-cols-[36px_1fr_1fr_52px] gap-2 border-b border-[#EEEFF1] py-2">
-          <span className="text-[11px] font-semibold text-[#9E9EA3] uppercase">Set</span>
-          <span className="text-center text-[11px] font-semibold text-[#9E9EA3] uppercase">
+        <div className="grid grid-cols-[36px_1fr_1fr_52px] gap-2 border-b border-app py-2">
+          <span className="text-[11px] font-semibold text-text-tertiary uppercase">Set</span>
+          <span className="text-center text-[11px] font-semibold text-text-tertiary uppercase">
             lb
           </span>
-          <span className="text-center text-[11px] font-semibold text-[#9E9EA3] uppercase">
+          <span className="text-center text-[11px] font-semibold text-text-tertiary uppercase">
             Reps
           </span>
           <span aria-hidden />

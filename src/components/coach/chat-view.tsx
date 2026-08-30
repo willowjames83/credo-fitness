@@ -19,6 +19,7 @@ import {
 } from "./message-bubble";
 import { Composer } from "./composer";
 import { CoachEmptyState } from "./empty-state";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LIMIT_COPY =
   "You've sent 50 messages to your coach today. The counter resets at midnight UTC — your conversation is saved.";
@@ -144,12 +145,12 @@ export function ChatView({
           <button
             type="button"
             onClick={onBack}
-            className="-ml-1.5 flex items-center gap-0.5 rounded-[10px] px-1.5 py-1 text-[13px] font-medium text-[#6B6B73] transition-colors hover:text-[#1A1A1E]"
+            className="focus-ring -ml-1.5 flex items-center gap-0.5 rounded-[10px] px-1.5 py-1 text-[13px] font-medium text-text-secondary transition-colors hover:text-text-primary"
           >
             <ChevronLeft size={16} strokeWidth={2.2} />
             All conversations
           </button>
-          <span className="truncate text-[13px] font-semibold text-[#1A1A1E]">
+          <span className="truncate text-[13px] font-semibold text-text-primary">
             {title}
           </span>
         </div>
@@ -159,15 +160,15 @@ export function ChatView({
         {loading ? (
           <ChatSkeleton />
         ) : loadError ? (
-          <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-6 text-center">
-            <div className="text-[14px] font-semibold text-[#1A1A1E]">
+          <div className="rounded-[14px] border border-app bg-card-surface p-6 text-center">
+            <div className="text-[14px] font-semibold text-text-primary">
               Couldn&apos;t load this conversation
             </div>
-            <div className="mt-1 text-[13px] text-[#6B6B73]">{loadError}</div>
+            <div className="mt-1 text-[13px] text-text-secondary">{loadError}</div>
             <button
               type="button"
               onClick={() => threadId && void load(threadId)}
-              className="mt-4 rounded-[10px] bg-[#E8501A] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+              className="focus-ring mt-4 rounded-[10px] bg-credo px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-credo/90"
             >
               Try again
             </button>
@@ -233,13 +234,13 @@ function ChatSkeleton() {
   return (
     <div className="flex flex-col gap-3.5 pt-1">
       <div className="flex justify-end">
-        <div className="h-11 w-2/3 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+        <Skeleton className="h-11 w-2/3 rounded-[14px]" />
       </div>
-      <div className="h-24 w-11/12 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+      <Skeleton className="h-24 w-11/12 rounded-[14px]" />
       <div className="flex justify-end">
-        <div className="h-9 w-1/2 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+        <Skeleton className="h-9 w-1/2 rounded-[14px]" />
       </div>
-      <div className="h-20 w-10/12 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+      <Skeleton className="h-20 w-10/12 rounded-[14px]" />
     </div>
   );
 }

@@ -29,23 +29,23 @@ export function AdjustmentChip({ adjustment, onApply, onDismiss }: AdjustmentChi
       transition={{ duration: 0.2 }}
       className={`flex items-start gap-2.5 rounded-[14px] border px-3.5 py-3 ${
         positive
-          ? "border-[#2D8A4E]/25 bg-[#E8F5ED]"
-          : "border-[#C47A1A]/25 bg-[#FFF3E0]"
+          ? "border-success/25 bg-success-light"
+          : "border-warning/25 bg-warning-light"
       }`}
     >
       <Icon
         size={16}
-        className={`mt-0.5 shrink-0 ${positive ? "text-[#2D8A4E]" : "text-[#C47A1A]"}`}
+        className={`mt-0.5 shrink-0 ${positive ? "text-success" : "text-warning"}`}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <p className="text-[13px] leading-snug text-[#1A1A1E]">{adjustment.reason}</p>
+        <p className="text-[13px] leading-snug text-text-primary">{adjustment.reason}</p>
         {adjustment.action === "reduce_weight" &&
           adjustment.nextSetWeight != null &&
           onApply && (
             <button
               type="button"
               onClick={onApply}
-              className="self-start rounded-[8px] bg-[#C47A1A] px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+              className="focus-ring self-start rounded-[8px] bg-warning px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
             >
               Set next set to {adjustment.nextSetWeight} lb
             </button>
@@ -55,7 +55,7 @@ export function AdjustmentChip({ adjustment, onApply, onDismiss }: AdjustmentChi
         type="button"
         aria-label="Dismiss suggestion"
         onClick={onDismiss}
-        className="shrink-0 rounded p-1 text-[#9E9EA3] transition-colors hover:text-[#1A1A1E]"
+        className="focus-ring shrink-0 rounded p-1 text-text-tertiary transition-colors hover:text-text-primary"
       >
         <X size={14} />
       </button>

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PercentileBar } from "@/components/shared/percentile-bar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TrendIndicator } from "@/components/shared/trend-indicator";
 import { PILLARS } from "@/lib/constants";
 import type { BenchmarkDTO } from "@/lib/types";
@@ -25,7 +26,7 @@ import {
 
 function pillarColor(pillar: string): string {
   if (pillar in PILLARS) return PILLARS[pillar as keyof typeof PILLARS].color;
-  return "#E8501A";
+  return "var(--color-credo)";
 }
 
 // The 1000m Row is the only inversed seconds test — display as m:ss.
@@ -130,7 +131,7 @@ export default function CredoTenPage() {
       .filter((g) => g.items.length > 0);
     const other = benchmarks.filter((b) => !(b.pillar in PILLARS));
     if (other.length > 0) {
-      known.push({ key: "other", label: "Other", color: "#E8501A", items: other });
+      known.push({ key: "other", label: "Other", color: "var(--color-credo)", items: other });
     }
     return known;
   }, [benchmarks]);
@@ -143,17 +144,17 @@ export default function CredoTenPage() {
   if (error || !benchmarks) {
     return (
       <div className="flex flex-1 items-center justify-center px-5 pb-10">
-        <div className="w-full rounded-[14px] border border-[#E5E5E8] bg-white p-6 text-center">
-          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+        <div className="w-full rounded-[14px] border border-app bg-card-surface p-6 text-center">
+          <div className="text-[14px] font-semibold text-text-primary">
             Couldn&apos;t load the Credo Ten
           </div>
-          <div className="mt-1 text-[13px] text-[#6B6B73]">
+          <div className="mt-1 text-[13px] text-text-secondary">
             {error ?? "Something went wrong"}
           </div>
           <button
             type="button"
             onClick={() => void load()}
-            className="mt-4 rounded-[10px] bg-[#E8501A] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+            className="focus-ring mt-4 rounded-[10px] bg-credo px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-credo/90"
           >
             Try again
           </button>
@@ -169,10 +170,10 @@ export default function CredoTenPage() {
     <div className="flex-1 px-5 pb-6">
       {/* ── Header ───────────────────────────────────────── */}
       <div className="pb-5">
-        <h1 className="text-[18px] font-semibold text-[#1A1A1E]">
+        <h1 className="text-[18px] font-semibold text-text-primary">
           The Credo Ten
         </h1>
-        <p className="mt-1 text-[13px] leading-relaxed text-[#6B6B73]">
+        <p className="mt-1 text-[13px] leading-relaxed text-text-secondary">
           Ten functional benchmarks that anchor your scores to real-world
           strength, stability, and engine.
         </p>
@@ -181,10 +182,10 @@ export default function CredoTenPage() {
             <div className="flex-1">
               <PercentileBar
                 value={mounted ? (testedCount / total) * 100 : 0}
-                color="#E8501A"
+                color="var(--color-credo)"
               />
             </div>
-            <span className="shrink-0 font-mono text-[12px] font-semibold text-[#6B6B73]">
+            <span className="shrink-0 font-mono text-[12px] font-semibold text-text-secondary">
               {testedCount} of {total} tested
             </span>
           </div>
@@ -245,23 +246,23 @@ function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardPro
   const unit = displayUnit(b);
 
   return (
-    <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
+    <div className="rounded-[14px] border border-app bg-card-surface p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+          <div className="text-[14px] font-semibold text-text-primary">
             {b.name}
           </div>
-          <div className="mt-0.5 text-[11px] text-[#9E9EA3]">
+          <div className="mt-0.5 text-[11px] text-text-tertiary">
             {latest ? `Tested ${relativeDate(latest.testedAt)}` : "Never tested"}
           </div>
         </div>
         <div className="shrink-0 text-right">
           {latest ? (
             <>
-              <div className="font-mono text-[20px] font-semibold leading-tight text-[#1A1A1E]">
+              <div className="font-mono text-[20px] font-semibold leading-tight text-text-primary">
                 {displayValue(b, latest.value)}
                 {unit && (
-                  <span className="ml-1 text-[12px] font-normal text-[#6B6B73]">
+                  <span className="ml-1 text-[12px] font-normal text-text-secondary">
                     {unit}
                   </span>
                 )}
@@ -276,7 +277,7 @@ function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardPro
               )}
             </>
           ) : (
-            <span className="font-mono text-[20px] font-semibold text-[#9E9EA3]">
+            <span className="font-mono text-[20px] font-semibold text-text-tertiary">
               —
             </span>
           )}
@@ -291,7 +292,7 @@ function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardPro
               color={color}
             />
           </div>
-          <span className="w-9 shrink-0 text-right text-[11px] font-medium text-[#6B6B73]">
+          <span className="w-9 shrink-0 text-right text-[11px] font-medium text-text-secondary">
             {ordinal(latest.percentile)}
           </span>
         </div>
@@ -300,7 +301,7 @@ function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardPro
       <button
         type="button"
         onClick={onLog}
-        className="mt-3 w-full rounded-[10px] border border-[#E5E5E8] bg-white py-2 text-[13px] font-semibold text-[#1A1A1E] transition-colors hover:bg-[#F7F7F8]"
+        className="focus-ring mt-3 w-full rounded-[10px] border border-app bg-card-surface py-2 text-[13px] font-semibold text-text-primary transition-colors hover:bg-surface"
       >
         Log result
       </button>
@@ -311,15 +312,12 @@ function BenchmarkCard({ benchmark: b, color, mounted, onLog }: BenchmarkCardPro
 function CredoTenSkeleton() {
   return (
     <div className="flex-1 px-5 pb-6">
-      <div className="h-5 w-32 animate-pulse rounded bg-[#EEEFF1]" />
-      <div className="mt-2 h-3 w-full animate-pulse rounded bg-[#EEEFF1]" />
-      <div className="mt-2 h-3 w-3/4 animate-pulse rounded bg-[#EEEFF1]" />
+      <Skeleton className="h-5 w-32" />
+      <Skeleton className="mt-2 h-3 w-full" />
+      <Skeleton className="mt-2 h-3 w-3/4" />
       <div className="mt-6 flex flex-col gap-2.5">
         {[0, 1, 2, 3, 4, 5].map((i) => (
-          <div
-            key={i}
-            className="h-[118px] animate-pulse rounded-[14px] bg-[#EEEFF1]"
-          />
+          <Skeleton key={i} className="h-[118px] rounded-[14px]" />
         ))}
       </div>
     </div>

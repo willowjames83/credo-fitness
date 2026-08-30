@@ -22,7 +22,7 @@ import {
 } from "./dto";
 import { apiPost, redirectToLogin, UnauthorizedError } from "./utils";
 
-const PURPLE = "#7C3AED";
+const PURPLE = "var(--color-nutrition)";
 
 const MEAL_OPTIONS = MEAL_TYPES.map((value) => ({
   value,

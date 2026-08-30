@@ -10,8 +10,8 @@ import {
   type FoodItem,
 } from "@/services/data/food-database";
 
-const PURPLE = "#7C3AED";
-const PURPLE_LIGHT = "#F3EEFF";
+const PURPLE = "var(--color-nutrition)";
+const PURPLE_LIGHT = "var(--color-nutrition-light)";
 
 /** Shown before the user searches: the highest-yield staples. */
 const FEATURED_IDS = [
@@ -55,21 +55,21 @@ export function ProteinQuickAdd({ onSelect }: ProteinQuickAddProps) {
 
   return (
     <div>
-      <div className="flex items-center gap-2 rounded-[10px] border border-[#E5E5E8] bg-white px-3 transition-colors focus-within:border-[#7C3AED]">
-        <Search size={15} className="shrink-0 text-[#9E9EA3]" />
+      <div className="flex items-center gap-2 rounded-[10px] border border-app bg-card-surface px-3 transition-colors focus-within:border-nutrition">
+        <Search size={15} className="shrink-0 text-text-tertiary" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search foods"
           aria-label="Search foods"
-          className="w-full bg-transparent py-2.5 text-[14px] text-[#1A1A1E] outline-none placeholder:text-[#C0C0C6]"
+          className="w-full bg-transparent py-2.5 text-[14px] text-text-primary outline-none placeholder:text-text-tertiary"
         />
         {searching && (
           <button
             type="button"
             onClick={() => setQuery("")}
-            className="shrink-0 text-[12px] font-medium text-[#9E9EA3] hover:text-[#1A1A1E]"
+            className="focus-ring shrink-0 rounded-sm text-[12px] font-medium text-text-tertiary hover:text-text-primary"
           >
             Clear
           </button>
@@ -77,7 +77,7 @@ export function ProteinQuickAdd({ onSelect }: ProteinQuickAddProps) {
       </div>
 
       {results.length === 0 ? (
-        <p className="mt-3 text-[13px] text-[#9E9EA3]">
+        <p className="mt-3 text-[13px] text-text-tertiary">
           No foods match “{query.trim()}”. Use manual entry below.
         </p>
       ) : (
@@ -87,9 +87,9 @@ export function ProteinQuickAdd({ onSelect }: ProteinQuickAddProps) {
               key={food.id}
               type="button"
               onClick={() => onSelect(food)}
-              className="flex flex-col items-start rounded-[12px] border border-[#E5E5E8] bg-white px-3 py-2.5 text-left transition-colors hover:bg-[#FBFAFF]"
+              className="focus-ring flex flex-col items-start rounded-[12px] border border-app bg-card-surface px-3 py-2.5 text-left transition-colors hover:bg-nutrition-light"
             >
-              <span className="line-clamp-2 text-[13px] font-medium leading-snug text-[#1A1A1E]">
+              <span className="line-clamp-2 text-[13px] font-medium leading-snug text-text-primary">
                 {food.name}
               </span>
               <span className="mt-1 flex items-baseline gap-1.5">
@@ -99,7 +99,7 @@ export function ProteinQuickAdd({ onSelect }: ProteinQuickAddProps) {
                 >
                   {Math.round(food.proteinG)}g
                 </span>
-                <span className="text-[11px] text-[#9E9EA3]">
+                <span className="text-[11px] text-text-tertiary">
                   {food.servingLabel}
                 </span>
               </span>
@@ -112,7 +112,7 @@ export function ProteinQuickAdd({ onSelect }: ProteinQuickAddProps) {
         <button
           type="button"
           onClick={() => setShowAll((v) => !v)}
-          className="mt-2.5 text-[12px] font-semibold text-[#7C3AED]"
+          className="focus-ring mt-2.5 rounded-sm text-[12px] font-semibold text-nutrition"
         >
           {showAll ? "Show fewer" : "Show all foods"}
         </button>

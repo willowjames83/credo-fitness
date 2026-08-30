@@ -68,7 +68,7 @@ export function WeekBarChart({
           y1={plot}
           x2="100%"
           y2={plot}
-          stroke="#E5E5E8"
+          stroke="var(--app-border)"
           strokeWidth={1}
         />
 
@@ -78,7 +78,7 @@ export function WeekBarChart({
             y1={targetY}
             x2="100%"
             y2={targetY}
-            stroke="#C9C9CE"
+            stroke="var(--text-tertiary)"
             strokeWidth={1}
             strokeDasharray="3 3"
           />
@@ -98,7 +98,7 @@ export function WeekBarChart({
                   width={`${barWidth}%`}
                   height={3}
                   rx={1.5}
-                  fill="#EEEFF1"
+                  fill="var(--surface-elevated)"
                 />
               )}
               {week.segments.map((segment, si) => {
@@ -129,7 +129,7 @@ export function WeekBarChart({
                 y={height - 5}
                 textAnchor="middle"
                 fontSize={9}
-                fill={i === weeks.length - 1 ? "#6B6B73" : "#9E9EA3"}
+                fill={i === weeks.length - 1 ? "var(--text-secondary)" : "var(--text-tertiary)"}
                 fontWeight={i === weeks.length - 1 ? 600 : 400}
               >
                 {shortDate(week.weekStart)}
@@ -155,7 +155,7 @@ export function ChartLegend({ items }: ChartLegendProps) {
             className="h-2 w-2 rounded-[2px]"
             style={{ background: item.color }}
           />
-          <span className="text-[11px] text-[#6B6B73]">{item.label}</span>
+          <span className="text-[11px] text-text-secondary">{item.label}</span>
         </div>
       ))}
     </div>

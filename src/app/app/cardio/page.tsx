@@ -41,8 +41,8 @@ import {
   UnauthorizedError,
 } from "@/components/pillars/utils";
 
-const BLUE = "#2563EB";
-const BLUE_LIGHT = "#EFF4FF";
+const BLUE = "var(--color-cardio)";
+const BLUE_LIGHT = "var(--color-cardio-light)";
 const VO2_BLUE = "#93B4F8";
 
 interface SessionsPayload {
@@ -147,17 +147,17 @@ export default function CardioPage() {
               >
                 {zone2ThisWeekMin}
               </span>
-              <span className="font-mono text-[18px] font-semibold text-[#9E9EA3]">
+              <span className="font-mono text-[18px] font-semibold text-text-tertiary">
                 / {zone2TargetMin}
               </span>
-              <span className="ml-0.5 text-[13px] text-[#6B6B73]">min</span>
+              <span className="ml-0.5 text-[13px] text-text-secondary">min</span>
             </div>
           </div>
           <div className="pb-1 text-right">
-            <div className="font-mono text-[20px] font-semibold text-[#1A1A1E]">
+            <div className="font-mono text-[20px] font-semibold text-text-primary">
               {vo2SessionsThisWeek}
             </div>
-            <div className="text-[11px] text-[#9E9EA3]">
+            <div className="text-[11px] text-text-tertiary">
               hard {vo2SessionsThisWeek === 1 ? "session" : "sessions"}
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function CardioPage() {
         <div className="mt-3.5">
           <ProgressBar fraction={fraction} color={BLUE} active={mounted} />
         </div>
-        <div className="mt-2 text-[12px] text-[#6B6B73]">
+        <div className="mt-2 text-[12px] text-text-secondary">
           {remaining > 0
             ? `${remaining} min to target`
             : "Weekly target cleared"}
@@ -184,11 +184,11 @@ export default function CardioPage() {
         <SectionLabel>
           {suggestion.kind === "vo2" ? "Raise your ceiling" : "This week"}
         </SectionLabel>
-        <p className="mt-1.5 text-[14px] leading-relaxed text-[#1A1A1E]">
+        <p className="mt-1.5 text-[14px] leading-relaxed text-text-primary">
           {suggestion.message}
         </p>
         {suggestion.freeDays.length > 0 && (
-          <p className="mt-2 text-[12px] leading-relaxed text-[#4B5C8A]">
+          <p className="mt-2 text-[12px] leading-relaxed text-cardio/70">
             {joinList(suggestion.freeDays)}{" "}
             {suggestion.freeDays.length === 1 ? "is" : "are"} free of lifting —
             good {suggestion.freeDays.length === 1 ? "slot" : "slots"} for it.
@@ -199,7 +199,7 @@ export default function CardioPage() {
       <button
         type="button"
         onClick={() => setSheetType("zone2")}
-        className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+        className="focus-ring mt-3 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
       >
         <Plus size={17} />
         Log session
@@ -225,12 +225,12 @@ export default function CardioPage() {
             unit="min"
             active={mounted}
           />
-          <div className="mt-3 border-t border-[#F0F0F2] pt-3">
+          <div className="mt-3 border-t border-app pt-3">
             <ChartLegend
               items={[
                 { label: "Zone 2", color: BLUE },
                 { label: "VO2 max / intervals", color: VO2_BLUE },
-                { label: `Target ${zone2TargetMin} min`, color: "#C9C9CE" },
+                { label: `Target ${zone2TargetMin} min`, color: "var(--text-tertiary)" },
               ]}
             />
           </div>
@@ -318,20 +318,20 @@ function NorwegianProtocolCard({ onLog }: { onLog: () => void }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-3 p-4 text-left"
+        className="focus-ring flex w-full items-center justify-between gap-3 rounded-[14px] p-4 text-left"
       >
         <div className="min-w-0">
-          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+          <div className="text-[14px] font-semibold text-text-primary">
             Norwegian 4x4
           </div>
-          <div className="mt-0.5 text-[12px] text-[#6B6B73]">
+          <div className="mt-0.5 text-[12px] text-text-secondary">
             The most reliable VO2 max protocol — once a week, about 40 min
           </div>
         </div>
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="shrink-0 text-[#9E9EA3]"
+          className="shrink-0 text-text-tertiary"
         >
           <ChevronDown size={18} />
         </motion.span>
@@ -346,7 +346,7 @@ function NorwegianProtocolCard({ onLog }: { onLog: () => void }) {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="border-t border-[#F0F0F2] px-4 pb-4 pt-3">
+            <div className="border-t border-app px-4 pb-4 pt-3">
               <ol className="flex flex-col gap-2.5">
                 {PROTOCOL_STEPS.map((step, i) => (
                   <li key={step.label} className="flex gap-3">
@@ -357,10 +357,10 @@ function NorwegianProtocolCard({ onLog }: { onLog: () => void }) {
                       {i + 1}
                     </span>
                     <div className="min-w-0">
-                      <div className="text-[13px] font-medium text-[#1A1A1E]">
+                      <div className="text-[13px] font-medium text-text-primary">
                         {step.label}
                       </div>
-                      <div className="text-[12px] leading-relaxed text-[#6B6B73]">
+                      <div className="text-[12px] leading-relaxed text-text-secondary">
                         {step.detail}
                       </div>
                     </div>
@@ -370,7 +370,7 @@ function NorwegianProtocolCard({ onLog }: { onLog: () => void }) {
               <button
                 type="button"
                 onClick={onLog}
-                className="mt-4 w-full rounded-[10px] border border-[#E5E5E8] bg-white py-2 text-[13px] font-semibold text-[#1A1A1E] transition-colors hover:bg-[#F7F7F8]"
+                className="focus-ring mt-4 w-full rounded-[10px] border border-app bg-card-surface py-2 text-[13px] font-semibold text-text-primary transition-colors hover:bg-surface"
               >
                 Log a 4x4 session
               </button>

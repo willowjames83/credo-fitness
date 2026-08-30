@@ -18,9 +18,9 @@ const LABELS: Record<string, string> = {
 };
 
 const CHIP_STYLES: Record<string, string> = {
-  fresh: "bg-[#E8F5F3] text-[#1A7A6D] border-[#1A7A6D]/15",
-  recovering: "bg-[#FFF3E0] text-[#C47A1A] border-[#C47A1A]/15",
-  fatigued: "bg-[#C43B3B]/8 text-[#C43B3B] border-[#C43B3B]/15",
+  fresh: "bg-teal-light text-teal border-teal/15",
+  recovering: "bg-warning-light text-warning border-warning/15",
+  fatigued: "bg-danger/8 text-danger border-danger/15",
 };
 
 function readinessTitle(state: MuscleRecoveryState): string {

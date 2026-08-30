@@ -20,7 +20,7 @@ import {
 } from "./dto";
 import { apiPost, redirectToLogin, UnauthorizedError } from "./utils";
 
-const COLOR = "#2563EB";
+const COLOR = "var(--color-cardio)";
 
 const TYPE_OPTIONS = CARDIO_TYPES.map((value) => ({
   value,

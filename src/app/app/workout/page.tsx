@@ -7,6 +7,7 @@ import {
   Check,
   CheckCircle2,
   ChevronDown,
+  ClipboardList,
   Info,
   RefreshCw,
   Repeat,
@@ -30,6 +31,8 @@ import { WorkoutSummary } from "@/components/workout/workout-summary";
 import type { SetRowState } from "@/components/workout/set-row";
 import { nowMs } from "@/components/workout/time";
 import { SectionHeader } from "@/components/shared/section-header";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/ui/empty-state";
 
 // ── localStorage persistence ────────────────────────────────────
 
@@ -127,14 +130,10 @@ function ElapsedTimer({ startedAt }: { startedAt: string }) {
   }, []);
   const seconds = Math.floor((nowMs() - new Date(startedAt).getTime()) / 1000);
   return (
-    <span className="font-mono text-[17px] font-medium text-[#E8501A] tabular-nums">
+    <span className="font-mono text-[17px] font-medium text-credo tabular-nums">
       {formatElapsed(seconds)}
     </span>
   );
-}
-
-function Skeleton({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded-[14px] bg-[#EEEFF1] ${className}`} />;
 }
 
 // ── page ────────────────────────────────────────────────────────
@@ -381,11 +380,11 @@ export default function WorkoutPage() {
   if (loading) {
     return (
       <div className="flex flex-1 flex-col gap-3 px-5 pb-5 pt-2">
-        <Skeleton className="h-16" />
-        <Skeleton className="h-40" />
-        <Skeleton className="h-24" />
-        <Skeleton className="h-24" />
-        <Skeleton className="h-12" />
+        <Skeleton className="h-16 rounded-[14px]" />
+        <Skeleton className="h-40 rounded-[14px]" />
+        <Skeleton className="h-24 rounded-[14px]" />
+        <Skeleton className="h-24 rounded-[14px]" />
+        <Skeleton className="h-12 rounded-[14px]" />
       </div>
     );
   }
@@ -393,12 +392,12 @@ export default function WorkoutPage() {
   if (loadError) {
     return (
       <div className="px-5 pt-4">
-        <div className="flex items-center justify-between gap-3 rounded-[14px] border border-[#C43B3B]/25 bg-[#C43B3B]/5 px-4 py-3">
-          <p className="text-sm text-[#C43B3B]">{loadError}</p>
+        <div className="flex items-center justify-between gap-3 rounded-[14px] border border-danger/25 bg-danger/5 px-4 py-3">
+          <p className="text-sm text-danger">{loadError}</p>
           <button
             type="button"
             onClick={retryLoad}
-            className="shrink-0 rounded-[8px] border border-[#C43B3B]/30 px-3 py-1.5 text-xs font-semibold text-[#C43B3B] transition-colors hover:bg-[#C43B3B]/10"
+            className="focus-ring shrink-0 rounded-[8px] border border-danger/30 px-3 py-1.5 text-xs font-semibold text-danger transition-colors hover:bg-danger/10"
           >
             Retry
           </button>
@@ -413,18 +412,20 @@ export default function WorkoutPage() {
 
   if (!plan) {
     return (
-      <div className="px-5 pt-6 text-center">
-        <p className="text-base font-semibold text-[#1A1A1E]">No training plan yet</p>
-        <p className="mx-auto mt-1 max-w-[320px] text-[13px] text-[#6B6B73]">
-          Answer a few questions about your goals and equipment and we&apos;ll build
-          today&apos;s workout.
-        </p>
-        <Link
-          href="/onboarding"
-          className="mx-auto mt-4 flex h-12 max-w-[280px] items-center justify-center rounded-[12px] bg-[#E8501A] text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
-        >
-          Set up my plan
-        </Link>
+      <div className="px-5 pt-6">
+        <EmptyState
+          icon={ClipboardList}
+          title="No training plan yet"
+          description="Answer a few questions about your goals and equipment and we'll build today's workout."
+          action={
+            <Link
+              href="/onboarding"
+              className="focus-ring mx-auto flex h-12 w-[200px] items-center justify-center rounded-[12px] bg-credo text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
+            >
+              Set up my plan
+            </Link>
+          }
+        />
       </div>
     );
   }
@@ -432,21 +433,21 @@ export default function WorkoutPage() {
   if (plan.status === "completed" || plan.status === "skipped") {
     return (
       <div className="px-5 pt-6 text-center">
-        <CheckCircle2 size={28} className="mx-auto text-[#2D8A4E]" />
-        <p className="mt-2 text-base font-semibold text-[#1A1A1E]">
+        <CheckCircle2 size={28} className="mx-auto text-success" />
+        <p className="mt-2 text-base font-semibold text-text-primary">
           {plan.status === "completed" ? "Today's workout is done" : "Today's workout was skipped"}
         </p>
-        <p className="mt-1 text-[13px] text-[#6B6B73]">{plan.focus}</p>
+        <p className="mt-1 text-[13px] text-text-secondary">{plan.focus}</p>
         <div className="mx-auto mt-4 flex max-w-[280px] flex-col gap-2">
           <Link
             href="/app/history"
-            className="flex h-11 items-center justify-center rounded-[10px] bg-[#E8501A] text-sm font-semibold text-white transition-colors hover:bg-[#D3480F]"
+            className="flex h-11 items-center justify-center rounded-[10px] bg-credo text-sm font-semibold text-white transition-colors hover:bg-credo/90"
           >
             View history
           </Link>
           <Link
             href="/app/dashboard"
-            className="flex h-11 items-center justify-center rounded-[10px] border border-[#E5E5E8] bg-white text-sm font-semibold text-[#1A1A1E] transition-colors hover:bg-[#F7F7F8]"
+            className="flex h-11 items-center justify-center rounded-[10px] border border-app bg-card-surface text-sm font-semibold text-text-primary transition-colors hover:bg-surface"
           >
             Back to dashboard
           </Link>
@@ -456,13 +457,13 @@ export default function WorkoutPage() {
   }
 
   const actionErrorBanner = actionError && (
-    <div className="flex items-center justify-between gap-3 rounded-[14px] border border-[#C43B3B]/25 bg-[#C43B3B]/5 px-4 py-2.5">
-      <p className="text-[13px] text-[#C43B3B]">{actionError}</p>
+    <div className="flex items-center justify-between gap-3 rounded-[14px] border border-danger/25 bg-danger/5 px-4 py-2.5">
+      <p className="text-[13px] text-danger">{actionError}</p>
       <button
         type="button"
         aria-label="Dismiss error"
         onClick={() => setActionError(null)}
-        className="text-[#C43B3B]"
+        className="focus-ring rounded-sm text-danger"
       >
         <X size={14} />
       </button>
@@ -476,8 +477,8 @@ export default function WorkoutPage() {
       <div className="flex flex-1 flex-col gap-3 px-5 pb-6">
         <div className="flex items-start justify-between gap-3 pt-1">
           <div>
-            <h1 className="text-lg font-semibold text-[#1A1A1E]">{plan.focus}</h1>
-            <p className="mt-0.5 text-[13px] text-[#6B6B73]">
+            <h1 className="text-lg font-semibold text-text-primary">{plan.focus}</h1>
+            <p className="mt-0.5 text-[13px] text-text-secondary">
               Week {plan.weekNumber} · Day {plan.dayNumber} of {plan.totalDays} ·{" "}
               {mainExercises.length} exercises · ~{plan.estimatedDuration} min
             </p>
@@ -486,7 +487,7 @@ export default function WorkoutPage() {
             type="button"
             onClick={regenerate}
             disabled={busy !== null}
-            className="flex h-9 shrink-0 items-center gap-1.5 rounded-[8px] border border-[#E5E5E8] bg-white px-3 text-xs font-semibold text-[#6B6B73] transition-colors hover:bg-[#F7F7F8] disabled:opacity-50"
+            className="focus-ring flex h-9 shrink-0 items-center gap-1.5 rounded-[8px] border border-app bg-card-surface px-3 text-xs font-semibold text-text-secondary transition-colors hover:bg-surface disabled:opacity-50"
           >
             <RefreshCw size={12} className={busy === "regen" ? "animate-spin" : ""} />
             Regenerate
@@ -496,33 +497,33 @@ export default function WorkoutPage() {
         {actionErrorBanner}
 
         {plan.warmup.length > 0 && (
-          <div className="rounded-[14px] border border-[#E5E5E8] bg-white">
+          <div className="rounded-[14px] border border-app bg-card-surface">
             <button
               type="button"
               onClick={() => setWarmupOpen((v) => !v)}
               aria-expanded={warmupOpen}
-              className="flex min-h-[44px] w-full items-center justify-between px-4 py-3"
+              className="focus-ring flex min-h-[44px] w-full items-center justify-between rounded-[14px] px-4 py-3"
             >
-              <span className="text-sm font-semibold text-[#1A1A1E]">
+              <span className="text-sm font-semibold text-text-primary">
                 Warmup{" "}
-                <span className="font-normal text-[#6B6B73]">
+                <span className="font-normal text-text-secondary">
                   · {plan.warmup.length} moves
                 </span>
               </span>
               <ChevronDown
                 size={16}
-                className={`text-[#9E9EA3] transition-transform ${warmupOpen ? "rotate-180" : ""}`}
+                className={`text-text-tertiary transition-transform ${warmupOpen ? "rotate-180" : ""}`}
               />
             </button>
             {warmupOpen && (
-              <div className="border-t border-[#EEEFF1] px-4 py-2">
+              <div className="border-t border-app px-4 py-2">
                 {plan.warmup.map((move, i) => (
                   <div
                     key={`${move.exerciseId}-${i}`}
                     className="flex items-center justify-between py-2"
                   >
-                    <span className="text-[13px] text-[#1A1A1E]">{move.name}</span>
-                    <span className="font-mono text-xs text-[#6B6B73]">
+                    <span className="text-[13px] text-text-primary">{move.name}</span>
+                    <span className="font-mono text-xs text-text-secondary">
                       {move.prescription}
                     </span>
                   </div>
@@ -534,21 +535,21 @@ export default function WorkoutPage() {
 
         <div className="flex flex-col gap-2.5">
           {mainExercises.map((ex, i) => (
-            <div key={ex.id} className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
+            <div key={ex.id} className="rounded-[14px] border border-app bg-card-surface p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[#1A1A1E]">
-                    <span className="mr-1.5 font-mono text-xs text-[#9E9EA3]">
+                  <p className="text-sm font-semibold text-text-primary">
+                    <span className="mr-1.5 font-mono text-xs text-text-tertiary">
                       {i + 1}
                     </span>
                     {ex.name}
                   </p>
-                  <p className="mt-0.5 font-mono text-[13px] text-[#6B6B73]">
+                  <p className="mt-0.5 font-mono text-[13px] text-text-secondary">
                     {ex.targetSets} × {ex.targetRepMin}-{ex.targetRepMax}
                     {ex.recommendedWeight > 0 ? ` @ ${ex.recommendedWeight} lb` : ""}
                   </p>
                   {ex.rationale && (
-                    <p className="mt-1 text-xs text-[#1A7A6D]">{ex.rationale}</p>
+                    <p className="mt-1 text-xs text-teal">{ex.rationale}</p>
                   )}
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
@@ -560,10 +561,10 @@ export default function WorkoutPage() {
                       onClick={() =>
                         setInfoOpenFor((v) => (v === ex.id ? null : ex.id))
                       }
-                      className={`flex h-9 w-9 items-center justify-center rounded-[8px] border transition-colors ${
+                      className={`focus-ring flex h-9 w-9 items-center justify-center rounded-[8px] border transition-colors ${
                         infoOpenFor === ex.id
-                          ? "border-[#E8501A] bg-[#FFF0E9] text-[#E8501A]"
-                          : "border-[#E5E5E8] bg-white text-[#9E9EA3] hover:text-[#1A1A1E]"
+                          ? "border-credo bg-credo-light text-credo"
+                          : "border-app bg-card-surface text-text-tertiary hover:text-text-primary"
                       }`}
                     >
                       <Info size={14} />
@@ -577,10 +578,10 @@ export default function WorkoutPage() {
                       onClick={() =>
                         setSwapOpenFor((v) => (v === ex.id ? null : ex.id))
                       }
-                      className={`flex h-9 w-9 items-center justify-center rounded-[8px] border transition-colors ${
+                      className={`focus-ring flex h-9 w-9 items-center justify-center rounded-[8px] border transition-colors ${
                         swapOpenFor === ex.id
-                          ? "border-[#E8501A] bg-[#FFF0E9] text-[#E8501A]"
-                          : "border-[#E5E5E8] bg-white text-[#9E9EA3] hover:text-[#1A1A1E]"
+                          ? "border-credo bg-credo-light text-credo"
+                          : "border-app bg-card-surface text-text-tertiary hover:text-text-primary"
                       }`}
                     >
                       <Repeat size={14} />
@@ -590,10 +591,10 @@ export default function WorkoutPage() {
               </div>
 
               {infoOpenFor === ex.id && (
-                <ul className="mt-3 flex flex-col gap-1 rounded-[10px] bg-[#F7F7F8] p-3">
+                <ul className="mt-3 flex flex-col gap-1 rounded-[10px] bg-surface p-3">
                   {ex.formCues.map((cue, ci) => (
-                    <li key={ci} className="flex gap-2 text-xs text-[#6B6B73]">
-                      <span className="text-[#1A7A6D]">·</span>
+                    <li key={ci} className="flex gap-2 text-xs text-text-secondary">
+                      <span className="text-teal">·</span>
                       {cue}
                     </li>
                   ))}
@@ -601,8 +602,8 @@ export default function WorkoutPage() {
               )}
 
               {swapOpenFor === ex.id && (
-                <div className="mt-3 flex flex-col gap-1.5 rounded-[10px] bg-[#F7F7F8] p-3">
-                  <p className="text-[11px] font-semibold text-[#9E9EA3] uppercase">
+                <div className="mt-3 flex flex-col gap-1.5 rounded-[10px] bg-surface p-3">
+                  <p className="text-[11px] font-semibold text-text-tertiary uppercase">
                     Swap for
                   </p>
                   {ex.alternatives.map((alt) => (
@@ -611,10 +612,10 @@ export default function WorkoutPage() {
                       type="button"
                       disabled={busy !== null}
                       onClick={() => swapExercise(ex.id, alt.exerciseId)}
-                      className="flex min-h-[44px] items-center justify-between rounded-[8px] border border-[#E5E5E8] bg-white px-3 text-left text-[13px] font-medium text-[#1A1A1E] transition-colors hover:border-[#E8501A] disabled:opacity-50"
+                      className="focus-ring flex min-h-[44px] items-center justify-between rounded-[8px] border border-app bg-card-surface px-3 text-left text-[13px] font-medium text-text-primary transition-colors hover:border-credo disabled:opacity-50"
                     >
                       {alt.name}
-                      <Repeat size={12} className="text-[#9E9EA3]" />
+                      <Repeat size={12} className="text-text-tertiary" />
                     </button>
                   ))}
                 </div>
@@ -627,7 +628,7 @@ export default function WorkoutPage() {
           type="button"
           onClick={startWorkout}
           disabled={busy !== null}
-          className="mt-1 flex h-13 min-h-[52px] items-center justify-center rounded-[12px] bg-[#E8501A] text-base font-semibold text-white transition-colors hover:bg-[#D3480F] disabled:opacity-60"
+          className="focus-ring mt-1 flex h-13 min-h-[52px] items-center justify-center rounded-[12px] bg-credo text-base font-semibold text-white transition-colors hover:bg-credo/90 disabled:opacity-60"
         >
           {busy === "start" ? "Starting…" : "Start workout"}
         </button>
@@ -649,8 +650,8 @@ export default function WorkoutPage() {
     <div className="flex flex-1 flex-col gap-3 px-5 pb-6">
       <div className="flex items-center justify-between pt-1">
         <div>
-          <h1 className="text-lg font-semibold text-[#1A1A1E]">{plan.focus}</h1>
-          <p className="mt-0.5 text-[13px] text-[#6B6B73]">
+          <h1 className="text-lg font-semibold text-text-primary">{plan.focus}</h1>
+          <p className="mt-0.5 text-[13px] text-text-secondary">
             Exercise {Math.min(activeIndex + 1, mainExercises.length)} of{" "}
             {mainExercises.length}
           </p>
@@ -659,9 +660,9 @@ export default function WorkoutPage() {
       </div>
 
       {/* progress bar */}
-      <div className="h-1.5 overflow-hidden rounded-full bg-[#EEEFF1]">
+      <div className="h-1.5 overflow-hidden rounded-full bg-surface-elevated">
         <motion.div
-          className="h-full rounded-full bg-[#E8501A]"
+          className="h-full rounded-full bg-credo"
           initial={false}
           animate={{
             width: `${mainExercises.length > 0 ? (doneCount / mainExercises.length) * 100 : 0}%`,
@@ -698,7 +699,7 @@ export default function WorkoutPage() {
         <button
           type="button"
           onClick={advanceExercise}
-          className="flex h-11 items-center justify-center rounded-[10px] border border-[#2D8A4E]/30 bg-[#E8F5ED] text-sm font-semibold text-[#2D8A4E] transition-colors hover:bg-[#2D8A4E]/15"
+          className="focus-ring flex h-11 items-center justify-center rounded-[10px] border border-success/30 bg-success-light text-sm font-semibold text-success transition-colors hover:bg-success/15"
         >
           {activeIndex < mainExercises.length - 1 ? "Next exercise" : "Review and finish"}
         </button>
@@ -721,24 +722,24 @@ export default function WorkoutPage() {
                   setAdjustment(null);
                   setRpePendingFor(null);
                 }}
-                className={`flex min-h-[44px] items-center justify-between rounded-[12px] border px-3.5 py-2.5 text-left transition-colors ${
+                className={`focus-ring flex min-h-[44px] items-center justify-between rounded-[12px] border px-3.5 py-2.5 text-left transition-colors ${
                   isActive
-                    ? "border-[#E8501A] bg-[#FFF0E9]"
-                    : "border-[#E5E5E8] bg-white hover:bg-[#F7F7F8]"
+                    ? "border-credo bg-credo-light"
+                    : "border-app bg-card-surface hover:bg-surface"
                 }`}
               >
                 <span
                   className={`text-sm font-medium ${
-                    complete ? "text-[#9E9EA3] line-through" : "text-[#1A1A1E]"
+                    complete ? "text-text-tertiary line-through" : "text-text-primary"
                   }`}
                 >
                   {ex.name}
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-[#9E9EA3]">
+                  <span className="font-mono text-xs text-text-tertiary">
                     {rows.filter((r) => r.completed).length}/{ex.targetSets}
                   </span>
-                  {complete && <Check size={14} className="text-[#2D8A4E]" />}
+                  {complete && <Check size={14} className="text-success" />}
                 </span>
               </button>
             );
@@ -749,7 +750,7 @@ export default function WorkoutPage() {
       <button
         type="button"
         onClick={() => setReviewOpen(true)}
-        className="mt-2 flex h-12 items-center justify-center rounded-[12px] border border-[#E5E5E8] bg-white text-sm font-semibold text-[#1A1A1E] transition-colors hover:bg-[#F7F7F8]"
+        className="focus-ring mt-2 flex h-12 items-center justify-center rounded-[12px] border border-app bg-card-surface text-sm font-semibold text-text-primary transition-colors hover:bg-surface"
       >
         Finish workout
       </button>
@@ -765,7 +766,7 @@ export default function WorkoutPage() {
       {reviewOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center lg:items-center">
           <div
-            className="absolute inset-0 bg-[#1A1A1E]/40"
+            className="absolute inset-0 bg-black/40"
             onClick={() => setReviewOpen(false)}
             aria-hidden
           />
@@ -775,11 +776,11 @@ export default function WorkoutPage() {
             transition={{ duration: 0.2, ease: "easeOut" }}
             role="dialog"
             aria-label="Review workout"
-            className="relative flex max-h-[85dvh] w-full max-w-[640px] flex-col rounded-t-[20px] border border-[#E5E5E8] bg-white lg:max-w-[440px] lg:rounded-[20px]"
+            className="relative flex max-h-[85dvh] w-full max-w-[640px] flex-col rounded-t-[20px] border border-app bg-card-surface lg:max-w-[440px] lg:rounded-[20px]"
           >
-            <div className="border-b border-[#EEEFF1] px-5 py-4">
-              <p className="text-base font-semibold text-[#1A1A1E]">Finish workout?</p>
-              <p className="mt-0.5 text-[13px] text-[#6B6B73]">
+            <div className="border-b border-app px-5 py-4">
+              <p className="text-base font-semibold text-text-primary">Finish workout?</p>
+              <p className="mt-0.5 text-[13px] text-text-secondary">
                 Only completed sets with reps count toward your scores.
               </p>
             </div>
@@ -793,15 +794,15 @@ export default function WorkoutPage() {
                 return (
                   <div
                     key={ex.id}
-                    className="flex items-center justify-between border-b border-[#EEEFF1] py-3 last:border-b-0"
+                    className="flex items-center justify-between border-b border-app py-3 last:border-b-0"
                   >
-                    <span className="text-sm text-[#1A1A1E]">{ex.name}</span>
+                    <span className="text-sm text-text-primary">{ex.name}</span>
                     <span className="flex items-center gap-2">
-                      <span className="font-mono text-xs text-[#6B6B73]">
+                      <span className="font-mono text-xs text-text-secondary">
                         {counted}/{rows.length} sets
                       </span>
                       {skipped > 0 && (
-                        <span className="flex items-center gap-1 rounded-[6px] bg-[#FFF3E0] px-1.5 py-0.5 text-[11px] font-medium text-[#C47A1A]">
+                        <span className="flex items-center gap-1 rounded-[6px] bg-warning-light px-1.5 py-0.5 text-[11px] font-medium text-warning">
                           <AlertTriangle size={10} />
                           {skipped} skipped
                         </span>
@@ -811,9 +812,9 @@ export default function WorkoutPage() {
                 );
               })}
             </div>
-            <div className="flex flex-col gap-2 border-t border-[#EEEFF1] p-5 pb-[calc(20px+env(safe-area-inset-bottom))] lg:pb-5">
+            <div className="flex flex-col gap-2 border-t border-app p-5 pb-[calc(20px+env(safe-area-inset-bottom))] lg:pb-5">
               {skippedTotal > 0 && (
-                <p className="text-xs text-[#C47A1A]">
+                <p className="text-xs text-warning">
                   {skippedTotal} set{skippedTotal === 1 ? "" : "s"} will be logged as
                   skipped.
                 </p>
@@ -822,14 +823,14 @@ export default function WorkoutPage() {
                 type="button"
                 onClick={submitWorkout}
                 disabled={busy !== null}
-                className="flex h-12 items-center justify-center rounded-[12px] bg-[#E8501A] text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F] disabled:opacity-60"
+                className="focus-ring flex h-12 items-center justify-center rounded-[12px] bg-credo text-[15px] font-semibold text-white transition-colors hover:bg-credo/90 disabled:opacity-60"
               >
                 {busy === "complete" ? "Saving…" : "Complete workout"}
               </button>
               <button
                 type="button"
                 onClick={() => setReviewOpen(false)}
-                className="flex h-11 items-center justify-center rounded-[10px] text-sm font-medium text-[#6B6B73] transition-colors hover:bg-[#F7F7F8]"
+                className="focus-ring flex h-11 items-center justify-center rounded-[10px] text-sm font-medium text-text-secondary transition-colors hover:bg-surface"
               >
                 Keep training
               </button>

@@ -33,7 +33,7 @@ export function SetRow({
   onUncomplete,
 }: SetRowProps) {
   const inputClass =
-    "h-11 w-full min-w-0 rounded-[10px] border border-[#E5E5E8] bg-white px-3 text-center font-mono text-base font-medium text-[#1A1A1E] outline-none transition-colors focus:border-[#E8501A] disabled:bg-[#F7F7F8] disabled:text-[#9E9EA3]";
+    "focus-ring h-11 w-full min-w-0 rounded-[10px] border border-app bg-card-surface px-3 text-center font-mono text-base font-medium text-text-primary outline-none transition-colors focus:border-credo disabled:bg-surface disabled:text-text-tertiary";
 
   return (
     <div
@@ -41,7 +41,7 @@ export function SetRow({
         state.completed ? "opacity-60" : ""
       }`}
     >
-      <span className="text-sm font-semibold text-[#6B6B73]">{setNumber}</span>
+      <span className="text-sm font-semibold text-text-secondary">{setNumber}</span>
       <input
         type="text"
         inputMode="decimal"
@@ -73,10 +73,10 @@ export function SetRow({
               : `Complete set ${setNumber}`
           }
           onClick={state.completed ? onUncomplete : onComplete}
-          className={`flex h-11 w-11 items-center justify-center rounded-[10px] border transition-colors ${
+          className={`focus-ring flex h-11 w-11 items-center justify-center rounded-[10px] border transition-colors ${
             state.completed
-              ? "border-[#2D8A4E] bg-[#2D8A4E] text-white"
-              : "border-[#E5E5E8] bg-white text-[#9E9EA3] hover:border-[#2D8A4E] hover:text-[#2D8A4E]"
+              ? "border-success bg-success text-white"
+              : "border-app bg-card-surface text-text-tertiary hover:border-success hover:text-success"
           } disabled:opacity-40`}
         >
           <Check size={18} strokeWidth={2.5} />

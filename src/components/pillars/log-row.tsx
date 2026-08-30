@@ -40,12 +40,12 @@ export function LogRow({
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-[12px] border border-[#E5E5E8] bg-white px-3.5 py-3">
+    <div className="flex items-center gap-3 rounded-[12px] border border-app bg-card-surface px-3.5 py-3">
       <div className="min-w-0 flex-1">
-        <div className="truncate text-[14px] font-medium text-[#1A1A1E]">
+        <div className="truncate text-[14px] font-medium text-text-primary">
           {title}
         </div>
-        <div className="mt-0.5 truncate text-[11px] text-[#9E9EA3]">{meta}</div>
+        <div className="mt-0.5 truncate text-[11px] text-text-tertiary">{meta}</div>
       </div>
 
       <div className="shrink-0 text-right">
@@ -55,7 +55,7 @@ export function LogRow({
         >
           {value}
         </span>
-        <span className="ml-0.5 text-[11px] text-[#9E9EA3]">{unit}</span>
+        <span className="ml-0.5 text-[11px] text-text-tertiary">{unit}</span>
       </div>
 
       {confirming ? (
@@ -63,7 +63,7 @@ export function LogRow({
           <button
             type="button"
             onClick={() => setConfirming(false)}
-            className="rounded-[8px] px-2 py-1 text-[12px] font-medium text-[#6B6B73] transition-colors hover:bg-[#F7F7F8]"
+            className="focus-ring rounded-[8px] px-2 py-1 text-[12px] font-medium text-text-secondary transition-colors hover:bg-surface"
           >
             Keep
           </button>
@@ -71,7 +71,7 @@ export function LogRow({
             type="button"
             onClick={() => void remove()}
             disabled={pending}
-            className="rounded-[8px] bg-[#C43B3B] px-2.5 py-1 text-[12px] font-semibold text-white transition-opacity disabled:opacity-50"
+            className="focus-ring rounded-[8px] bg-danger px-2.5 py-1 text-[12px] font-semibold text-white transition-opacity disabled:opacity-50"
           >
             {pending ? "…" : "Delete"}
           </button>
@@ -81,7 +81,7 @@ export function LogRow({
           type="button"
           onClick={() => setConfirming(true)}
           aria-label={`Delete ${title}`}
-          className="shrink-0 rounded-full p-1.5 text-[#C0C0C6] transition-colors hover:bg-[#F7F7F8] hover:text-[#C43B3B]"
+          className="focus-ring shrink-0 rounded-full p-1.5 text-text-tertiary transition-colors hover:bg-surface hover:text-danger"
         >
           <Trash2 size={15} />
         </button>

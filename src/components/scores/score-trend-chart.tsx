@@ -26,6 +26,15 @@ const PILLAR_FIELDS = {
 
 type PillarField = (typeof PILLAR_FIELDS)[PillarKey];
 
+// Themed (light/dark-aware) CSS var equivalents of PILLARS[key].color/.bg,
+// which are fixed light-mode hex and unsafe to paint dark surfaces with.
+const PILLAR_VAR: Record<PillarKey, { color: string; light: string }> = {
+  strength: { color: "var(--color-credo)", light: "var(--color-credo-light)" },
+  stability: { color: "var(--color-teal)", light: "var(--color-teal-light)" },
+  cardio: { color: "var(--color-cardio)", light: "var(--color-cardio-light)" },
+  nutrition: { color: "var(--color-nutrition)", light: "var(--color-nutrition-light)" },
+};
+
 const W = 640;
 const H = 224;
 const PAD = { top: 14, right: 16, bottom: 28, left: 34 };
@@ -50,11 +59,11 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
 
   if (sorted.length < 2) {
     return (
-      <div className="rounded-[14px] border border-[#E5E5E8] bg-white px-5 py-10 text-center">
-        <div className="text-[14px] font-semibold text-[#1A1A1E]">
+      <div className="rounded-[14px] border border-app bg-card-surface px-5 py-10 text-center">
+        <div className="text-[14px] font-semibold text-text-primary">
           Not enough history yet
         </div>
-        <div className="mt-1 text-[13px] text-[#6B6B73]">
+        <div className="mt-1 text-[13px] text-text-secondary">
           Keep training — trends appear after week 2.
         </div>
       </div>
@@ -88,18 +97,16 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
   }
 
   return (
-    <div className="rounded-[14px] border border-[#E5E5E8] bg-white p-4">
+    <div className="rounded-[14px] border border-app bg-card-surface p-4">
       {/* Series toggles */}
       <div className="mb-3 flex flex-wrap items-center gap-1.5">
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold"
-          style={{ background: "#FFF0E9", color: "#E8501A" }}
-        >
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#E8501A" }} />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-credo-light px-2.5 py-1 text-[11px] font-semibold text-credo">
+          <span className="h-1.5 w-1.5 rounded-full bg-credo" />
           Credo
         </span>
         {(Object.keys(PILLARS) as PillarKey[]).map((key) => {
           const pillar = PILLARS[key];
+          const vars = PILLAR_VAR[key];
           const active = overlays.includes(key);
           return (
             <button
@@ -107,16 +114,18 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
               type="button"
               onClick={() => toggle(key)}
               aria-pressed={active}
-              className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition-colors"
-              style={
+              className={`focus-ring inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition-colors ${
                 active
-                  ? { background: pillar.bg, borderColor: "transparent", color: pillar.color }
-                  : { background: "#FFFFFF", borderColor: "#E5E5E8", color: "#9E9EA3" }
+                  ? "border-transparent"
+                  : "border-app bg-card-surface text-text-tertiary"
+              }`}
+              style={
+                active ? { background: vars.light, color: vars.color } : undefined
               }
             >
               <span
                 className="h-1.5 w-1.5 rounded-full"
-                style={{ background: active ? pillar.color : "#D4D4D8" }}
+                style={{ background: active ? vars.color : "var(--text-tertiary)" }}
               />
               {pillar.label}
             </button>
@@ -132,8 +141,8 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
       >
         <defs>
           <linearGradient id="credo-trend-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#E8501A" stopOpacity={0.13} />
-            <stop offset="100%" stopColor="#E8501A" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--color-credo)" stopOpacity={0.13} />
+            <stop offset="100%" stopColor="var(--color-credo)" stopOpacity={0} />
           </linearGradient>
         </defs>
 
@@ -145,7 +154,7 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
               x2={W - PAD.right}
               y1={y(g)}
               y2={y(g)}
-              stroke="#EEEFF1"
+              stroke="var(--surface-elevated)"
               strokeWidth={1}
             />
             <text
@@ -153,7 +162,7 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
               y={y(g) + 3.5}
               textAnchor="end"
               fontSize={10}
-              fill="#9E9EA3"
+              fill="var(--text-tertiary)"
             >
               {g}
             </text>
@@ -169,7 +178,7 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
             key={key}
             d={linePath(PILLAR_FIELDS[key])}
             fill="none"
-            stroke={PILLARS[key].color}
+            stroke={PILLAR_VAR[key].color}
             strokeWidth={1.5}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -182,7 +191,7 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
         <path
           d={credoLine}
           fill="none"
-          stroke="#E8501A"
+          stroke="var(--color-credo)"
           strokeWidth={2.5}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -191,8 +200,8 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
           cx={x(last.weekNumber)}
           cy={y(last.credoScore)}
           r={4}
-          fill="#E8501A"
-          stroke="#FFFFFF"
+          fill="var(--color-credo)"
+          stroke="var(--card-bg)"
           strokeWidth={1.5}
         />
 
@@ -209,7 +218,7 @@ export function ScoreTrendChart({ snapshots }: ScoreTrendChartProps) {
               y={H - 8}
               textAnchor="middle"
               fontSize={10}
-              fill="#9E9EA3"
+              fill="var(--text-tertiary)"
             >
               W{s.weekNumber}
             </text>

@@ -47,7 +47,7 @@ export function BottomSheet({
         aria-hidden="true"
       />
       <motion.div
-        className="relative max-h-[92dvh] w-full max-w-[640px] overflow-y-auto rounded-t-[20px] bg-white px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-3"
+        className="relative max-h-[92dvh] w-full max-w-[640px] overflow-y-auto rounded-t-[20px] bg-card-surface px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-3"
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
@@ -56,7 +56,7 @@ export function BottomSheet({
         aria-modal="true"
         aria-label={title}
       >
-        <div className="mx-auto mb-3 h-1 w-9 rounded-full bg-[#E5E5E8]" />
+        <div className="mx-auto mb-3 h-1 w-9 rounded-full bg-app" />
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
@@ -64,12 +64,12 @@ export function BottomSheet({
                 className="h-2 w-2 shrink-0 rounded-full"
                 style={{ background: color }}
               />
-              <span className="text-[16px] font-semibold text-[#1A1A1E]">
+              <span className="text-[16px] font-semibold text-text-primary">
                 {title}
               </span>
             </div>
             {subtitle && (
-              <p className="mt-1.5 text-[13px] leading-relaxed text-[#6B6B73]">
+              <p className="mt-1.5 text-[13px] leading-relaxed text-text-secondary">
                 {subtitle}
               </p>
             )}
@@ -78,7 +78,7 @@ export function BottomSheet({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="rounded-full p-1.5 text-[#9E9EA3] transition-colors hover:bg-[#F7F7F8] hover:text-[#1A1A1E]"
+            className="focus-ring rounded-full p-1.5 text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
           >
             <X size={18} />
           </button>
@@ -99,11 +99,11 @@ export function FieldLabel({ children, htmlFor, optional }: FieldLabelProps) {
   return (
     <label
       htmlFor={htmlFor}
-      className="block text-[11px] font-semibold uppercase tracking-[1.5px] text-[#9E9EA3]"
+      className="block text-[11px] font-semibold uppercase tracking-[1.5px] text-text-tertiary"
     >
       {children}
       {optional && (
-        <span className="ml-1.5 font-normal normal-case tracking-normal text-[#C0C0C6]">
+        <span className="ml-1.5 font-normal normal-case tracking-normal text-text-tertiary">
           optional
         </span>
       )}
@@ -137,7 +137,7 @@ export function NumberField({
 }: NumberFieldProps) {
   return (
     <div
-      className="flex items-center gap-2 rounded-[10px] border border-[#E5E5E8] bg-white px-3 transition-colors focus-within:border-[var(--field-accent)]"
+      className="flex items-center gap-2 rounded-[10px] border border-app bg-card-surface px-3 transition-colors focus-within:border-[var(--field-accent)]"
       style={{ ["--field-accent" as string]: color }}
     >
       <input
@@ -153,10 +153,10 @@ export function NumberField({
           )
         }
         aria-label={ariaLabel}
-        className="w-full bg-transparent py-2.5 font-mono text-[18px] font-semibold text-[#1A1A1E] outline-none placeholder:text-[#C0C0C6]"
+        className="w-full bg-transparent py-2.5 font-mono text-[18px] font-semibold text-text-primary outline-none placeholder:text-text-tertiary"
       />
       {suffix && (
-        <span className="shrink-0 text-[13px] font-medium text-[#9E9EA3]">
+        <span className="shrink-0 text-[13px] font-medium text-text-tertiary">
           {suffix}
         </span>
       )}
@@ -193,7 +193,7 @@ export function TextField({
       aria-label={ariaLabel}
       onChange={(e) => onChange(e.target.value)}
       style={{ ["--field-accent" as string]: color }}
-      className="w-full rounded-[10px] border border-[#E5E5E8] bg-white px-3 py-2.5 text-[14px] text-[#1A1A1E] outline-none transition-colors placeholder:text-[#C0C0C6] focus:border-[var(--field-accent)]"
+      className="w-full rounded-[10px] border border-app bg-card-surface px-3 py-2.5 text-[14px] text-text-primary outline-none transition-colors placeholder:text-text-tertiary focus:border-[var(--field-accent)]"
     />
   );
 }
@@ -224,14 +224,14 @@ export function ChipGroup<T extends string>({
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(option.value)}
-            className="rounded-[10px] border px-3 py-2 text-[13px] font-medium transition-colors"
+            className="focus-ring rounded-[10px] border px-3 py-2 text-[13px] font-medium transition-colors"
             style={
               selected
-                ? { borderColor: color, background: color, color: "#FFFFFF" }
+                ? { borderColor: color, background: color, color: "white" }
                 : {
-                    borderColor: "#E5E5E8",
-                    background: "#FFFFFF",
-                    color: "#1A1A1E",
+                    borderColor: "var(--app-border)",
+                    background: "var(--card-bg)",
+                    color: "var(--text-primary)",
                   }
             }
           >
@@ -261,7 +261,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={disabled || pending}
-      className="mt-5 w-full rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F] disabled:cursor-not-allowed disabled:opacity-40"
+      className="focus-ring mt-5 w-full rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90 disabled:cursor-not-allowed disabled:opacity-40"
     >
       {pending ? pendingLabel : children}
     </button>
@@ -274,6 +274,6 @@ interface SheetErrorProps {
 
 export function SheetError({ message }: SheetErrorProps) {
   return (
-    <div className="mt-3 text-[12px] font-medium text-[#C43B3B]">{message}</div>
+    <div className="mt-3 text-[12px] font-medium text-danger">{message}</div>
   );
 }

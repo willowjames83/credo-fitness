@@ -39,8 +39,8 @@ import {
   weekdayInitial,
 } from "@/components/pillars/utils";
 
-const PURPLE = "#7C3AED";
-const PURPLE_LIGHT = "#F3EEFF";
+const PURPLE = "var(--color-nutrition)";
+const PURPLE_LIGHT = "var(--color-nutrition-light)";
 
 type SheetState =
   | { mode: "closed" }
@@ -161,7 +161,7 @@ export default function ProteinPage() {
         <div className="flex flex-col items-center">
           <ProgressRing
             fraction={fraction}
-            color={hit ? "#2D8A4E" : PURPLE}
+            color={hit ? "var(--color-success)" : PURPLE}
             active={mounted}
             label={
               hasTarget
@@ -169,10 +169,10 @@ export default function ProteinPage() {
                 : `${totalG} grams of protein today`
             }
           >
-            <span className="font-mono text-[36px] font-bold leading-none text-[#1A1A1E]">
+            <span className="font-mono text-[36px] font-bold leading-none text-text-primary">
               {totalG}
             </span>
-            <span className="mt-1 text-[12px] text-[#6B6B73]">
+            <span className="mt-1 text-[12px] text-text-secondary">
               {hasTarget ? `of ${targetG}g` : "grams today"}
             </span>
           </ProgressRing>
@@ -185,14 +185,14 @@ export default function ProteinPage() {
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="mt-4 rounded-[10px] px-3.5 py-3 text-center text-[13px] leading-relaxed text-[#1A1A1E]"
+              className="mt-4 rounded-[10px] px-3.5 py-3 text-center text-[13px] leading-relaxed text-text-primary"
               style={{ background: PURPLE_LIGHT }}
             >
               {today.pacing}
             </motion.p>
             {remainingG != null && remainingG > 0 && (
-              <p className="mt-2 text-center text-[12px] text-[#9E9EA3]">
-                <span className="font-mono font-semibold text-[#6B6B73]">
+              <p className="mt-2 text-center text-[12px] text-text-tertiary">
+                <span className="font-mono font-semibold text-text-secondary">
                   {remainingG}g
                 </span>{" "}
                 remaining
@@ -200,14 +200,14 @@ export default function ProteinPage() {
             )}
           </>
         ) : (
-          <div className="mt-4 rounded-[10px] border border-[#E5E5E8] bg-[#F7F7F8] px-4 py-3.5 text-center">
-            <p className="text-[13px] leading-relaxed text-[#6B6B73]">
+          <div className="mt-4 rounded-[10px] border border-app bg-surface px-4 py-3.5 text-center">
+            <p className="text-[13px] leading-relaxed text-text-secondary">
               No protein target yet. Onboarding sets it from your bodyweight and
               goal.
             </p>
             <Link
               href="/onboarding"
-              className="mt-3 inline-block rounded-[10px] bg-[#E8501A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+              className="focus-ring mt-3 inline-block rounded-[10px] bg-credo px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-credo/90"
             >
               Complete onboarding
             </Link>
@@ -232,7 +232,7 @@ export default function ProteinPage() {
       <button
         type="button"
         onClick={() => setSheet({ mode: "manual" })}
-        className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-[#E8501A] py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+        className="focus-ring mt-4 flex w-full items-center justify-center gap-1.5 rounded-[12px] bg-credo py-3 text-[15px] font-semibold text-white transition-colors hover:bg-credo/90"
       >
         <Plus size={17} />
         Enter manually
@@ -251,10 +251,10 @@ export default function ProteinPage() {
             grouped.map((group, gi) => (
               <div key={group.key} className={gi === 0 ? "" : "mt-4"}>
                 <div className="mb-2 flex items-baseline justify-between">
-                  <span className="text-[12px] font-semibold text-[#6B6B73]">
+                  <span className="text-[12px] font-semibold text-text-secondary">
                     {group.label}
                   </span>
-                  <span className="font-mono text-[12px] font-semibold text-[#9E9EA3]">
+                  <span className="font-mono text-[12px] font-semibold text-text-tertiary">
                     {group.items.reduce((sum, e) => sum + e.grams, 0)}g
                   </span>
                 </div>
@@ -289,18 +289,20 @@ export default function ProteinPage() {
               const height = Math.max(6, Math.round(ratio * 64));
               return (
                 <div key={day.date} className="flex flex-1 flex-col items-center">
-                  <span className="mb-1 font-mono text-[10px] text-[#9E9EA3]">
+                  <span className="mb-1 font-mono text-[10px] text-text-tertiary">
                     {day.totalG > 0 ? day.totalG : "—"}
                   </span>
                   <div
-                    className="flex w-full items-end justify-center rounded-[6px] bg-[#EEEFF1]"
+                    className="flex w-full items-end justify-center rounded-[6px] bg-surface-elevated"
                     style={{ height: 64 }}
                   >
                     <div
                       className="w-full rounded-[6px]"
                       style={{
                         height: mounted ? height : 6,
-                        background: day.hit ? PURPLE : "#D8CFF2",
+                        background: day.hit
+                          ? PURPLE
+                          : "color-mix(in srgb, var(--color-nutrition) 35%, var(--surface-elevated))",
                         transition:
                           "height 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
@@ -309,7 +311,7 @@ export default function ProteinPage() {
                   <span
                     className="mt-1.5 text-[11px]"
                     style={{
-                      color: isToday ? "#1A1A1E" : "#9E9EA3",
+                      color: isToday ? "var(--text-primary)" : "var(--text-tertiary)",
                       fontWeight: isToday ? 600 : 400,
                     }}
                   >
@@ -319,7 +321,7 @@ export default function ProteinPage() {
               );
             })}
           </div>
-          <div className="mt-3 border-t border-[#F0F0F2] pt-3 text-[12px] text-[#6B6B73]">
+          <div className="mt-3 border-t border-app pt-3 text-[12px] text-text-secondary">
             {streakLine(week.streak, hasTarget)}
           </div>
         </div>

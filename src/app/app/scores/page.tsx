@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PercentileBar } from "@/components/shared/percentile-bar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TrendIndicator } from "@/components/shared/trend-indicator";
 import { PILLARS, type PillarKey } from "@/lib/constants";
 import { getTierLabel } from "@/lib/scoring";
@@ -136,17 +137,17 @@ export default function ScoresPage() {
   if (error || !scores || !snapshots || !strength) {
     return (
       <div className="flex flex-1 items-center justify-center px-5 pb-10">
-        <div className="w-full rounded-[14px] border border-[#E5E5E8] bg-white p-6 text-center">
-          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+        <div className="w-full rounded-[14px] border border-app bg-card-surface p-6 text-center">
+          <div className="text-[14px] font-semibold text-text-primary">
             Couldn&apos;t load your scores
           </div>
-          <div className="mt-1 text-[13px] text-[#6B6B73]">
+          <div className="mt-1 text-[13px] text-text-secondary">
             {error ?? "Something went wrong"}
           </div>
           <button
             type="button"
             onClick={() => void load()}
-            className="mt-4 rounded-[10px] bg-[#E8501A] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+            className="focus-ring mt-4 rounded-[10px] bg-credo px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-credo/90"
           >
             Try again
           </button>
@@ -169,18 +170,15 @@ export default function ScoresPage() {
       <div className="pt-1 pb-6 text-center">
         <SectionHeader>{`Week ${scores.weekNumber} · Credo Score`}</SectionHeader>
         <div
-          className="font-display leading-none text-[#1A1A1E]"
+          className="font-display leading-none text-text-primary"
           style={{ fontSize: 84, marginTop: 12 }}
         >
           {credoScore}
         </div>
-        <div className="mt-2 text-[14px] font-medium text-[#6B6B73]">
+        <div className="mt-2 text-[14px] font-medium text-text-secondary">
           {getTierLabel(credoScore, "credo")}
         </div>
-        <div
-          className="mt-1 text-[12px] font-medium"
-          style={{ color: deltaColor(scores.credo.delta) }}
-        >
+        <div className={`mt-1 text-[12px] font-medium ${deltaColor(scores.credo.delta)}`}>
           {scores.credo.delta === 0
             ? "No change from last week"
             : `${signed(scores.credo.delta)} from last week`}
@@ -195,22 +193,19 @@ export default function ScoresPage() {
           return (
             <div
               key={key}
-              className="rounded-[14px] border border-[#E5E5E8] bg-white px-1.5 py-3 text-center"
+              className="rounded-[14px] border border-app bg-card-surface px-1.5 py-3 text-center"
             >
               <div
                 className="mx-auto mb-1.5 h-1 w-6 rounded-full"
                 style={{ background: pillar.color }}
               />
-              <div className="text-[11px] font-medium text-[#6B6B73]">
+              <div className="text-[11px] font-medium text-text-secondary">
                 {pillar.label}
               </div>
-              <div className="mt-0.5 font-mono text-[20px] font-bold leading-tight text-[#1A1A1E]">
+              <div className="mt-0.5 font-mono text-[20px] font-bold leading-tight text-text-primary">
                 {Math.round(s.score)}
               </div>
-              <div
-                className="text-[11px] font-medium"
-                style={{ color: deltaColor(s.delta) }}
-              >
+              <div className={`text-[11px] font-medium ${deltaColor(s.delta)}`}>
                 {s.delta === 0 ? "±0" : signed(s.delta)}
               </div>
             </div>
@@ -231,11 +226,11 @@ export default function ScoresPage() {
         <div className="mb-2.5">
           <SectionHeader>Strength Score</SectionHeader>
         </div>
-        <div className="overflow-hidden rounded-[14px] border border-[#E5E5E8] bg-white">
+        <div className="overflow-hidden rounded-[14px] border border-app bg-card-surface">
           <div className="flex items-start justify-between px-4 pb-3 pt-4">
             <div>
               <div className="flex items-baseline gap-2.5">
-                <span className="font-mono text-[32px] font-bold leading-none text-[#1A1A1E]">
+                <span className="font-mono text-[32px] font-bold leading-none text-text-primary">
                   {Math.round(strength.overall)}
                 </span>
                 <TrendIndicator
@@ -244,47 +239,47 @@ export default function ScoresPage() {
                   positive={strength.trend !== "declining"}
                 />
               </div>
-              <div className="mt-1 text-[13px] font-medium text-[#6B6B73]">
+              <div className="mt-1 text-[13px] font-medium text-text-secondary">
                 {getTierLabel(strength.overall, "strength")}
               </div>
             </div>
             <div className="text-right">
-              <div className="font-mono text-[16px] font-semibold text-[#1A1A1E]">
+              <div className="font-mono text-[16px] font-semibold text-text-primary">
                 {ordinal(strength.percentile)}
               </div>
-              <div className="text-[11px] text-[#9E9EA3]">percentile</div>
+              <div className="text-[11px] text-text-tertiary">percentile</div>
             </div>
           </div>
-          <div className="border-t border-[#E5E5E8] bg-[#F7F7F8] px-4 py-2 text-[12px] text-[#6B6B73]">
+          <div className="border-t border-app bg-surface px-4 py-2 text-[12px] text-text-secondary">
             vs {strength.demographicContext}
           </div>
 
           {/* 8 subscores */}
-          <div className="border-t border-[#E5E5E8]">
+          <div className="border-t border-app">
             {strength.subscores.map((s) => {
               const hasData = s.estimated1RM > 0;
               const kind = subscoreValueKind(s);
               return (
                 <div
                   key={s.category}
-                  className="border-b border-[#E5E5E8] px-4 py-3 last:border-b-0"
+                  className="border-b border-app px-4 py-3 last:border-b-0"
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="text-[13px] font-semibold text-[#1A1A1E]">
+                      <div className="text-[13px] font-semibold text-text-primary">
                         {s.category}
                       </div>
-                      <div className="truncate text-[11px] text-[#9E9EA3]">
+                      <div className="truncate text-[11px] text-text-tertiary">
                         {s.keyLift}
                       </div>
                     </div>
                     {hasData && (
                       <div className="shrink-0 text-right">
-                        <div className="font-mono text-[14px] font-semibold text-[#1A1A1E]">
+                        <div className="font-mono text-[14px] font-semibold text-text-primary">
                           {formatSubscoreValue(s)}
                         </div>
                         {kind === "lb" && s.relativeStrength > 0 && (
-                          <div className="text-[11px] text-[#9E9EA3]">
+                          <div className="text-[11px] text-text-tertiary">
                             {s.relativeStrength.toFixed(2)}×BW
                           </div>
                         )}
@@ -299,16 +294,16 @@ export default function ScoresPage() {
                           color={PILLARS.strength.color}
                         />
                       </div>
-                      <span className="w-9 shrink-0 text-right text-[11px] font-medium text-[#6B6B73]">
+                      <span className="w-9 shrink-0 text-right text-[11px] font-medium text-text-secondary">
                         {ordinal(s.percentile)}
                       </span>
                     </div>
                   ) : (
-                    <div className="mt-1.5 text-[12px] text-[#9E9EA3]">
+                    <div className="mt-1.5 text-[12px] text-text-tertiary">
                       No data — log {s.keyLift} or test it in the{" "}
                       <Link
                         href="/app/credo-ten"
-                        className="font-medium text-[#E8501A] hover:underline"
+                        className="focus-ring rounded-sm font-medium text-credo hover:underline"
                       >
                         Credo Ten
                       </Link>
@@ -327,12 +322,12 @@ export default function ScoresPage() {
           type="button"
           onClick={() => void recalculate()}
           disabled={recalculating}
-          className="w-full rounded-[12px] border border-[#E5E5E8] bg-transparent py-2.5 text-[13px] font-semibold text-[#6B6B73] transition-colors hover:border-[#9E9EA3] hover:text-[#1A1A1E] disabled:opacity-50"
+          className="focus-ring w-full rounded-[12px] border border-app bg-transparent py-2.5 text-[13px] font-semibold text-text-secondary transition-colors hover:border-text-tertiary hover:text-text-primary disabled:opacity-50"
         >
           {recalculating ? "Recalculating…" : "Recalculate scores"}
         </button>
         {recalcError && (
-          <div className="mt-2 text-center text-[12px] font-medium text-[#C43B3B]">
+          <div className="mt-2 text-center text-[12px] font-medium text-danger">
             {recalcError}
           </div>
         )}
@@ -345,17 +340,17 @@ function ScoresSkeleton() {
   return (
     <div className="flex-1 px-5 pb-6">
       <div className="flex flex-col items-center pt-4">
-        <div className="h-3 w-36 animate-pulse rounded bg-[#EEEFF1]" />
-        <div className="mt-5 h-20 w-28 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
-        <div className="mt-4 h-3 w-24 animate-pulse rounded bg-[#EEEFF1]" />
+        <Skeleton className="h-3 w-36" />
+        <Skeleton className="mt-5 h-20 w-28 rounded-[14px]" />
+        <Skeleton className="mt-4 h-3 w-24" />
       </div>
       <div className="mt-7 grid grid-cols-4 gap-2">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-[92px] animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+          <Skeleton key={i} className="h-[92px] rounded-[14px]" />
         ))}
       </div>
-      <div className="mt-7 h-64 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
-      <div className="mt-7 h-80 animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+      <Skeleton className="mt-7 h-64 rounded-[14px]" />
+      <Skeleton className="mt-7 h-80 rounded-[14px]" />
     </div>
   );
 }

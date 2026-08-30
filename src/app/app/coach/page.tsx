@@ -14,6 +14,7 @@ import {
 } from "@/components/coach/api";
 import { ChatView } from "@/components/coach/chat-view";
 import { ThreadList } from "@/components/coach/thread-list";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type View = { kind: "list" } | { kind: "chat"; threadId: string | null };
 
@@ -72,15 +73,15 @@ export default function CoachPage() {
   if (error && threads === null) {
     return (
       <div className="flex flex-1 items-center justify-center px-5 pb-10">
-        <div className="w-full rounded-[14px] border border-[#E5E5E8] bg-white p-6 text-center">
-          <div className="text-[14px] font-semibold text-[#1A1A1E]">
+        <div className="w-full rounded-[14px] border border-app bg-card-surface p-6 text-center">
+          <div className="text-[14px] font-semibold text-text-primary">
             Couldn&apos;t load your coach
           </div>
-          <div className="mt-1 text-[13px] text-[#6B6B73]">{error}</div>
+          <div className="mt-1 text-[13px] text-text-secondary">{error}</div>
           <button
             type="button"
             onClick={() => void load()}
-            className="mt-4 rounded-[10px] bg-[#E8501A] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#D3480F]"
+            className="focus-ring mt-4 rounded-[10px] bg-credo px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-credo/90"
           >
             Try again
           </button>
@@ -122,17 +123,14 @@ export default function CoachPage() {
 function CoachSkeleton() {
   return (
     <div className="flex flex-1 flex-col px-5 pb-6">
-      <div className="h-3 w-32 animate-pulse rounded bg-[#EEEFF1]" />
-      <div className="mt-4 h-28 w-full animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+      <Skeleton className="h-3 w-32" />
+      <Skeleton className="mt-4 h-28 w-full rounded-[14px]" />
       <div className="mt-4 flex flex-col gap-2">
         {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="h-12 w-full animate-pulse rounded-[14px] bg-[#EEEFF1]"
-          />
+          <Skeleton key={i} className="h-12 w-full rounded-[14px]" />
         ))}
       </div>
-      <div className="mt-auto h-[66px] w-full animate-pulse rounded-[14px] bg-[#EEEFF1]" />
+      <Skeleton className="mt-auto h-[66px] w-full rounded-[14px]" />
     </div>
   );
 }
